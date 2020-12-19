@@ -6,21 +6,20 @@
  */
 package uminho.dss.turmas3l;
 
-
-import uminho.dss.turmas3l.ui.UIText;
+import uminho.dss.turmas3l.ui.TextUI;
 
 /**
  * @author DSS
  * @version 20201206
  */
-public class Main {
+public class MainTurmas {
 
     /**
      * O método main cria a aplicação e invoca o método run()
      */
     public static void main(String[] args) {
         try {
-            new UIText().run();
+            new TextUI().run();
         }
         catch (Exception e) {
             System.out.println("Não foi possível arrancar: "+e.getMessage());
