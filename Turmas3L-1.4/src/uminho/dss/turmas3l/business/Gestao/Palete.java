@@ -4,19 +4,19 @@ import java.util.Collection;
 
 public class Palete {
     private String idPalete;
-    private Collection<String> mats;
+    private Collection<String> matsIds;
     private double peso;
 
     public Palete(String id, double peso){
         this.idPalete = id;
-        this.mats = null;
+        this.matsIds = null;
         this.peso = peso;
     }
 
     public Palete(String id, Collection<String> mats, double peso) {
         this.idPalete = id;
-        this.mats = new ArrayList<>();
-        this.mats.addAll(mats);
+        this.matsIds = new ArrayList<>();
+        this.matsIds.addAll(mats);
         this.peso = peso;
     }
 
