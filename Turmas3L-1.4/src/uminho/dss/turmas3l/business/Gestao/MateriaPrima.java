@@ -23,4 +23,31 @@ public class MateriaPrima {
     public void setQtd(int qtd){
         this.qtd = qtd;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public int getQtd() {
+        return qtd;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("MateriaPrima{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", nome='").append(nome).append('\'');
+        sb.append(", peso=").append(peso);
+        sb.append(", qtd=").append(qtd);
+        sb.append('}');
+        return sb.toString();
+    }
 }

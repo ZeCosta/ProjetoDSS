@@ -1,25 +1,35 @@
 package uminho.dss.turmas3l.business.Gestao;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class Palete {
-    private String idPalete;
-    private MateriaPrima materia;
+    private String matId;
+    private String id;
     private double peso;
 
-    public Palete(String id, double peso){
-        this.idPalete = id;
-        this.materia = null;
-        this.peso = peso;
-    }
-
-    public Palete(String id, MateriaPrima mats, double peso) {
-        this.idPalete = id;
-        this.materia = mats;
+    public Palete(String id, double peso, String matId){
+        this.id = id;
+        this.matId = matId;
         this.peso = peso;
     }
 
     public String getId(){
-        return this.idPalete;
+        return id;
+    }
+
+    public String getMatId() {
+        return matId;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Palete{");
+        sb.append("matId='").append(matId).append('\'');
+        sb.append(", id='").append(id).append('\'');
+        sb.append(", peso=").append(peso);
+        sb.append('}');
+        return sb.toString();
     }
 }
