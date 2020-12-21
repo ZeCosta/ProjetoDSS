@@ -5,6 +5,6 @@ import uminho.dss.turmas3l.business.QRCode;
 import java.util.Map;
 
 public interface IGest {
-    Map<String, Localizacao> solicitarListagem();
-    void comunicarQR(QRCode qr);
+    /*Map<String, Localizacao> solicitarListagem();
+    void comunicarQR(QRCode qr);*/
 }

@@ -1,7 +1,7 @@
 package uminho.dss.turmas3l.business;
 
 public class Localizacao {
-    enum Local{
+    private enum Local{
         P1N, P2N, P3N, P4N,
         P1S, P2S, P3S, P4S,
         ZRececao, ZEntrega, ZRobots,
