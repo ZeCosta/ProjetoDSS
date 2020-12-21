@@ -131,7 +131,7 @@ public class UIText {
         try {
             System.out.println("Número da palete a transportar: ");
             String num = scin.nextLine();
-            if (this.model.existePalete(num)) {
+            /*if (this.model.existePalete(num)) {   <- se nao existe palete sair
                 System.out.println("Destino da palete: ");
                 String destino = scin.nextLine();
 
@@ -139,92 +139,7 @@ public class UIText {
                 //else{System.out.println("O destino da palete é igual a origem");}
             } else {
                 System.out.println("Essa palete não existe!");
-            }
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-
-    public void adicionarTurma(){
-        try {
-            System.out.println("Número da nova turma: ");
-            String num = scin.nextLine();
-            if (!this.model.existeTurma(num)) {
-                System.out.println("Número da sala da nova turma: ");
-                String sala = scin.nextLine();
-
-                //if (!this.model.existeSala(sala)) {
-                System.out.println("Edificio da sala: ");
-                String edificio = scin.nextLine();
-                System.out.println("Capaciada da sala: ");
-                String capacidade = scin.nextLine();
-                this.model.adicionaTurma(new Turma(num,new Sala(sala,edificio,Integer.parseInt(capacidade))));
-                System.out.println("Turma adicionada");
-                //}
-            } else {
-                System.out.println("Esse número de aluno já existe!");
-            }
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    public void mudarSalaATurma(){
-        try {
-            System.out.println("Número da turma: ");
-            String num = scin.nextLine();
-            if (this.model.existeTurma(num)) {
-                System.out.println("Número da sala da nova turma: ");
-                String sala = scin.nextLine();
-
-                //if (!this.model.existeSala(sala)) {
-                System.out.println("Edificio da sala: ");
-                String edificio = scin.nextLine();
-                System.out.println("Capaciada da sala: ");
-                String capacidade = scin.nextLine();
-                this.model.adicionaTurma(new Turma(num,new Sala(sala,edificio,Integer.parseInt(capacidade))));
-                System.out.println("Sala alterada");
-                //}
-            } else {
-                System.out.println("Essa turma não existe!");
-            }
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    public void listarTurmas(){
-        try {
-            System.out.println(this.model.getTurmas().toString());
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-
-
-    /**
-     *  Estado - Adicionar Aluno a Turma
-     */
-    private void adicionarAlunoATurma() {
-        try {
-            System.out.println("Número da turma: ");
-            String tid = scin.nextLine();
-            if (this.model.existeTurma(tid)) {
-                System.out.println("Número do aluno: ");
-                String num = scin.nextLine();
-                if (this.model.existeAluno(num)) {
-                    this.model.adicionaAlunoTurma(tid, num);
-                    System.out.println("Aluno adicionado à turma");
-                } else {
-                    System.out.println("Esse número de aluno não existe!");
-                }
-            } else {
-                System.out.println("Esse número de turma não existe!");
-            }
+            }*/
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -232,24 +147,56 @@ public class UIText {
     }
 
     /**
-     *  Estado - Remover Aluno de Turma
+     * Consultas das paletes
      */
-    private void removerAlunoDeTurma() {
+    public void consultarTudo(){
         try {
-            System.out.println("Número da turma: ");
-            String tid = scin.nextLine();
-            if (this.model.existeTurma(tid)) {
-                System.out.println("Número do aluno: ");
-                String num = scin.nextLine();
-                if (this.model.existeAlunoEmTurma(tid,num)) {
-                    this.model.removeAlunoTurma(tid, num);
-                    System.out.println("Aluno removido da turma");
-                } else {
-                    System.out.println("Esse número de aluno não existe na turma!");
-                }
-            } else {
-                System.out.println("Esse número de turma não existe!");
-            }
+            //System.out.println(this.model.getPaletesZR().toString());
+            //System.out.println(this.model.getPaletesZA().toString());
+            //System.out.println(this.model.getPaletesZE().toString());
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void consultarZonaRececao(){
+        try {
+            //System.out.println(this.model.getPaletesZR().toString());
+            //System.out.println(this.model.getPaletesZA().toString());
+            //System.out.println(this.model.getPaletesZE().toString());
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void consultarZonaArmazenamento(){
+        try {
+            //System.out.println(this.model.getPaletesZR().toString());
+            //System.out.println(this.model.getPaletesZA().toString());
+            //System.out.println(this.model.getPaletesZE().toString());
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void consultarZonaEntrega(){
+        try {
+            //System.out.println(this.model.getPaletesZR().toString());
+            //System.out.println(this.model.getPaletesZA().toString());
+            //System.out.println(this.model.getPaletesZE().toString());
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    /**
+     * listar ordens dos robots
+     */
+    public void listarOrdens(){
+        try {
+            //System.out.println(this.model.getOrdens().toString()); <- vai a cada robot com estado diferente de "A espera" e indica o estado,.. (e a localizacao?)
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -257,16 +204,37 @@ public class UIText {
     }
 
     /**
-     *  Estado - Listar Alunos da Turma
+     * notificar recolha
      */
-    private void listarAlunosDaTurma() {
+    public void notificarRecolha(){
         try {
-            System.out.println("Número da turma: ");
-            String tid = scin.nextLine();
-            System.out.println(this.model.getAlunos(tid).toString());
+            //alterar localizacao do robot
+            //confirmar que a palete esta no sitio
+            //recolher a palete -> colocar no robot e retirar do local
+            //alterar estado do robot
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
     }
+
+    /**
+     * notificar recolha
+     */
+    public void notificarEntrega(){
+        try {
+            //alterar localizacao do robot
+            //entregar a palete -> colocar no local e retirar do robot
+            //alterar estado do robot
+
+            //verificar se há entregas na fila de espera
+            //      -> Se sim, dar a ordem ao robot
+            //      -> Se nao, alterar a localizacao do robot para a zona de descanso
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 }
