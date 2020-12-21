@@ -6,7 +6,9 @@
  */
 package uminho.dss.turmas3l.data;
 
-import uminho.dss.turmas3l.business.Sala;
+import uminho.dss.turmas3l.business.Gestao.MateriaPrima;
+import uminho.dss.turmas3l.business.Gestao.Palete;
+import uminho.dss.turmas3l.business.Localizacao;
 import uminho.dss.turmas3l.business.Turma;
 
 import java.sql.*;
@@ -20,7 +22,7 @@ import java.util.*;
  * @author JFC
  * @version 20201208
  */
-public class PaleteDAO implements Map<String, Turma> {
+public class PaleteDAO implements Map<String, Palete> {
     private static PaleteDAO singleton = null;
 
     private PaleteDAO() {
@@ -29,16 +31,19 @@ public class PaleteDAO implements Map<String, Turma> {
             String sql = "CREATE TABLE IF NOT EXISTS materiaprima (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "nome varchar(45) DEFAULT NULL," +
-                    "peso double(5,2) DEFAULT 0)" +
+                    "peso double(4,2) DEFAULT 0)" +
                     "quantidade int(4) DEFAULT 0)";
-            stm.executeUpdate(sql);
-            sql = "CREATE TABLE IF NOT EXISTS palete (" +
-                    "id varchar(10) NOT NULL PRIMARY KEY," +
-                    "Sala varchar(10) DEFAULT NULL," +
-                    "foreign key(Sala) references salas(Num))";
             stm.executeUpdate(sql);
             sql = "CREATE TABLE IF NOT EXISTS localizacao (" +
                     "id varchar(10) NOT NULL PRIMARY KEY,";
+            stm.executeUpdate(sql);
+            sql = "CREATE TABLE IF NOT EXISTS palete (" +
+                    "id varchar(10) NOT NULL PRIMARY KEY," +
+                    "peso double(6,2) DEFAULT NULL," +
+                    "localizacao varchar(10)," +
+                    "materia varchar(10)," +
+                    "foreign key(localizacao) references localizacao(id))"+
+                    "foreign key(materia) references materiaprima(id))";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
             // Erro a criar tabela...
@@ -136,109 +141,91 @@ public class PaleteDAO implements Map<String, Turma> {
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public Turma get(Object key) {
-        Turma t = null;
+    public Palete get(Object key) {
+        Palete p = null;
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM palete WHERE Id='"+key+"'")) {
             if (rs.next()) {  // A chave existe na tabela
-                // Reconstruir a colecção de alunos da turma
-                Collection<String> alunos = getAlunosTurma(key.toString(), stm);
-
-                // Reconstruir a Sala
-                Sala s = null;
-                String sql = "SELECT * FROM localizacao WHERE Num='"+rs.getString("Sala")+"'";
+                // Reconstruir a MateriaPrima
+                MateriaPrima m = null;
+                String sql = "SELECT * FROM materiaprima WHERE id='"+rs.getString("materia")+"'";
                 try (ResultSet rsa = stm.executeQuery(sql)) {
                     if (rsa.next()) {  // Encontrou a sala
-                        s = new Sala(rs.getString("Sala"),
-                                     rsa.getString("Edificio"),
-                                     rsa.getInt("Capacidade"));
+                        m = new MateriaPrima(rs.getString("id"),
+                                     rsa.getString("nome"),
+                                rsa.getInt("peso"),
+                                rsa.getInt("quantidade"));
                     } else {
                         // BD inconsistente!! Sala não existe - tratar com excepções.
                     } // catch é feito no try inicial - este try serve para fechar o ResultSet automaticamente
                       // Nota: abrir um novo ResultSet no mesmo Statement fecha o ResultSet anterior
                 }
 
+                // Reconstruir a localizacao
+                Localizacao l = null;
+                sql = "SELECT * FROM localizacao WHERE id='"+rs.getString("localizacao")+"'";
+                try (ResultSet rsa = stm.executeQuery(sql)) {
+                    if (rsa.next()) {  // Encontrou a sala
+                        l = new Localizacao(rs.getString("id"));
+                    } else {
+                        // BD inconsistente!! Sala não existe - tratar com excepções.
+                    } // catch é feito no try inicial - este try serve para fechar o ResultSet automaticamente
+                    // Nota: abrir um novo ResultSet no mesmo Statement fecha o ResultSet anterior
+                }
+
                 // Reconstruir a turma cokm os dados obtidos da BD 
-                t = new Turma(rs.getString("Id"), s, alunos);
+                p = new Palete(rs.getString("id"),Double.parseDouble(rs.getString("peso")), m, l);
             }
         } catch (SQLException e) {
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return t;
+        return p;
     }
 
-    /**
-     * Método auxiliar que obtem a listad e alunos da turma
-     *
-     * @param tid o id da turma
-     * @return a lista de alunos da turma
-     */
-    private Collection<String> getAlunosTurma(String tid, Statement stm) throws SQLException {
-        Collection<String> alunos = new TreeSet<>();
-        try (ResultSet rsa = stm.executeQuery("SELECT id FROM palete WHERE localizacao='"+tid+"'")) {
-            while(rsa.next()) {
-                alunos.add(rsa.getString("Num"));
-            }
-        } // execepção é enviada a quem chama o método - este try serve para fechar o ResultSet automaticamente
-        return alunos;
-    }
+
 
     /**
-     * Insere uma turma na base de dados
-     *
-     * ATENÇÂO: Esta implementação é provisória.
-     * Falta devolver o valor existente (caso exista um)
-     * Falta remover a sala anterior, caso esteja a ser alterada
-     * Deveria utilizar transacções...
-     *
-     * @param key o id da turma
-     * @param t a turma
+     * @param key o id da palete
+     * @param p a palete
      * @return para já retorna sempre null (deverá devolver o valor existente, caso exista um)
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public Turma put(String key, Turma t) {
-        Turma res = null;
-        Sala s = t.getSala();
+    public Palete put(String key, Palete p) {
+        Palete res = null;
+        Localizacao l = p.getLocalizacao();
+        MateriaPrima m = p.getMateriaPrima();
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
 
-            // Actualizar a Sala
+            // adicionar localizacao se nao existe
             stm.executeUpdate(
-                    "INSERT INTO salas " +
-                                "VALUES ('"+ s.getNumero()+ "', '"+
-                                            s.getEdificio()+"', "+
-                                            s.getCapacidade()+") " +
-                                "ON DUPLICATE KEY UPDATE Edificio=Values(Edificio), " +
-                                                        "Capacidade=Values(Capacidade)");
+                    "INSERT IGNORE INTO localizacao " +
+                                "VALUES ('"+ l.getLocal()+ "')");
+
+            // Actualizar a MateriaPrima
+            stm.executeUpdate(
+                    "INSERT INTO materiaprima " +
+                            "VALUES ('"+ m.getId()+ "', '"+
+                            m.getNome()+"', "+
+                            m.getPeso()+", "+
+                            m.getQtd()+") " +
+                            "ON DUPLICATE KEY UPDATE nome=Values(nome), " +
+                            "peso=Values(peso), " +
+                            "quantidade=Values(quantidade)");
+
 
             // Actualizar a turma
             stm.executeUpdate(
-                    "INSERT INTO turmas VALUES ('"+t.getId()+"', '"+s.getNumero()+"') " +
-                                "ON DUPLICATE KEY UPDATE Sala=VALUES(Sala)");
+                    "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
+                            ", '"+l.getLocal()+"', ''" +
+                            m.getId()+"'') " +
+                                "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao)"+
+                                "materia=VALUES(materia)");
 
-            // Actualizar os alunos da turma
-            Collection<String> oldAl = getAlunosTurma(key, stm);
-            Collection<String> newAl = t.getAlunos();
-            newAl.removeAll(oldAl);         // Alunos que entram na turma, em relação ao que está na BD
-            oldAl.removeAll(t.getAlunos()); // Alunos que saem na turma, em relação ao que está na BD
-            try (PreparedStatement pstm = conn.prepareStatement("UPDATE alunos SET Turma=? WHERE Num=?")) {
-                // Remover os que saem da turma (colocar a NULL a coluna que diz qual a turma dos alunos)
-                pstm.setNull(1, Types.VARCHAR);
-                for (String a: oldAl) {
-                    pstm.setString(2, a);
-                    pstm.executeUpdate();
-                }
-                // Adicionar os que entram na turma (colocar o Id da turma na coluna Turma da tabela alunos)
-                pstm.setString(1, t.getId());
-                for (String a: newAl) {
-                    pstm.setString(2, a);
-                    pstm.executeUpdate();
-                }
-            }
 
         } catch (SQLException e) {
             // Database error!
@@ -258,37 +245,36 @@ public class PaleteDAO implements Map<String, Turma> {
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public Turma remove(Object key) {
-        Turma t = this.get(key);
+    public Palete remove(Object key) {
+        Palete p = this.get(key);
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
-             Statement stm = conn.createStatement();
-             PreparedStatement pstm = conn.prepareStatement("UPDATE alunos SET Turma=? WHERE Num=?")) {
-            // retirar os alunos da turma
-            pstm.setNull(1, Types.VARCHAR);
-            for (String a: t.getAlunos()) {
-                pstm.setString(2, a);
-                pstm.executeUpdate();
-            }
+             Statement stm = conn.createStatement()) {
+
+            // apagar a materiaprima
+            stm.executeUpdate("DELETE FROM materiaprima WHERE Id='"+p.getMateriaPrima().getId()+"'");
+
             // apagar a turma
-            stm.executeUpdate("DELETE FROM turmas WHERE Id='"+key+"'");
+            stm.executeUpdate("DELETE FROM palete WHERE Id='"+key+"'");
         } catch (Exception e) {
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return t;
+        return p;
     }
+
+
 
     /**
      * Adicionar um conjunto de turmas à base de dados
      *
-     * @param turmas as turmas a adicionar
+     * @param paletes as paletes a adicionar
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public void putAll(Map<? extends String, ? extends Turma> turmas) {
-        for(Turma t : turmas.values()) {
-            this.put(t.getId(), t);
+    public void putAll(Map<? extends String, ? extends Palete> paletes) {
+        for(Palete p : paletes.values()) {
+            this.put(p.getId(), p);
         }
     }
 
@@ -323,15 +309,15 @@ public class PaleteDAO implements Map<String, Turma> {
      * @return Todos as turmas da base de dados
      */
     @Override
-    public Collection<Turma> values() {
-        Collection<Turma> res = new HashSet<>();
+    public Collection<Palete> values() {
+        Collection<Palete> res = new HashSet<>();
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT Id FROM turmas")) { // ResultSet com os ids de todas as turmas
+             ResultSet rs = stm.executeQuery("SELECT Id FROM palete")) { // ResultSet com os ids de todas as turmas
             while (rs.next()) {
                 String idt = rs.getString("Id"); // Obtemos um id de turma do ResultSet
-                Turma t = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
-                res.add(t);                                 // Adiciona a turma ao resultado.
+                Palete p = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
+                res.add(p);                                 // Adiciona a turma ao resultado.
             }
         } catch (Exception e) {
             // Database error!
@@ -346,7 +332,7 @@ public class PaleteDAO implements Map<String, Turma> {
      * @return ainda nada!
      */
     @Override
-    public Set<Entry<String, Turma>> entrySet() {
+    public Set<Entry<String, Palete>> entrySet() {
         throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
     }
 }

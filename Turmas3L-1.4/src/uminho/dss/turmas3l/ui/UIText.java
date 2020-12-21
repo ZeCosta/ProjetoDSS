@@ -120,7 +120,7 @@ public class UIText {
             //chamar metodod criarPalete
             Palete p = qrcode.criarPalete();
             //adicionar paelte a zona de rececao
-            //this.model.adicionarPaleteZR(p); -> model adiciona ao DAO e zonaderececao altera a localizacao?
+            this.model.adicionarPaleteZR(p); //-> model adiciona ao DAO e zonaderececao altera a localizacao?
 
         }
         catch (NullPointerException e) {

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class SubSistemaGestao implements IGest{
-    private Map<String, Turma> paletes;
+    private Map<String, Palete> paletes;
 
     public SubSistemaGestao(){
         this.paletes = PaleteDAO.getInstance();
@@ -30,5 +30,9 @@ public class SubSistemaGestao implements IGest{
         sb.append("paletesIds=").append(paletes);
         sb.append('}');
         return sb.toString();
+    }
+
+    public void adicionarPaleteZR(Palete p) {
+        this.paletes.put(p.getId(), p);
     }
 }
