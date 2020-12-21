@@ -1,7 +1,5 @@
 package uminho.dss.turmas3l.business.Transporte;
 
-import uminho.dss.turmas3l.business.Gestao.SubSistemaGestao;
-
 import java.util.Collection;
 import java.util.TreeSet;
 
