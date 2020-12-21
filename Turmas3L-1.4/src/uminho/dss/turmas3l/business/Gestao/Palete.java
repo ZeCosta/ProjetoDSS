@@ -13,6 +13,12 @@ public class Palete {
         this.materia = materia;
         this.peso = peso;
     }
+    public Palete(String id, double peso, MateriaPrima materia,Localizacao localizacao){
+        this.id = id;
+        this.materia = materia;
+        this.peso = peso;
+        this.localizacao = localizacao;
+    }
 
     public String getId(){
         return id;
@@ -26,6 +32,9 @@ public class Palete {
         return this.localizacao;
     }
 
+    public MateriaPrima getMateriaPrima(){
+        return this.materia;
+    }
 
 
     public double getPeso() {
