@@ -24,7 +24,7 @@ public class PaleteDAO implements Map<String, Turma> {
     private static PaleteDAO singleton = null;
 
     private PaleteDAO() {
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS materiaprima (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
@@ -65,7 +65,7 @@ public class PaleteDAO implements Map<String, Turma> {
     @Override
     public int size() {
         int i = 0;
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT count(*) FROM palete")) {
             if(rs.next()) {
@@ -100,7 +100,7 @@ public class PaleteDAO implements Map<String, Turma> {
     @Override
     public boolean containsKey(Object key) {
         boolean r;
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs =
                      stm.executeQuery("SELECT id FROM palete WHERE id='"+key.toString()+"'")) {
@@ -138,7 +138,7 @@ public class PaleteDAO implements Map<String, Turma> {
     @Override
     public Turma get(Object key) {
         Turma t = null;
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM palete WHERE Id='"+key+"'")) {
             if (rs.next()) {  // A chave existe na tabela
@@ -203,7 +203,7 @@ public class PaleteDAO implements Map<String, Turma> {
     public Turma put(String key, Turma t) {
         Turma res = null;
         Sala s = t.getSala();
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
 
             // Actualizar a Sala
@@ -260,7 +260,7 @@ public class PaleteDAO implements Map<String, Turma> {
     @Override
     public Turma remove(Object key) {
         Turma t = this.get(key);
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              PreparedStatement pstm = conn.prepareStatement("UPDATE alunos SET Turma=? WHERE Num=?")) {
             // retirar os alunos da turma
@@ -299,7 +299,7 @@ public class PaleteDAO implements Map<String, Turma> {
      */
     @Override
     public void clear() {
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             stm.execute("UPDATE alunos SET Turma=NULL");
             stm.executeUpdate("TRUNCATE turmas");
@@ -325,7 +325,7 @@ public class PaleteDAO implements Map<String, Turma> {
     @Override
     public Collection<Turma> values() {
         Collection<Turma> res = new HashSet<>();
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT Id FROM turmas")) { // ResultSet com os ids de todas as turmas
             while (rs.next()) {
