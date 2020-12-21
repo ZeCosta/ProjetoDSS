@@ -8,10 +8,10 @@ import uminho.dss.turmas3l.business.Turma;
 import java.sql.*;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 public class RobotDAO implements Map<String, Robot> {
     private static RobotDAO singleton = null;
-    private Map<String,Robot>
 
     private RobotDAO(){
         try(Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
@@ -95,6 +95,11 @@ public class RobotDAO implements Map<String, Robot> {
         return r;
     }
 
+    @Override
+    public boolean containsValue(Object o) {
+        return false;
+    }
+
     /**
      * Obter um robot, dado o seu id
      *
@@ -105,6 +110,7 @@ public class RobotDAO implements Map<String, Robot> {
     @Override
     public Robot get(Object key) {
         Robot r = null;
+        /*
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM robots WHERE id='"+key+"'")) {
@@ -114,7 +120,7 @@ public class RobotDAO implements Map<String, Robot> {
                 String estado = rs.getString("estado");
                 Robot.Estado e = Robot.Estado.valueOf(estado);
                 if(e.equals(Robot.Estado.TRANSPORTAR)){
-                        /* Reconstruir a palete */
+                        // Reconstruir a palete //
                 }
 
                 // POR ACABAR A PARTIR DAQUI
@@ -139,7 +145,43 @@ public class RobotDAO implements Map<String, Robot> {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return t;
+        */
+        return r;
+    }
+
+    @Override
+    public Robot put(String s, Robot robot) {
+        return null;
+    }
+
+    @Override
+    public Robot remove(Object o) {
+        return null;
+    }
+
+    @Override
+    public void putAll(Map<? extends String, ? extends Robot> map) {
+
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public Set<String> keySet() {
+        return null;
+    }
+
+    @Override
+    public Collection<Robot> values() {
+        return null;
+    }
+
+    @Override
+    public Set<Entry<String, Robot>> entrySet() {
+        return null;
     }
 
     /**
