@@ -7,6 +7,7 @@
 package uminho.dss.turmas3l.ui;
 
 import uminho.dss.turmas3l.business.*;
+import uminho.dss.turmas3l.business.Gestao.Palete;
 
 import java.util.Scanner;
 
@@ -115,8 +116,11 @@ public class UIText {
             String qr = scin.nextLine();
 
             //criar objeto qrcode
+            QRCode qrcode = new QRCode(qr);
             //chamar metodod criarPalete
+            Palete p = qrcode.criarPalete();
             //adicionar paelte a zona de rececao
+            //this.model.adicionarPaleteZR(p); -> model adiciona ao DAO e zonaderececao altera a localizacao?
 
         }
         catch (NullPointerException e) {
