@@ -6,7 +6,7 @@ public class Palete {
     private String id;
     private double peso;
     private MateriaPrima materia;
-    private Localizacao localizacao;
+    private Localizacao localizacao = null;
 
     public Palete(String id, double peso, MateriaPrima materia){
         this.id = id;

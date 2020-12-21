@@ -117,10 +117,11 @@ public class UIText {
 
             //criar objeto qrcode
             QRCode qrcode = new QRCode(qr);
-            //chamar metodod criarPalete
+            //chamar metodo criarPalete
             Palete p = qrcode.criarPalete();
+            p.setLocalizacao(new Localizacao("ZRececao"));
             //adicionar paelte a zona de rececao
-            this.model.adicionarPaleteZR(p); //-> model adiciona ao DAO e zonaderececao altera a localizacao?
+            this.model.adicionarPalete(p); //-> model adiciona ao DAO e zonaderececao altera a localizacao?
 
         }
         catch (NullPointerException e) {

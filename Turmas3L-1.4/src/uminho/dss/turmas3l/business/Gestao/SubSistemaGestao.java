@@ -32,7 +32,7 @@ public class SubSistemaGestao implements IGest{
         return sb.toString();
     }
 
-    public void adicionarPaleteZR(Palete p) {
+    public void adicionarPalete(Palete p) {
         this.paletes.put(p.getId(), p);
     }
 }
