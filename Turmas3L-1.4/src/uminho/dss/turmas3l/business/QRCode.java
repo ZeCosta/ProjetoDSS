@@ -1,5 +1,6 @@
 package uminho.dss.turmas3l.business;
 
+import uminho.dss.turmas3l.business.Gestao.MateriaPrima;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 
 public class QRCode {
@@ -17,15 +18,12 @@ public class QRCode {
 
         String idpalete;
 
-
         idpalete=linhaPartida[0];
 
         String[] linhas;
         linhas=linhaPartida[1].split(";",4);
-        //MateriaPrima materia = new MateriaPrima(linhas[0],linhas[1],Double.parseDouble(linhas[2]),Integer.parseInt(linhas[3]));
 
 
-
-        return new Palete(idpalete,0);
+        return new Palete(idpalete,0, new MateriaPrima(linhas[0],linhas[1],Double.parseDouble(linhas[2]),Integer.parseInt(linhas[3])));
     }
 }

@@ -1,25 +1,45 @@
 package uminho.dss.turmas3l.business.Gestao;
-import java.util.ArrayList;
-import java.util.Collection;
+
+import uminho.dss.turmas3l.business.Localizacao;
 
 public class Palete {
-    private String idPalete;
-    private MateriaPrima materia;
+    private String id;
     private double peso;
+    private MateriaPrima materia;
+    private Localizacao localizacao;
 
-    public Palete(String id, double peso){
-        this.idPalete = id;
-        this.materia = null;
-        this.peso = peso;
-    }
-
-    public Palete(String id, MateriaPrima mats, double peso) {
-        this.idPalete = id;
-        this.materia = mats;
+    public Palete(String id, double peso, MateriaPrima materia){
+        this.id = id;
+        this.materia = materia;
         this.peso = peso;
     }
 
     public String getId(){
-        return this.idPalete;
+        return id;
+    }
+
+    public void setLocalizacao(Localizacao l){
+        this.localizacao=l;
+    }
+
+    public Localizacao getLocalizacao(){
+        return this.localizacao;
+    }
+
+
+
+    public double getPeso() {
+        return peso;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Palete{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", materia='").append(materia).append('\'');
+        sb.append(", peso=").append(peso).append('\'');
+        sb.append(", localizacao='").append(localizacao);
+        sb.append('}');
+        return sb.toString();
     }
 }
