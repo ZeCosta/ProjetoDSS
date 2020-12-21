@@ -39,7 +39,7 @@ public class UIText {
      * Executa o menu principal e invoca o método correspondente à opção seleccionada.
      */
     public void run() {
-        System.out.println("Bem vindo ao Sistema de Gestão de Turmas!");
+        System.out.println("Bem vindo ao Sistema de Gestão de Armazém!");
         this.menuPrincipal();
         System.out.println("Até breve...");
     }
