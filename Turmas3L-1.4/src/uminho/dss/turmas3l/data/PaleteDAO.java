@@ -285,15 +285,6 @@ public class PaleteDAO implements Map<String, Palete> {
      */
     @Override
     public void clear() {
-        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
-             Statement stm = conn.createStatement()) {
-            stm.execute("UPDATE alunos SET Turma=NULL");
-            stm.executeUpdate("TRUNCATE turmas");
-        } catch (SQLException e) {
-            // Database error!
-            e.printStackTrace();
-            throw new NullPointerException(e.getMessage());
-        }
     }
 
     /**
@@ -333,6 +324,6 @@ public class PaleteDAO implements Map<String, Palete> {
      */
     @Override
     public Set<Entry<String, Palete>> entrySet() {
-        throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
+        throw new NullPointerException("public Set<Map.Entry<String,Palete>> entrySet() not implemented!");
     }
 }

@@ -16,7 +16,7 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
      * @param p palete a adicionar
      */
     @Override
-    public void adicionarPaleteZR(Palete p) {
-        this.ssg.adicionarPaleteZR(p);
+    public void adicionarPalete(Palete p) {
+        this.ssg.adicionarPalete(p);
     }
 }
