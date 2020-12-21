@@ -7,7 +7,7 @@ public class Robot {
     private String percursoId;
 
     public enum Estado{
-        LIVRE, OCUPADO
+        LIVRE, BUSCAR, TRANSPORTAR
     }
 
     public Robot(String id){
