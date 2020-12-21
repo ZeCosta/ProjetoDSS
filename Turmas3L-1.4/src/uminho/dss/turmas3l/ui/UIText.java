@@ -18,7 +18,7 @@ import java.util.Scanner;
  */
 public class UIText {
     // O model tem a 'lógica de negócio'.
-    private ITurmasFacade model;
+    private IGestaoArmazemLNFacade model;
 
     // Scanner para leitura
     private Scanner scin;
@@ -30,7 +30,7 @@ public class UIText {
      */
     public UIText() {
 
-        this.model = new TurmasFacade();
+        this.model = new GestaoArmazemLN();
         scin = new Scanner(System.in);
     }
 
@@ -57,14 +57,33 @@ public class UIText {
         });
 
         // Registar pré-condições das transições
-        menu.setPreCondition(3, ()->this.model.haAlunos() && this.model.haTurmas());
+        //menu.setPreCondition(4, ()->this.model.haRobot() );
 
         // Registar os handlers
-        menu.setHandler(1, ()->gestaoDeTurmas());
-        // Falta handler para opção 2 - "Operações sobre Turmas"
-        menu.setHandler(2,()->gestaoDeTurmas());
-        menu.setHandler(3, ()->adicionarAlunoATurma());
+        menu.setHandler(1, ()->comunicarQRCode());
+        menu.setHandler(2,()->comunicarOrdemTransporte());
+        menu.setHandler(3, ()->consultarListagem());
         menu.setHandler(4, ()->gestaoRobots());
+
+        menu.run();
+    }
+
+    /**
+     *  Estado - Gestão de Alunos
+     */
+    private void consultarListagem() {
+        Menu menu = new Menu(new String[]{
+                "Consultar tudo",
+                "Consultar zona de receção",
+                "Consultar zona de armazenamento",
+                "Consultar zona de entrega"
+        });
+
+        // Registar os handlers
+        menu.setHandler(1, ()->consultarTudo());
+        menu.setHandler(2, ()->consultarZonaRececao());
+        menu.setHandler(3, ()->consultarZonaArmazenamento());
+        menu.setHandler(3, ()->consultarZonaEntrega());
 
         menu.run();
     }
@@ -75,34 +94,51 @@ public class UIText {
     private void gestaoRobots() {
         Menu menu = new Menu(new String[]{
                 "Listar ordens de transporte",
-                "Notificar entrega de palete",
-                "Notificar recolha de palete"
+                "Notificar recolha de palete",
+                "Notificar entrega de palete"
         });
 
         // Registar os handlers
-        menu.setHandler(1, ()->adicionarAluno());
-        menu.setHandler(2, ()->consultarAluno());
-        menu.setHandler(3, ()->listarAlunos());
+        menu.setHandler(1, ()->listarOrdens());
+        menu.setHandler(2, ()->notificarRecolha());
+        menu.setHandler(3, ()->notificarEntrega());
 
         menu.run();
     }
 
     /**
-     *  Estado - Adicionar Aluno
+     *  Comunicar qrcode
      */
-    private void adicionarAluno() {
+    private void comunicarQRCode() {
         try {
-            System.out.println("Número da novo aluno: ");
+            System.out.println("Inserir QRCode: ");
+            String qr = scin.nextLine();
+
+            //criar objeto qrcode
+            //chamar metodod criarPalete
+            //adicionar paelte a zona de rececao
+
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     *  comunicar ordem de transporte
+     */
+    private void comunicarOrdemTransporte() {
+        try {
+            System.out.println("Número da palete a transportar: ");
             String num = scin.nextLine();
-            if (!this.model.existeAluno(num)) {
-                System.out.println("Nome da novo aluno: ");
-                String nome = scin.nextLine();
-                System.out.println("Email da novo aluno: ");
-                String email = scin.nextLine();
-                this.model.adicionaAluno(new Aluno(num, nome, email));
-                System.out.println("Aluno adicionado");
+            if (this.model.existePalete(num)) {
+                System.out.println("Destino da palete: ");
+                String destino = scin.nextLine();
+
+                //if (this.model.origem(num)) {  <- se a origem for igual ao destino nao transportar
+                //else{System.out.println("O destino da palete é igual a origem");}
             } else {
-                System.out.println("Esse número de aluno já existe!");
+                System.out.println("Essa palete não existe!");
             }
         }
         catch (NullPointerException e) {
@@ -110,54 +146,6 @@ public class UIText {
         }
     }
 
-    /**
-     *  Estado - Consultar Aluno
-     */
-    private void consultarAluno() {
-        try {
-            System.out.println("Número a consultar: ");
-            String num = scin.nextLine();
-            if (this.model.existeAluno(num)) {
-                System.out.println(this.model.procuraAluno(num).toString());
-            } else {
-                System.out.println("Esse número de aluno não existe!");
-            }
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     *  Estado - Listar Alunos
-     */
-    private void listarAlunos() {
-        try {
-            System.out.println(this.model.getAlunos().toString());
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * cenascoisoetalput
-     */
-    public void gestaoDeTurmas(){
-        Menu menu = new Menu(new String[]{
-                "Adicionar Turma",
-                "Mudar Sala à Turma",
-                "Listar Turmas"
-        });
-
-        // Registar os handlers
-        menu.setHandler(1, ()->adicionarTurma());
-        menu.setHandler(2, ()->mudarSalaATurma());
-        menu.setHandler(3, ()->listarTurmas());
-
-        menu.run();
-
-    }
 
     public void adicionarTurma(){
         try {
