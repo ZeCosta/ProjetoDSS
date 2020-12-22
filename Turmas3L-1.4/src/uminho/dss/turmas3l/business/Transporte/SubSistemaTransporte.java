@@ -31,11 +31,23 @@ public class SubSistemaTransporte {
     public void addRobot(Robot r) {
         this.robots.put(r.getId(),r);
     }
-    public void deleteRobot(Robot r) {
-        this.robots.put(r.getId(),r);
-    }
 
     public void deleteRobot(String id) {
         this.robots.remove(id);
     }
+
+    public void mudaLocalizacao (String id, String l) {
+        Localizacao loc = new Localizacao(l);
+        this.getRobot(id).setLocalizacao(loc);
+    }
+
+    public void eliminaPalete (String id) {
+        this.getRobot(id).setPalete(null);
+    }
+
+    public void mudaEstado (String id, String e) {
+        this.getRobot(id).setEstado(e);
+    }
+
+
 }

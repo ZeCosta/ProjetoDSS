@@ -253,12 +253,27 @@ public class UIText {
      */
     public void notificarRecolha(){
         try {
-            //ler id do robot (e verificar se o robot esta a transportar, etc)
-
-            //alterar localizacao do robot
-            //confirmar que a palete esta no sitio
-            //recolher a palete -> colocar no robot e retirar do local
-            //alterar estado do robot
+            System.out.println("Id do robot: ");
+            String id = scin.nextLine();
+            if(this.model.getRobot(id)==null){
+                System.out.println("Robot com esse id não existe");
+            }
+            else if (!this.model.getRobot(id).getEstado().equals("BUSCAR")){
+                System.out.println("Robot com esse id está com outras ocupações");
+            }
+            else{
+                this.model.mudaLocalizacaoR(id, "ZRececao");
+                String idP = this.model.getRobot(id).getPalete().getId();
+                if (this.model.getPalete(idP).getLocalizacao().equals(null)) {
+                    this.model.eliminaPaleteR(id);
+                    this.model.mudaLocalizacaoR(id, "ZRobots");
+                    this.model.mudaEstado(id, "LIVRE");
+                }
+                else {
+                    this.model.eliminaLocalizacaoP(idP);
+                    this.model.mudaEstado(id, "TRANSPORTAR");
+                }
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());

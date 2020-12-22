@@ -72,4 +72,20 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
     public Robot getRobotDisponivel() {
         return null;
     }
+
+    public void mudaLocalizacaoR (String id, String l) {
+        this.sst.mudaLocalizacao (id, l);
+    }
+
+    public void eliminaPaleteR (String id) {
+        this.sst.eliminaPalete (id);
+    }
+
+    public void mudaEstado (String id, String e) {
+        this.sst.mudaEstado (id, e);
+    }
+
+    public void eliminaLocalizacaoP (String id) {
+        this.ssg.eliminaLocalizacao (id);
+    }
 }

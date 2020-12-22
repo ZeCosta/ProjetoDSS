@@ -26,6 +26,14 @@ public interface IGestaoArmazemLNFacade {
 
     Robot getRobotDisponivel();
 
+    void mudaLocalizacaoR (String id, String l);
+
+    void eliminaPaleteR (String id);
+
+    void mudaEstado (String id, String e);
+
+    void eliminaLocalizacaoP (String id);
+
 
     /*Map<String,Localizacao> solicitarListagem();
     void ordemTransporte(String idRobot, String idPalete);
