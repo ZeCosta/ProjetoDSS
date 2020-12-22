@@ -117,16 +117,19 @@ public class UIText {
                 "Criar Armazem (colocar localizacoes (e arestas?) na base de dados",
                 "Povoar base de dados (adicionar paletes e robot)",
                 "Adicionar Robot",
+                "Eliminar Robot",
                 "etc"
         });
 
         // Registar os handlers
-        //menu.setHandler(1, ()->listarOrdens());
-        //menu.setHandler(2, ()->notificarRecolha());
-        //menu.setHandler(3, ()->notificarEntrega());
+        menu.setHandler(1, ()->criarArmazem());
+        menu.setHandler(2, ()->povoarBD());
+        menu.setHandler(3, ()->adicionarRobot());
+        menu.setHandler(4, ()->eliminarRobot());
 
         menu.run();
     }
+
 
     /**
      *  Comunicar qrcode
@@ -163,6 +166,9 @@ public class UIText {
                 String destino = scin.nextLine();
 
                 //if (this.model.origem(num)) {  <- se a origem for igual ao destino nao transportar
+                    //if(robot_disponivel)
+                        //criar percurso e enviar para o robot
+                    //else guardar numa lista de ordens
                 //else{System.out.println("O destino da palete é igual a origem");}
             } else {
                 System.out.println("Essa palete não existe!");
@@ -223,7 +229,7 @@ public class UIText {
      */
     public void listarOrdens(){
         try {
-            //System.out.println(this.model.getOrdens().toString()); <- vai a cada robot com estado diferente de "A espera" e indica o estado,.. (e a localizacao?)
+            //System.out.println(this.model.getOrdens().toString()); <- vai a cada robot com estado diferente de "A espera" e indica o id do robot, o estado,.. (e a localizacao?)
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -263,5 +269,45 @@ public class UIText {
         }
     }
 
+    public void criarArmazem(){
+        try {
+            //adicionar localizacoes
+            //adicionar arestas?
+            //atualizar armazem?
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    private void povoarBD() {
+        try {
+            //adicionar algumas paletes (e 1 robot?)
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void adicionarRobot() {
+        try {
+            //id automatico ou manual? <- diferença se há stdin
+
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void eliminarRobot() {
+        try {
+            //stdin do id
+            //se existe e nao tem ordem, eliminar
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }
