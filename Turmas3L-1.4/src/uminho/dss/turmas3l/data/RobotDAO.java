@@ -9,6 +9,8 @@ import uminho.dss.turmas3l.business.Transporte.Robot;
 import uminho.dss.turmas3l.business.Turma;
 
 import java.sql.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,7 +22,7 @@ public class RobotDAO implements Map<String, Robot> {
             Statement stm = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS localizacao (" +
                     "id varchar(10) NOT NULL PRIMARY KEY)," +
-                    "local varchar(20) NOT NULL)";
+                    "l_local varchar(20) NOT NULL)";
             stm.executeUpdate(sql);
 
             sql = "CREATE TABLE IF NOT EXISTS materiaprima (" +
@@ -165,7 +167,7 @@ public class RobotDAO implements Map<String, Robot> {
                                 String idLocalizacao = rsa.getString("localizacao");
                                 try(ResultSet rsc = stm.executeQuery("SELECT * FROM localizacao WHERE id='"+idLocalizacao+"'")){
                                     if(rsc.next()){
-                                        l = new Localizacao(rsc.getString("local"));
+                                        l = new Localizacao(rsc.getString("l_local"));
                                     }
                                 }
                                 p = new Palete(idPalete, rsa.getDouble("peso"),mp,l);
@@ -195,18 +197,97 @@ public class RobotDAO implements Map<String, Robot> {
     }
 
     @Override
-    public Robot put(String s, Robot robot) {
-        return null;
+    public Robot put(String id, Robot r) {
+        Robot res = null;
+        Localizacao l = r.getLocalizacao();
+        Percurso per = r.getPercurso();
+        Palete p = r.getPalete();
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
+             Statement stm = conn.createStatement()) {
+
+            // adicionar localizacao se nao existe
+            stm.executeUpdate(
+                    "INSERT IGNORE INTO localizacao " +
+                            "VALUES ('"+ l.getId()+ "', '" +
+                             l.getLocal()+"') " +
+                              "ON DUPLICATE KEY UPDATE l_local=Values(l_local)");
+
+            // Atualizar percurso
+            stm.executeUpdate(
+                    "INSERT INTO percurso " +
+                            "VALUES ('"+ per.getId()+ "', '"+
+                            per.getcRecolha()+"', '"+
+                            per.getcEntrega()+"', '"+
+                            per.getcRobots()+"') " +
+                            "ON DUPLICATE KEY UPDATE cRecolha=Values(cRecolha), " +
+                            "cEntrega=Values(cEntrega), " +
+                            "cRobots=Values(cRobots)");
+
+            MateriaPrima m = p.getMateriaPrima();
+            Localizacao lPalete = p.getLocalizacao();
+            //Atualizar a materia prima
+            stm.executeUpdate(
+                    "INSERT INTO materiaprima VALUES ('"+m.getId()+"', "+m.getNome()+
+                            ", '"+m.getPeso()+"', '" +
+                            m.getQtd()+"') " +
+                            "ON DUPLICATE KEY UPDATE nome=VALUES(nome),"+
+                            "quantidade=VALUES(quantidade),"+
+                            "peso=VALUES(peso)");
+
+            // Atualizar a palete
+            stm.executeUpdate(
+                    "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
+                            ", '"+l.getLocal()+"', '" +
+                            m.getId()+"') " +
+                            "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao),"+
+                            "materia=VALUES(materia),"+
+                            "peso=VALUES(peso)");
+
+
+
+        } catch (SQLException e) {
+            // Database error!
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return res;
     }
 
     @Override
-    public Robot remove(Object o) {
-        return null;
+    public Robot remove(Object key) {
+        Robot r = this.get(key);
+        Palete p = r.getPalete();
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
+             Statement stm = conn.createStatement()) {
+
+            // apagar a materiaprima
+            stm.executeUpdate("DELETE FROM materiaprima WHERE id='"+p.getMateriaPrima().getId()+"'");
+
+            // apagar a localização
+            stm.executeUpdate("DELETE FROM localizacao WHERE id='"+p.getLocalizacao().getId()+"'");
+
+            // apagar o percurso
+            stm.executeUpdate("DELETE FROM percurso WHERE id='"+r.getPercurso().getId()+"'");
+
+            // apagar a palete
+            stm.executeUpdate("DELETE FROM palete WHERE id='"+p.getId()+"'");
+
+            //apagar o robot
+            stm.executeUpdate("DELETE FROM robot WHERE id='"+r.getId()+"'");
+
+        } catch (Exception e) {
+            // Database error!
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return r;
     }
 
     @Override
-    public void putAll(Map<? extends String, ? extends Robot> map) {
-
+    public void putAll(Map<? extends String, ? extends Robot> robots) {
+        for(Robot r : robots.values()) {
+            this.put(r.getId(), r);
+        }
     }
 
     @Override
@@ -221,25 +302,25 @@ public class RobotDAO implements Map<String, Robot> {
 
     @Override
     public Collection<Robot> values() {
-        return null;
+        Collection<Robot> res = new HashSet<>();
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery("SELECT id FROM robot")) { // ResultSet com os ids de todas as turmas
+            while (rs.next()) {
+                String idt = rs.getString("id"); // Obtemos um id de turma do ResultSet
+                Robot r = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
+                res.add(r);                                 // Adiciona a turma ao resultado.
+            }
+        } catch (Exception e) {
+            // Database error!
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return res;
     }
 
     @Override
     public Set<Entry<String, Robot>> entrySet() {
         return null;
     }
-
-    /**
-     * Verifica se um robot existe na base de dados
-     *
-     * @param value robot procurado na tabela
-     * @return true se o robot existe
-     * @throws
-     */
-    /*@Override
-    public boolean containsValue(Object value) {
-        Robot r = (Robot) value;
-        String idRobot = r.getId();
-        return (this.containsKey(idRobot) && ;
-    }*/
 }

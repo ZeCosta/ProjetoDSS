@@ -6,9 +6,9 @@ import uminho.dss.turmas3l.business.Localizacao;
 public class Robot {
     private String id;
     private Estado estado;
-    private Palete p;
-    private Percurso per;
-    private Localizacao l;
+    private Palete palete;
+    private Percurso percurso;
+    private Localizacao localizacao;
 
     public enum Estado{
         LIVRE, BUSCAR, TRANSPORTAR
@@ -17,9 +17,9 @@ public class Robot {
     public Robot(String id, Estado e, Palete p, Percurso per, Localizacao l){
         this.id = id;
         this.estado = e;
-        this.p = p;
-        this.per = per;
-        this.l = l;
+        this.palete = p;
+        this.percurso = per;
+        this.localizacao = l;
     }
 
     public String getId() {
@@ -38,27 +38,27 @@ public class Robot {
         this.estado = estado;
     }
 
-    public Palete getP() {
-        return p;
+    public Palete getPalete() {
+        return palete;
     }
 
-    public void setP(Palete p) {
-        this.p = p;
+    public void setPalete(Palete p) {
+        this.palete = p;
     }
 
-    public Percurso getPer() {
-        return per;
+    public Percurso getPercurso() {
+        return percurso;
     }
 
-    public void setPer(Percurso per) {
-        this.per = per;
+    public void setPercurso(Percurso per) {
+        this.percurso = per;
     }
 
-    public Localizacao getL() {
-        return l;
+    public Localizacao getLocalizacao() {
+        return localizacao;
     }
 
-    public void setL(Localizacao l) {
-        this.l = l;
+    public void setLocalizacao(Localizacao l) {
+        this.localizacao = l;
     }
 }
