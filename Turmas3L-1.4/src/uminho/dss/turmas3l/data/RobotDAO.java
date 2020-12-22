@@ -1,12 +1,14 @@
 package uminho.dss.turmas3l.data;
 
+import uminho.dss.turmas3l.business.Gestao.MateriaPrima;
 import uminho.dss.turmas3l.business.Gestao.Palete;
+import uminho.dss.turmas3l.business.Localizacao;
 import uminho.dss.turmas3l.business.Sala;
+import uminho.dss.turmas3l.business.Transporte.Percurso;
 import uminho.dss.turmas3l.business.Transporte.Robot;
 import uminho.dss.turmas3l.business.Turma;
 
 import java.sql.*;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +18,31 @@ public class RobotDAO implements Map<String, Robot> {
     private RobotDAO(){
         try(Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
             Statement stm = conn.createStatement()) {
-            String sql = "CREATE TABLE IF NOT EXISTS robots (" +
+            String sql = "CREATE TABLE IF NOT EXISTS localizacao (" +
+                    "id varchar(10) NOT NULL PRIMARY KEY)," +
+                    "local varchar(20) NOT NULL)";
+            stm.executeUpdate(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS materiaprima (" +
+                    "id varchar(10) NOT NULL PRIMARY KEY," +
+                    "nome varchar(45) DEFAULT NULL," +
+                    "peso double(4,2) DEFAULT 0," +
+                    "quantidade int(4) DEFAULT 0)";
+            stm.executeUpdate(sql);
+
+            /* Por fazer sql = "CREATE IF NOT EXISTS percurso (" +
+                    "" */
+
+            sql = "CREATE TABLE IF NOT EXISTS palete (" +
+                    "id varchar(10) NOT NULL PRIMARY KEY," +
+                    "peso double(6,2) DEFAULT NULL," +
+                    "localizacao varchar(10)," +
+                    "materia varchar(10)," +
+                    "foreign key(localizacao) references localizacao(id),"+
+                    "foreign key(materia) references materiaprima(id))";
+            stm.executeUpdate(sql);
+
+            sql = "CREATE TABLE IF NOT EXISTS robot (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "estado varchar(15) DEFAULT NULL," +
                     "paleteId varchar(10), foreign key(paleteId) references paletesDAO(id)" +
@@ -49,7 +75,7 @@ public class RobotDAO implements Map<String, Robot> {
         int i = 0;
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT count(*) FROM robots")) {
+             ResultSet rs = stm.executeQuery("SELECT count(*) FROM robot")) {
             if(rs.next()) {
                 i = rs.getInt(1);
             }
@@ -85,7 +111,7 @@ public class RobotDAO implements Map<String, Robot> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs =
-                     stm.executeQuery("SELECT id FROM robots WHERE id='"+key.toString()+"'")) {
+                     stm.executeQuery("SELECT id FROM robot WHERE id='"+key.toString()+"'")) {
             r = rs.next();
         } catch (SQLException e) {
             // Database error!
@@ -110,35 +136,47 @@ public class RobotDAO implements Map<String, Robot> {
     @Override
     public Robot get(Object key) {
         Robot r = null;
-        /*
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT * FROM robots WHERE id='"+key+"'")) {
+             ResultSet rs = stm.executeQuery("SELECT * FROM robot WHERE id='"+key+"'")) {
             if (rs.next()) {  // A chave existe na tabela
                 // Verificar se o robot possui uma palete com ele
                 Palete p = null;
+                MateriaPrima mp = null;
+                Localizacao l = null;
+                String idRobot = rs.getString("id");
                 String estado = rs.getString("estado");
                 Robot.Estado e = Robot.Estado.valueOf(estado);
                 if(e.equals(Robot.Estado.TRANSPORTAR)){
-                        // Reconstruir a palete //
+                        // Robot possui palete com ele, é preciso reconstruir a localização da palete, a matéria prima e a própria palete
+                        String idPalete = rs.getString("paleteId");
+                        try(ResultSet rsa = stm.executeQuery("SELECT * FROM palete WHERE id='"+idPalete+"'")){
+                            //Reconstruir matéria prima
+                            if(rsa.next()){
+                                String idMateria = rsa.getString("materia");
+                                try(ResultSet rsb = stm.executeQuery("SELECT * FROM materiaprima WHERE id='"+idMateria+"'")){
+                                    if(rsb.next()){
+                                        mp = new MateriaPrima(rsb.getString("id"),
+                                                rsb.getString("nome"),
+                                                rsb.getDouble("peso"),
+                                                rsb.getInt("quantidade"));
+                                    }
+                                }
+                                String idLocalizacao = rsa.getString("localizacao");
+                                try(ResultSet rsc = stm.executeQuery("SELECT * FROM localizacao WHERE id='"+idLocalizacao+"'")){
+                                    if(rsc.next()){
+                                        l = new Localizacao(rsc.getString("local"));
+                                    }
+                                }
+                                p = new Palete(idPalete, rsa.getDouble("peso"),mp,l);
+                            }
+                        }
                 }
+                Percurso per = null;
+                String percursoId = rs.getString("percursoId");
+                /* TRATAR DO PERCURSO */
 
-                // POR ACABAR A PARTIR DAQUI
-                Sala s = null;
-                String sql = "SELECT * FROM salas WHERE Num='"+rs.getString("Sala")+"'";
-                try (ResultSet rsa = stm.executeQuery(sql)) {
-                    if (rsa.next()) {  // Encontrou a sala
-                        s = new Sala(rs.getString("Sala"),
-                                rsa.getString("Edificio"),
-                                rsa.getInt("Capacidade"));
-                    } else {
-                        // BD inconsistente!! Sala não existe - tratar com excepções.
-                    } // catch é feito no try inicial - este try serve para fechar o ResultSet automaticamente
-                    // Nota: abrir um novo ResultSet no mesmo Statement fecha o ResultSet anterior
-                }
-
-                // Reconstruir a turma cokm os dados obtidos da BD
-                t = new Turma(rs.getString("Id"), s, alunos);
+                r = new Robot(idRobot, e, )
             }
         } catch (SQLException e) {
             // Database error!

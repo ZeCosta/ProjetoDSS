@@ -1,10 +1,12 @@
 package uminho.dss.turmas3l.business.Transporte;
 
+import uminho.dss.turmas3l.business.Gestao.Palete;
+
 public class Robot {
     private String id;
     private Estado estado;
-    private String paleteId;
-    private String percursoId;
+    private Palete p;
+    private Percurso per;
 
     public enum Estado{
         LIVRE, BUSCAR, TRANSPORTAR
