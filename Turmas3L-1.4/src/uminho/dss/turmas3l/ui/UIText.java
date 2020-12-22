@@ -148,7 +148,7 @@ public class UIText {
             Palete p = qrcode.criarPalete();
             p.setLocalizacao(new Localizacao("ZRececao"));
             //adicionar paelte a zona de rececao
-            this.model.adicionarPalete(p); //-> model adiciona ao DAO e zonaderececao altera a localizacao?
+            this.model.adicionarPalete(p);
 
         }
         catch (NullPointerException e) {
@@ -243,6 +243,8 @@ public class UIText {
      */
     public void notificarRecolha(){
         try {
+            //ler id do robot (e verificar se o robot esta a transportar, etc)
+
             //alterar localizacao do robot
             //confirmar que a palete esta no sitio
             //recolher a palete -> colocar no robot e retirar do local
