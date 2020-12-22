@@ -29,6 +29,7 @@ public class QRCode {
         return new Palete(linhas1[0],Double.parseDouble(linhas1[1]), new MateriaPrima(linhas[0],linhas[1],Double.parseDouble(linhas[2]),Integer.parseInt(linhas[3])));
     }
 
+    /*
     public static void main(String[] args) {
         Scanner scin = new Scanner(System.in);
         System.out.println("Inserir QRCode: ");
@@ -44,4 +45,5 @@ public class QRCode {
         System.out.println("break;");
         //adicionar paelte a zona de rececao
     }
+    */
 }

@@ -5,6 +5,7 @@ import uminho.dss.turmas3l.data.PaleteDAO;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class SubSistemaGestao implements IGest{
@@ -34,5 +35,18 @@ public class SubSistemaGestao implements IGest{
 
     public void adicionarPalete(Palete p) {
         this.paletes.put(p.getId(), p);
+    }
+
+    public Set<Palete> getPaletes() {
+        return (Set<Palete>) this.paletes.values();
+    }
+    public Set<Palete> getPaletesZR() {
+        return (Set<Palete>) this.paletes.values();
+    }
+    public Set<Palete> getPaletesZA() {
+        return (Set<Palete>) this.paletes.values();
+    }
+    public Set<Palete> getPaletesZE() {
+        return (Set<Palete>) this.paletes.values();
     }
 }

@@ -53,8 +53,9 @@ public class UIText {
         Menu menu = new Menu(new String[]{
                 "Comunicar QRcode",
                 "Comunicar ordem de transporte",
-                "Consultar Listagem",
-                "Operações sobre robots"
+                "Consultar Listagens",
+                "Operações sobre robots",
+                "Outras opções"
         });
 
         // Registar pré-condições das transições
@@ -65,6 +66,7 @@ public class UIText {
         menu.setHandler(2,()->comunicarOrdemTransporte());
         menu.setHandler(3, ()->consultarListagem());
         menu.setHandler(4, ()->gestaoRobots());
+        menu.setHandler(5, ()->gestaoDeOpcoes());
 
         menu.run();
     }
@@ -103,6 +105,25 @@ public class UIText {
         menu.setHandler(1, ()->listarOrdens());
         menu.setHandler(2, ()->notificarRecolha());
         menu.setHandler(3, ()->notificarEntrega());
+
+        menu.run();
+    }
+
+    /**
+     *  Estado - Gestão de Opcoes
+     */
+    private void gestaoDeOpcoes() {
+        Menu menu = new Menu(new String[]{
+                "Criar Armazem (colocar localizacoes (e arestas?) na base de dados",
+                "Povoar base de dados (adicionar paletes e robot)",
+                "Adicionar Robot",
+                "etc"
+        });
+
+        // Registar os handlers
+        //menu.setHandler(1, ()->listarOrdens());
+        //menu.setHandler(2, ()->notificarRecolha());
+        //menu.setHandler(3, ()->notificarEntrega());
 
         menu.run();
     }
@@ -157,9 +178,9 @@ public class UIText {
      */
     public void consultarTudo(){
         try {
-            //System.out.println(this.model.getPaletesZR().toString());
-            //System.out.println(this.model.getPaletesZA().toString());
-            //System.out.println(this.model.getPaletesZE().toString());
+            for(Palete p:this.model.getPaletes()){
+                System.out.println(p.toString());
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -167,9 +188,9 @@ public class UIText {
     }
     public void consultarZonaRececao(){
         try {
-            //System.out.println(this.model.getPaletesZR().toString());
-            //System.out.println(this.model.getPaletesZA().toString());
-            //System.out.println(this.model.getPaletesZE().toString());
+            for(Palete p:this.model.getPaletesZR()){
+                System.out.println(p.toString());
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -177,9 +198,9 @@ public class UIText {
     }
     public void consultarZonaArmazenamento(){
         try {
-            //System.out.println(this.model.getPaletesZR().toString());
-            //System.out.println(this.model.getPaletesZA().toString());
-            //System.out.println(this.model.getPaletesZE().toString());
+            for(Palete p:this.model.getPaletesZA()){
+                System.out.println(p.toString());
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -187,9 +208,9 @@ public class UIText {
     }
     public void consultarZonaEntrega(){
         try {
-            //System.out.println(this.model.getPaletesZR().toString());
-            //System.out.println(this.model.getPaletesZA().toString());
-            //System.out.println(this.model.getPaletesZE().toString());
+            for(Palete p:this.model.getPaletesZE()){
+                System.out.println(p.toString());
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());

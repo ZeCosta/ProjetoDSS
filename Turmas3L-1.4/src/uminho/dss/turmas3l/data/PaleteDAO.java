@@ -129,15 +129,14 @@ public class PaleteDAO implements Map<String, Palete> {
      */
     @Override
     public boolean containsValue(Object value) {
-        Turma t = (Turma) value;
-        return this.containsKey(t.getId());
+        return false;
     }
 
     /**
-     * Obter uma turma, dado o seu id
+     * Obter uma palete, dado o seu id
      *
-     * @param key id da turma
-     * @return a turma caso exista (null noutro caso)
+     * @param key id da palete
+     * @return a palete caso exista (null noutro caso)
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
@@ -174,7 +173,7 @@ public class PaleteDAO implements Map<String, Palete> {
                     // Nota: abrir um novo ResultSet no mesmo Statement fecha o ResultSet anterior
                 }
 
-                // Reconstruir a turma cokm os dados obtidos da BD 
+                // Reconstruir a palete cokm os dados obtidos da BD
                 p = new Palete(rs.getString("id"),Double.parseDouble(rs.getString("peso")), m, l);
             }
         } catch (SQLException e) {
@@ -218,7 +217,7 @@ public class PaleteDAO implements Map<String, Palete> {
                             "quantidade=Values(quantidade)");
 
 
-            // Actualizar a turma
+            // Actualizar a palete
             stm.executeUpdate(
                     "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
                             ", '"+l.getLocal()+"', '" +
@@ -237,12 +236,12 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * Remover uma turma, dado o seu id
+     * Remover uma palete, dado o seu id
      *
-     * NOTA: Não estamos a apagar a sala...
+     * NOTA: Não estamos a apagar a localizacao, mas estamos a apagar a materia...
      *
-     * @param key id da turma a remover
-     * @return a turma removida
+     * @param key id da palete a remover
+     * @return a palete removida
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
@@ -254,7 +253,7 @@ public class PaleteDAO implements Map<String, Palete> {
             // apagar a materiaprima
             stm.executeUpdate("DELETE FROM materiaprima WHERE Id='"+p.getMateriaPrima().getId()+"'");
 
-            // apagar a turma
+            // apagar a palete
             stm.executeUpdate("DELETE FROM palete WHERE Id='"+key+"'");
         } catch (Exception e) {
             // Database error!
@@ -267,7 +266,7 @@ public class PaleteDAO implements Map<String, Palete> {
 
 
     /**
-     * Adicionar um conjunto de turmas à base de dados
+     * Adicionar um conjunto de palete à base de dados
      *
      * @param paletes as paletes a adicionar
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
@@ -280,7 +279,7 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * Apagar todas as turmas
+     * Apagar todas as paletes -> não achamos necessaria a implementação
      *
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
@@ -298,7 +297,7 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * @return Todos as turmas da base de dados
+     * @return Todas as paletes da base de dados
      */
     @Override
     public Collection<Palete> values() {
@@ -306,6 +305,28 @@ public class PaleteDAO implements Map<String, Palete> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT Id FROM palete")) { // ResultSet com os ids de todas as turmas
+            while (rs.next()) {
+                String idt = rs.getString("Id"); // Obtemos um id de turma do ResultSet
+                Palete p = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
+                res.add(p);                                 // Adiciona a turma ao resultado.
+            }
+        } catch (Exception e) {
+            // Database error!
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * @return Todas as paletes da base de dados
+     */
+    public Collection<Palete> valuesByLocalizacao(String localizacao) {
+        Collection<Palete> res = new HashSet<>();
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery("SELECT Id FROM palete " +
+                     "where localizacao ='"+localizacao+"'")) { // ResultSet com os ids das paletes numa certa localizacao
             while (rs.next()) {
                 String idt = rs.getString("Id"); // Obtemos um id de turma do ResultSet
                 Palete p = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
