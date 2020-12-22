@@ -51,7 +51,7 @@ public class RobotDAO implements Map<String, Robot> {
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "estado varchar(15) DEFAULT NULL," +
                     "localizacao varchar(10) ," +
-                    "palete varchar(10) ," +
+                    "palete varchar(10) DEFAULT NULL," +
                     "percurso varchar(10), " +
                     "foreign key(localizacao) references localizacao(id),"+
                     "foreign key(palete) references palete(id)," +
@@ -205,7 +205,6 @@ public class RobotDAO implements Map<String, Robot> {
 
     @Override
     public Robot put(String id, Robot r) {
-        System.out.println("ah");
         Robot res = null;
         Localizacao l = r.getLocalizacao();
         Percurso per = r.getPercurso();
@@ -213,12 +212,11 @@ public class RobotDAO implements Map<String, Robot> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
 
-            System.out.println("coiso");
 
             // adicionar localizacao se nao existe
             stm.executeUpdate(
                     "INSERT IGNORE INTO localizacao " +
-                            "VALUES ('"+ l.getId()+ "') ");
+                            "VALUES ('"+ l.getLocal()+ "') ");
 
             // Atualizar percurso
             stm.executeUpdate(
@@ -252,25 +250,37 @@ public class RobotDAO implements Map<String, Robot> {
                             "peso=VALUES(peso)");
             */
 
-            System.out.println("cenas");
-            String idp;
-            idp=null;
-            if(r.getPalete()!=null)idp= r.getPalete().getId();
 
-            stm.executeUpdate(
-                    "INSERT INTO robot " +
-                            "VALUES ('"+ r.getId()+ "', '"+
-                            r.getEstado()+"', '"+
-                            r.getLocalizacao().getLocal()+"', '"+
-                            r.getPercurso().getId()+"', '"+
-                            idp+"') " +
-                            "ON DUPLICATE KEY UPDATE estado=Values(estado), " +
-                            "localizacao=Values(localizacao), " +
-                            "percurso=Values(percurso), " +
-                            "palete=Values(palete)");
+
+            if(r.getPalete()!=null){
+                stm.executeUpdate(
+                        "INSERT INTO robot " +
+                                "VALUES ('"+ r.getId()+ "', '"+
+                                r.getEstado()+"', '"+
+                                r.getLocalizacao().getLocal()+"', '"+
+                                r.getPalete().getId()+"', '"+
+                                r.getPercurso().getId()+"') " +
+                                "ON DUPLICATE KEY UPDATE estado=Values(estado), " +
+                                "localizacao=Values(localizacao), " +
+                                "percurso=Values(percurso), " +
+                                "palete=Values(palete)");
+            }else{
+                stm.executeUpdate(
+                        "INSERT INTO robot " +
+                                "VALUES ('"+ r.getId()+ "', '"+
+                                r.getEstado()+"', '"+
+                                r.getLocalizacao().getLocal()+"', "+
+                                "NULL"+", '"+
+                                r.getPercurso().getId()+"') " +
+                                "ON DUPLICATE KEY UPDATE estado=Values(estado), " +
+                                "localizacao=Values(localizacao), " +
+                                "percurso=Values(percurso), " +
+                                "palete=Values(palete)");
+
+            }
+
 
         } catch (SQLException e) {
-            System.out.println("dsasadsda");
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());

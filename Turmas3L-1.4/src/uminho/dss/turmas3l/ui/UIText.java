@@ -301,7 +301,7 @@ public class UIText {
                 //adicionar robot com id lido
                 Robot r = new Robot(id, Robot.Estado.LIVRE,null,new Percurso(id,null,null,null),new Localizacao("ZRobots"));
 
-                System.out.println(r.toString());
+                //System.out.println(r.toString());
                 System.out.println(r.getId());
                 this.model.addRobot(r);
             }

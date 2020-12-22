@@ -1,8 +1,8 @@
 package uminho.dss.turmas3l.business;
 
 public class Localizacao {
-    private String id;
     private String local;
+    private String armazem;
 
     public Localizacao(String l){
         this.local=l;
@@ -12,5 +12,4 @@ public class Localizacao {
         return this.local;
     }
 
-    public String getId(){return this.id;}
 }
