@@ -95,7 +95,7 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
              Statement stm = conn.createStatement()) {
             stm.executeUpdate(
                     "INSERT INTO materiaprima VALUES ('"+mp.getId()+"', '"+mp.getNome()+"', '"+mp.getPeso()+"', '"+mp.getQtd()+"' NULL) " +
-                            "ON DUPLICATE KEY UPDATE Nome=VALUES(Nome), Peso=VALUES(Email), Quantidade=VALUES(Quantidade)");
+                            "ON DUPLICATE KEY UPDATE Nome=VALUES(Nome), Peso=VALUES(Peso), Quantidade=VALUES(Quantidade)");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());

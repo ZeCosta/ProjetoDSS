@@ -94,7 +94,7 @@ public class PercursoDAO implements Map<String, Percurso> {
              Statement stm = conn.createStatement()) {
             stm.executeUpdate(
                     "INSERT INTO percurso VALUES ('"+p.getId()+"', '"+p.getcEntrega()+"', '"+p.getcRecolha()+"', '"+p.getcRobots()+"' NULL) " +
-                            "ON DUPLICATE KEY UPDATE Nome=VALUES(Nome), Peso=VALUES(Email), Quantidade=VALUES(Quantidade)");
+                            "ON DUPLICATE KEY UPDATE cRecolha=VALUES(cRecolha), cEntrega=VALUES(cEntrega), cRobots=VALUES(cRobots)");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
