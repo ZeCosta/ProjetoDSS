@@ -75,6 +75,10 @@ public class SubSistemaTransporte {
         this.robots.put(r.getId(),r);
     }
 
+    public void deleteRobot(String id) {
+        this.robots.remove(id);
+    }
+
     public Percurso criarPercurso(String idRobot, Localizacao lPalete, Localizacao destino, String[] locais, int[][] mapa){
         Percurso res = null;
 
