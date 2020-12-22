@@ -13,7 +13,7 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS materiaprima (" +
-                    "Id varchar(10) NOT NULL PRIMARY KEY," +
+                    "id varchar(10) NOT NULL PRIMARY KEY," +
                     "Nome varchar(45) DEFAULT NULL," +
                     "Peso double(5,2) DEFAULT 0)" +
                     "Quantidade int(4) DEFAULT 0)";
@@ -35,7 +35,7 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
         int i = 0;
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT count(*) FROM mateeriaprima")) {
+             ResultSet rs = stm.executeQuery("SELECT count(*) FROM materiaprima")) {
             if(rs.next()) {
                 i = rs.getInt(1);
             }
@@ -76,10 +76,10 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
         MateriaPrima mp = null;
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT * FROM materiaprima WHERE Id='"+key+"'")) {
+             ResultSet rs = stm.executeQuery("SELECT * FROM materiaprima WHERE id='"+key+"'")) {
             if (rs.next()) {  // A chave existe na tabela
                 // Reconstruir o aluno com os dados obtidos da BD - a chave estranjeira da turma, não é utilizada aqui.
-                mp = new MateriaPrima(rs.getString("Id"), rs.getString("Nome"), rs.getDouble("Peso"), rs.getInt("Qtd"));
+                mp = new MateriaPrima(rs.getString("id"), rs.getString("Nome"), rs.getDouble("Peso"), rs.getInt("Qtd"));
             }
         } catch (SQLException e) {
             // Database error!
@@ -107,7 +107,7 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
         MateriaPrima mp = this.get(key);
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              Statement stm = conn.createStatement()) {
-            stm.executeUpdate("DELETE FROM materiaprima WHERE Id='"+key+"'");
+            stm.executeUpdate("DELETE FROM materiaprima WHERE id='"+key+"'");
         } catch (Exception e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
@@ -143,9 +143,9 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
         Collection<MateriaPrima> col = new HashSet<>();
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT Id FROM materiaprima")) {
+             ResultSet rs = stm.executeQuery("SELECT id FROM materiaprima")) {
             while (rs.next()) {
-                col.add(this.get(rs.getString("Id")));
+                col.add(this.get(rs.getString("id")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,6 +159,6 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
      * @return ainda nada!
      */
     public Set<Entry<String, MateriaPrima>> entrySet() {
-        throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
+        throw new NullPointerException("public Set<Map.Entry<String,MateriaPrima>> entrySet() not implemented!");
     }
 }
