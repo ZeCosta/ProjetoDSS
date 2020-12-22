@@ -153,7 +153,7 @@ public class PaleteDAO implements Map<String, Palete> {
                     if (rsa.next()) {  // Encontrou a sala
                         m = new MateriaPrima(rs.getString("id"),
                                      rsa.getString("nome"),
-                                rsa.getInt("peso"),
+                                rsa.getDouble("peso"),
                                 rsa.getInt("quantidade"));
                     } else {
                         // BD inconsistente!! Sala não existe - tratar com excepções.
@@ -165,8 +165,8 @@ public class PaleteDAO implements Map<String, Palete> {
                 Localizacao l = null;
                 sql = "SELECT * FROM localizacao WHERE id='"+rs.getString("localizacao")+"'";
                 try (ResultSet rsa = stm.executeQuery(sql)) {
-                    if (rsa.next()) {  // Encontrou a sala
-                        l = new Localizacao(rs.getString("id"));
+                    if (rsa.next()) {  // Encontrou a localizacao
+                        l = new Localizacao(rsa.getString("id"));
                     } else {
                         // BD inconsistente!! Sala não existe - tratar com excepções.
                     } // catch é feito no try inicial - este try serve para fechar o ResultSet automaticamente
@@ -305,28 +305,6 @@ public class PaleteDAO implements Map<String, Palete> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT Id FROM palete")) { // ResultSet com os ids de todas as turmas
-            while (rs.next()) {
-                String idt = rs.getString("Id"); // Obtemos um id de turma do ResultSet
-                Palete p = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
-                res.add(p);                                 // Adiciona a turma ao resultado.
-            }
-        } catch (Exception e) {
-            // Database error!
-            e.printStackTrace();
-            throw new NullPointerException(e.getMessage());
-        }
-        return res;
-    }
-
-    /**
-     * @return Todas as paletes da base de dados
-     */
-    public Collection<Palete> valuesByLocalizacao(String localizacao) {
-        Collection<Palete> res = new HashSet<>();
-        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
-             Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT Id FROM palete " +
-                     "where localizacao ='"+localizacao+"'")) { // ResultSet com os ids das paletes numa certa localizacao
             while (rs.next()) {
                 String idt = rs.getString("Id"); // Obtemos um id de turma do ResultSet
                 Palete p = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma

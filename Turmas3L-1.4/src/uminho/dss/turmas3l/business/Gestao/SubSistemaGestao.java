@@ -3,10 +3,7 @@ package uminho.dss.turmas3l.business.Gestao;
 import uminho.dss.turmas3l.business.Turma;
 import uminho.dss.turmas3l.data.PaleteDAO;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class SubSistemaGestao implements IGest{
     private Map<String, Palete> paletes;
@@ -41,12 +38,27 @@ public class SubSistemaGestao implements IGest{
         return (Set<Palete>) this.paletes.values();
     }
     public Set<Palete> getPaletesZR() {
-        return (Set<Palete>) this.paletes.values();
+        Set<Palete> res = new HashSet<>();
+        for(Palete p:this.paletes.values()){
+            if(p.getLocalizacao().getLocal().equals("ZRececao")) {
+                res.add(p);
+            }
+        }
+        return res;
     }
     public Set<Palete> getPaletesZA() {
-        return (Set<Palete>) this.paletes.values();
+        Set<Palete> res = new HashSet<>();
+        for(Palete p:this.paletes.values()){
+            if(!p.getLocalizacao().getLocal().equals("ZRececao")
+                    && !p.getLocalizacao().getLocal().equals("ZEntrega")) res.add(p);
+        }
+        return res;
     }
     public Set<Palete> getPaletesZE() {
-        return (Set<Palete>) this.paletes.values();
+        Set<Palete> res = new HashSet<>();
+        for(Palete p:this.paletes.values()){
+            if(p.getLocalizacao().getLocal().equals("ZEntrega")) res.add(p);
+        }
+        return res;
     }
 }

@@ -86,7 +86,7 @@ public class UIText {
         menu.setHandler(1, ()->consultarTudo());
         menu.setHandler(2, ()->consultarZonaRececao());
         menu.setHandler(3, ()->consultarZonaArmazenamento());
-        menu.setHandler(3, ()->consultarZonaEntrega());
+        menu.setHandler(4, ()->consultarZonaEntrega());
 
         menu.run();
     }
