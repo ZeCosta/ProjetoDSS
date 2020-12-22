@@ -25,6 +25,12 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
     }
 
     @Override
+    public Palete getPalete(String id) {
+        return ssg.getPalete(id);
+    }
+
+
+    @Override
     public Set<Palete> getPaletes() {
         return ssg.getPaletes();
     }
@@ -54,5 +60,16 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
 
     public void deleteRobot(String id) {
         this.sst.deleteRobot(id);
+    }
+
+
+    @Override
+    public boolean validaLocal(String destino) {    //fazer funcao -> ir ao armazem e verificar que local existe
+        return true;
+    }
+
+    @Override
+    public Robot getRobotDisponivel() {
+        return null;
     }
 }

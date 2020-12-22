@@ -20,6 +20,12 @@ public interface IGestaoArmazemLNFacade {
 
     void deleteRobot(String id);
 
+    Palete getPalete(String id);
+
+    boolean validaLocal(String destino);
+
+    Robot getRobotDisponivel();
+
 
     /*Map<String,Localizacao> solicitarListagem();
     void ordemTransporte(String idRobot, String idPalete);

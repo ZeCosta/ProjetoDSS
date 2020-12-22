@@ -162,19 +162,29 @@ public class UIText {
     private void comunicarOrdemTransporte() {
         try {
             System.out.println("Número da palete a transportar: ");
-            String num = scin.nextLine();
-            /*if (this.model.existePalete(num)) {   <- se nao existe palete sair
+            String id = scin.nextLine();
+            Palete p = this.model.getPalete(id);
+            if (p!=null) {   //<- se nao existe palete sair
                 System.out.println("Destino da palete: ");
                 String destino = scin.nextLine();
 
-                //if (this.model.origem(num)) {  <- se a origem for igual ao destino nao transportar
-                    //if(robot_disponivel)
-                        //criar percurso e enviar para o robot
-                    //else guardar numa lista de ordens
-                //else{System.out.println("O destino da palete é igual a origem");}
+                if (this.model.validaLocal(destino)) {  //<- se a origem for igual ao destino nao transporta
+                    if (p.getLocalizacao().getLocal()!=destino) {  //<- se a origem for igual ao destino nao transportar
+                        Robot robotdisponivel = this.model.getRobotDisponivel();
+                        if(robotdisponivel!=null){
+                            //criar percurso e enviar para o robot
+                        }else{
+                            //else guardar numa lista de ordens
+                        }
+                    }else{
+                        System.out.println("O destino da palete é igual a origem");
+                    }
+                }else{
+                    System.out.println("O destino não existe");
+                }
             } else {
                 System.out.println("Essa palete não existe!");
-            }*/
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());

@@ -11,4 +11,6 @@ public interface IGest {
     */
 
     Set<Palete> getPaletesZR();
+
+    Palete getPalete(String id);
 }

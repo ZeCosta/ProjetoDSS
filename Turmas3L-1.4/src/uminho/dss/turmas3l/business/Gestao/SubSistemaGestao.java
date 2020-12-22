@@ -23,6 +23,11 @@ public class SubSistemaGestao implements IGest{
     */
 
     @Override
+    public Palete getPalete(String id) {
+        return this.paletes.get(id);
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("SubSistemaGestao{");
         sb.append("paletesIds=").append(paletes);
