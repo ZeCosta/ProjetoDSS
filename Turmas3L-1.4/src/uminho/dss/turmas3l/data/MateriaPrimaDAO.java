@@ -158,7 +158,6 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
      * NÃO IMPLEMENTADO!
      * @return ainda nada!
      */
-    @Override
     public Set<Entry<String, MateriaPrima>> entrySet() {
         throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
     }
