@@ -2,6 +2,7 @@ package uminho.dss.turmas3l.business;
 
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Gestao.SubSistemaGestao;
+import uminho.dss.turmas3l.business.Transporte.Robot;
 import uminho.dss.turmas3l.business.Transporte.SubSistemaTransporte;
 
 import java.util.HashSet;
@@ -39,5 +40,15 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
     @Override
     public Set<Palete> getPaletesZE() {
         return ssg.getPaletesZE();
+    }
+
+    @Override
+    public Robot getRobot(String id) {
+        return this.sst.getRobot(id);
+    }
+
+    @Override
+    public void addRobot(Robot r) {
+        this.sst.addRobot(r);
     }
 }

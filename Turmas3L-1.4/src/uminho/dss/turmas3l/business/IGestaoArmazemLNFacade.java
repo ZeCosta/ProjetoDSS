@@ -1,5 +1,6 @@
 package uminho.dss.turmas3l.business;
 import uminho.dss.turmas3l.business.Gestao.Palete;
+import uminho.dss.turmas3l.business.Transporte.Robot;
 
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,10 @@ public interface IGestaoArmazemLNFacade {
     Set<Palete> getPaletesZR();
     Set<Palete> getPaletesZA();
     Set<Palete> getPaletesZE();
+
+    Robot getRobot(String id);
+
+    void addRobot(Robot r);
 
 
     /*Map<String,Localizacao> solicitarListagem();

@@ -8,6 +8,8 @@ package uminho.dss.turmas3l.ui;
 
 import uminho.dss.turmas3l.business.*;
 import uminho.dss.turmas3l.business.Gestao.Palete;
+import uminho.dss.turmas3l.business.Transporte.Percurso;
+import uminho.dss.turmas3l.business.Transporte.Robot;
 
 import java.util.Scanner;
 
@@ -293,7 +295,19 @@ public class UIText {
     private void adicionarRobot() {
         try {
             //id automatico ou manual? <- diferença se há stdin
+            System.out.println("Id do robot a adicionar: ");
+            String id = scin.nextLine();
+            if(this.model.getRobot(id)==null){
+                //adicionar robot com id lido
+                Robot r = new Robot(id, Robot.Estado.LIVRE,null,new Percurso(id,null,null,null),new Localizacao("ZRobots"));
 
+                System.out.println(r.toString());
+                System.out.println(r.getId());
+                this.model.addRobot(r);
+            }
+            else{
+                System.out.println("Robot com esse id já existe");
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());

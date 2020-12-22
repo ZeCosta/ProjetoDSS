@@ -21,19 +21,22 @@ public class RobotDAO implements Map<String, Robot> {
         try(Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
             Statement stm = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS localizacao (" +
-                    "id varchar(10) NOT NULL PRIMARY KEY)," +
-                    "l_local varchar(20) NOT NULL)";
+                    "id varchar(10) NOT NULL PRIMARY KEY)";
             stm.executeUpdate(sql);
-
+            /*
             sql = "CREATE TABLE IF NOT EXISTS materiaprima (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "nome varchar(45) DEFAULT NULL," +
                     "peso double(4,2) DEFAULT 0," +
                     "quantidade int(4) DEFAULT 0)";
             stm.executeUpdate(sql);
-
-            /* Por fazer sql = "CREATE IF NOT EXISTS percurso (" +
-                    "" */
+            */
+            sql = "CREATE TABLE IF NOT EXISTS percurso (" +
+                    "id varchar(10) NOT NULL PRIMARY KEY," +
+                    "cRecolha varchar(45) DEFAULT NULL," +
+                    "cEntrega varchar(45) DEFAULT NULL," +
+                    "cRobots varchar(45) DEFAULT NULL)";
+            stm.executeUpdate(sql);
 
             sql = "CREATE TABLE IF NOT EXISTS palete (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
@@ -47,8 +50,12 @@ public class RobotDAO implements Map<String, Robot> {
             sql = "CREATE TABLE IF NOT EXISTS robot (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "estado varchar(15) DEFAULT NULL," +
-                    "paleteId varchar(10), foreign key(paleteId) references paletesDAO(id)" +
-                    "percursoId varchar(10), foreign key(percursoId) references percursoDAO(id))";  // Assume-se uma relação 1-n entre Turma e Aluno
+                    "localizacao varchar(10) ," +
+                    "palete varchar(10) ," +
+                    "percurso varchar(10), " +
+                    "foreign key(localizacao) references localizacao(id),"+
+                    "foreign key(palete) references palete(id)," +
+                    "foreign key(percurso) references percurso(id))";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
             // Erro a criar tabela...
@@ -198,6 +205,7 @@ public class RobotDAO implements Map<String, Robot> {
 
     @Override
     public Robot put(String id, Robot r) {
+        System.out.println("ah");
         Robot res = null;
         Localizacao l = r.getLocalizacao();
         Percurso per = r.getPercurso();
@@ -205,12 +213,12 @@ public class RobotDAO implements Map<String, Robot> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
 
+            System.out.println("coiso");
+
             // adicionar localizacao se nao existe
             stm.executeUpdate(
                     "INSERT IGNORE INTO localizacao " +
-                            "VALUES ('"+ l.getId()+ "', '" +
-                             l.getLocal()+"') " +
-                              "ON DUPLICATE KEY UPDATE l_local=Values(l_local)");
+                            "VALUES ('"+ l.getId()+ "') ");
 
             // Atualizar percurso
             stm.executeUpdate(
@@ -222,7 +230,7 @@ public class RobotDAO implements Map<String, Robot> {
                             "ON DUPLICATE KEY UPDATE cRecolha=Values(cRecolha), " +
                             "cEntrega=Values(cEntrega), " +
                             "cRobots=Values(cRobots)");
-
+            /*
             MateriaPrima m = p.getMateriaPrima();
             Localizacao lPalete = p.getLocalizacao();
             //Atualizar a materia prima
@@ -242,15 +250,32 @@ public class RobotDAO implements Map<String, Robot> {
                             "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao),"+
                             "materia=VALUES(materia),"+
                             "peso=VALUES(peso)");
+            */
 
+            System.out.println("cenas");
+            String idp;
+            idp=null;
+            if(r.getPalete()!=null)idp= r.getPalete().getId();
 
+            stm.executeUpdate(
+                    "INSERT INTO robot " +
+                            "VALUES ('"+ r.getId()+ "', '"+
+                            r.getEstado()+"', '"+
+                            r.getLocalizacao().getLocal()+"', '"+
+                            r.getPercurso().getId()+"', '"+
+                            idp+"') " +
+                            "ON DUPLICATE KEY UPDATE estado=Values(estado), " +
+                            "localizacao=Values(localizacao), " +
+                            "percurso=Values(percurso), " +
+                            "palete=Values(palete)");
 
         } catch (SQLException e) {
+            System.out.println("dsasadsda");
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return res;
+        return r;
     }
 
     @Override
@@ -260,17 +285,8 @@ public class RobotDAO implements Map<String, Robot> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
 
-            // apagar a materiaprima
-            stm.executeUpdate("DELETE FROM materiaprima WHERE id='"+p.getMateriaPrima().getId()+"'");
-
-            // apagar a localização
-            stm.executeUpdate("DELETE FROM localizacao WHERE id='"+p.getLocalizacao().getId()+"'");
-
             // apagar o percurso
             stm.executeUpdate("DELETE FROM percurso WHERE id='"+r.getPercurso().getId()+"'");
-
-            // apagar a palete
-            stm.executeUpdate("DELETE FROM palete WHERE id='"+p.getId()+"'");
 
             //apagar o robot
             stm.executeUpdate("DELETE FROM robot WHERE id='"+r.getId()+"'");

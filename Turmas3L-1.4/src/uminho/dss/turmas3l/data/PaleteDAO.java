@@ -232,7 +232,7 @@ public class PaleteDAO implements Map<String, Palete> {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return res;
+        return p;
     }
 
     /**

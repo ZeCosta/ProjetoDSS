@@ -11,7 +11,7 @@ public class Robot {
     private Localizacao localizacao;
 
     public enum Estado{
-        LIVRE, BUSCAR, TRANSPORTAR
+        LIVRE, BUSCAR, TRANSPORTAR, REGRESSAR
     }
 
     public Robot(String id, Estado e, Palete p, Percurso per, Localizacao l){
@@ -30,12 +30,12 @@ public class Robot {
         this.id = id;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public String getEstado() {
+        return this.estado.name();
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setEstado(String estado) {
+        this.estado = Estado.valueOf(estado);
     }
 
     public Palete getPalete() {
@@ -60,5 +60,16 @@ public class Robot {
 
     public void setLocalizacao(Localizacao l) {
         this.localizacao = l;
+    }
+
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Robot{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", Estado='").append(this.getEstado()).append('\'');
+        sb.append(", Palete=").append(this.getPalete().getId()).append('\'');
+        sb.append(", Percurso=").append(this.getPercurso().getId()).append('\'');
+        sb.append(", localizacao='").append(localizacao.getLocal());
+        sb.append('}');
+        return sb.toString();
     }
 }
