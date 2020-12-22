@@ -49,7 +49,8 @@ public class Armazem {
         this.mapa = new int[locais.size()][locais.size()];
         this.mapa = mapa;
     }
-
+    public Armazem(){
+    }
     public String[] getLocaisOrdenados(){
         return locaisOrdenados;
     }
