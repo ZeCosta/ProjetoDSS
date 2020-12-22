@@ -1,66 +1,64 @@
 package uminho.dss.turmas3l.business.Transporte;
 
 import uminho.dss.turmas3l.business.Gestao.Palete;
+import uminho.dss.turmas3l.business.Localizacao;
 
 public class Robot {
     private String id;
     private Estado estado;
     private Palete p;
     private Percurso per;
+    private Localizacao l;
 
     public enum Estado{
         LIVRE, BUSCAR, TRANSPORTAR
     }
 
-    public Robot(String id){
-        this.id = id;
-        this.estado = Estado.LIVRE;
-        this.paleteId = null;
-    }
-
-    public Robot(String id, Estado e, String idPalete, String percursoId){
+    public Robot(String id, Estado e, Palete p, Percurso per, Localizacao l){
         this.id = id;
         this.estado = e;
-        this.paleteId = idPalete;
-        this.percursoId = percursoId;
-    }
-
-    public void setEstado(Estado estado){
-        this.estado = estado;
-    }
-
-    public void setPaleteId(String paleteId){
-        this.paleteId = paleteId;
-    }
-
-    public void setPercursoId(String id){
-        this.percursoId = id;
+        this.p = p;
+        this.per = per;
+        this.l = l;
     }
 
     public String getId() {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Estado getEstado() {
         return estado;
     }
 
-    public String getPaleteId() {
-        return paleteId;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
-    public String getPercursoId() {
-        return percursoId;
+    public Palete getP() {
+        return p;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Robot{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", estado=").append(estado);
-        sb.append(", paleteId='").append(paleteId).append('\'');
-        sb.append(", percursoId='").append(percursoId).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public void setP(Palete p) {
+        this.p = p;
+    }
+
+    public Percurso getPer() {
+        return per;
+    }
+
+    public void setPer(Percurso per) {
+        this.per = per;
+    }
+
+    public Localizacao getL() {
+        return l;
+    }
+
+    public void setL(Localizacao l) {
+        this.l = l;
     }
 }

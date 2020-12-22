@@ -174,16 +174,23 @@ public class RobotDAO implements Map<String, Robot> {
                 }
                 Percurso per = null;
                 String percursoId = rs.getString("percursoId");
-                /* TRATAR DO PERCURSO */
+                try(ResultSet rsa = stm.executeQuery("SELECT * FROM percurso WHERE id='"+percursoId+"'")){
+                    if(rsa.next()){
+                        per = new Percurso(rsa.getString("id"),
+                                rsa.getString("cRecolha"),
+                                rsa.getString("cEntrega"),
+                                rsa.getString("cRobots"));
+                    }
+                }
 
-                r = new Robot(idRobot, e, )
+                r = new Robot(idRobot, e, p, per, l);
             }
         } catch (SQLException e) {
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        */
+
         return r;
     }
 
