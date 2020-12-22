@@ -31,18 +31,18 @@ public class PaleteDAO implements Map<String, Palete> {
             String sql = "CREATE TABLE IF NOT EXISTS materiaprima (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "nome varchar(45) DEFAULT NULL," +
-                    "peso double(4,2) DEFAULT 0)" +
+                    "peso double(4,2) DEFAULT 0," +
                     "quantidade int(4) DEFAULT 0)";
             stm.executeUpdate(sql);
             sql = "CREATE TABLE IF NOT EXISTS localizacao (" +
-                    "id varchar(10) NOT NULL PRIMARY KEY,";
+                    "id varchar(10) NOT NULL PRIMARY KEY)";
             stm.executeUpdate(sql);
             sql = "CREATE TABLE IF NOT EXISTS palete (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "peso double(6,2) DEFAULT NULL," +
                     "localizacao varchar(10)," +
                     "materia varchar(10)," +
-                    "foreign key(localizacao) references localizacao(id))"+
+                    "foreign key(localizacao) references localizacao(id),"+
                     "foreign key(materia) references materiaprima(id))";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
@@ -221,10 +221,11 @@ public class PaleteDAO implements Map<String, Palete> {
             // Actualizar a turma
             stm.executeUpdate(
                     "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
-                            ", '"+l.getLocal()+"', ''" +
-                            m.getId()+"'') " +
-                                "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao)"+
-                                "materia=VALUES(materia)");
+                            ", '"+l.getLocal()+"', '" +
+                            m.getId()+"') " +
+                                "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao),"+
+                                "materia=VALUES(materia),"+
+                                "peso=VALUES(peso)");
 
 
         } catch (SQLException e) {

@@ -113,7 +113,8 @@ public class UIText {
     private void comunicarQRCode() {
         try {
             System.out.println("Inserir QRCode: ");
-            String qr = scin.nextLine();
+            String qr = scin.nextLine();                //Exemplo-> 1;1:1;materia1;1.1;1
+                                                        //idpalete;pesopalete:idmateria;nomemateria;pesomateria;quatidademateria
 
             //criar objeto qrcode
             QRCode qrcode = new QRCode(qr);
