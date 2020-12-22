@@ -18,6 +18,8 @@ public interface IGestaoArmazemLNFacade {
 
     void addRobot(Robot r);
 
+    void deleteRobot(String id);
+
 
     /*Map<String,Localizacao> solicitarListagem();
     void ordemTransporte(String idRobot, String idPalete);

@@ -51,4 +51,8 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
     public void addRobot(Robot r) {
         this.sst.addRobot(r);
     }
+
+    public void deleteRobot(String id) {
+        this.sst.deleteRobot(id);
+    }
 }

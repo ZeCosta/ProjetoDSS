@@ -316,8 +316,15 @@ public class UIText {
 
     private void eliminarRobot() {
         try {
-            //stdin do id
-            //se existe e nao tem ordem, eliminar
+            System.out.println("Id do robot a eliminar: ");
+            String id = scin.nextLine();
+            if(this.model.getRobot(id)==null){
+                System.out.println("Robot com esse id não existe");
+            }
+            else if (!this.model.getRobot(id).getEstado().equals("LIVRE")){
+                System.out.println("Robot com esse id está ocupado");
+            }
+            else this.model.deleteRobot(id);
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());

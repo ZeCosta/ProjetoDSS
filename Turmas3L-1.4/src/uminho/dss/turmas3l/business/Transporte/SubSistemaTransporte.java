@@ -30,4 +30,7 @@ public class SubSistemaTransporte {
     public void addRobot(Robot r) {
         this.robots.put(r.getId(),r);
     }
+
+    public void deleteRobot (String id) { this.robots.remove(id); }
+
 }
