@@ -31,18 +31,18 @@ public class PaleteDAO implements Map<String, Palete> {
             String sql = "CREATE TABLE IF NOT EXISTS materiaprima (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "nome varchar(45) DEFAULT NULL," +
-                    "peso double(4,2) DEFAULT 0)" +
+                    "peso double(4,2) DEFAULT 0," +
                     "quantidade int(4) DEFAULT 0)";
             stm.executeUpdate(sql);
             sql = "CREATE TABLE IF NOT EXISTS localizacao (" +
-                    "id varchar(10) NOT NULL PRIMARY KEY,";
+                    "id varchar(10) NOT NULL PRIMARY KEY)";
             stm.executeUpdate(sql);
             sql = "CREATE TABLE IF NOT EXISTS palete (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "peso double(6,2) DEFAULT NULL," +
                     "localizacao varchar(10)," +
                     "materia varchar(10)," +
-                    "foreign key(localizacao) references localizacao(id))"+
+                    "foreign key(localizacao) references localizacao(id),"+
                     "foreign key(materia) references materiaprima(id))";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
@@ -129,15 +129,14 @@ public class PaleteDAO implements Map<String, Palete> {
      */
     @Override
     public boolean containsValue(Object value) {
-        Turma t = (Turma) value;
-        return this.containsKey(t.getId());
+        return false;
     }
 
     /**
-     * Obter uma turma, dado o seu id
+     * Obter uma palete, dado o seu id
      *
-     * @param key id da turma
-     * @return a turma caso exista (null noutro caso)
+     * @param key id da palete
+     * @return a palete caso exista (null noutro caso)
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
@@ -154,7 +153,7 @@ public class PaleteDAO implements Map<String, Palete> {
                     if (rsa.next()) {  // Encontrou a sala
                         m = new MateriaPrima(rs.getString("id"),
                                      rsa.getString("nome"),
-                                rsa.getInt("peso"),
+                                rsa.getDouble("peso"),
                                 rsa.getInt("quantidade"));
                     } else {
                         // BD inconsistente!! Sala não existe - tratar com excepções.
@@ -166,15 +165,15 @@ public class PaleteDAO implements Map<String, Palete> {
                 Localizacao l = null;
                 sql = "SELECT * FROM localizacao WHERE id='"+rs.getString("localizacao")+"'";
                 try (ResultSet rsa = stm.executeQuery(sql)) {
-                    if (rsa.next()) {  // Encontrou a sala
-                        l = new Localizacao(rs.getString("id"));
+                    if (rsa.next()) {  // Encontrou a localizacao
+                        l = new Localizacao(rsa.getString("id"));
                     } else {
                         // BD inconsistente!! Sala não existe - tratar com excepções.
                     } // catch é feito no try inicial - este try serve para fechar o ResultSet automaticamente
                     // Nota: abrir um novo ResultSet no mesmo Statement fecha o ResultSet anterior
                 }
 
-                // Reconstruir a turma cokm os dados obtidos da BD 
+                // Reconstruir a palete cokm os dados obtidos da BD
                 p = new Palete(rs.getString("id"),Double.parseDouble(rs.getString("peso")), m, l);
             }
         } catch (SQLException e) {
@@ -218,13 +217,14 @@ public class PaleteDAO implements Map<String, Palete> {
                             "quantidade=Values(quantidade)");
 
 
-            // Actualizar a turma
+            // Actualizar a palete
             stm.executeUpdate(
                     "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
-                            ", '"+l.getLocal()+"', ''" +
-                            m.getId()+"'') " +
-                                "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao)"+
-                                "materia=VALUES(materia)");
+                            ", '"+l.getLocal()+"', '" +
+                            m.getId()+"') " +
+                                "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao),"+
+                                "materia=VALUES(materia),"+
+                                "peso=VALUES(peso)");
 
 
         } catch (SQLException e) {
@@ -236,12 +236,12 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * Remover uma turma, dado o seu id
+     * Remover uma palete, dado o seu id
      *
-     * NOTA: Não estamos a apagar a sala...
+     * NOTA: Não estamos a apagar a localizacao, mas estamos a apagar a materia...
      *
-     * @param key id da turma a remover
-     * @return a turma removida
+     * @param key id da palete a remover
+     * @return a palete removida
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
@@ -253,7 +253,7 @@ public class PaleteDAO implements Map<String, Palete> {
             // apagar a materiaprima
             stm.executeUpdate("DELETE FROM materiaprima WHERE Id='"+p.getMateriaPrima().getId()+"'");
 
-            // apagar a turma
+            // apagar a palete
             stm.executeUpdate("DELETE FROM palete WHERE Id='"+key+"'");
         } catch (Exception e) {
             // Database error!
@@ -266,7 +266,7 @@ public class PaleteDAO implements Map<String, Palete> {
 
 
     /**
-     * Adicionar um conjunto de turmas à base de dados
+     * Adicionar um conjunto de palete à base de dados
      *
      * @param paletes as paletes a adicionar
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
@@ -279,7 +279,7 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * Apagar todas as turmas
+     * Apagar todas as paletes -> não achamos necessaria a implementação
      *
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
@@ -297,7 +297,7 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * @return Todos as turmas da base de dados
+     * @return Todas as paletes da base de dados
      */
     @Override
     public Collection<Palete> values() {

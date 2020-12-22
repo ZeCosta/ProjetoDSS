@@ -47,7 +47,7 @@ public class Palete {
         sb.append("id='").append(id).append('\'');
         sb.append(", materia='").append(materia).append('\'');
         sb.append(", peso=").append(peso).append('\'');
-        sb.append(", localizacao='").append(localizacao);
+        sb.append(", localizacao='").append(localizacao.getLocal());
         sb.append('}');
         return sb.toString();
     }

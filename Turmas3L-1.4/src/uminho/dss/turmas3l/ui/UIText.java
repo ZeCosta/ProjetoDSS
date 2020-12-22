@@ -53,8 +53,9 @@ public class UIText {
         Menu menu = new Menu(new String[]{
                 "Comunicar QRcode",
                 "Comunicar ordem de transporte",
-                "Consultar Listagem",
-                "Operações sobre robots"
+                "Consultar Listagens",
+                "Operações sobre robots",
+                "Outras opções"
         });
 
         // Registar pré-condições das transições
@@ -65,6 +66,7 @@ public class UIText {
         menu.setHandler(2,()->comunicarOrdemTransporte());
         menu.setHandler(3, ()->consultarListagem());
         menu.setHandler(4, ()->gestaoRobots());
+        menu.setHandler(5, ()->gestaoDeOpcoes());
 
         menu.run();
     }
@@ -84,7 +86,7 @@ public class UIText {
         menu.setHandler(1, ()->consultarTudo());
         menu.setHandler(2, ()->consultarZonaRececao());
         menu.setHandler(3, ()->consultarZonaArmazenamento());
-        menu.setHandler(3, ()->consultarZonaEntrega());
+        menu.setHandler(4, ()->consultarZonaEntrega());
 
         menu.run();
     }
@@ -108,12 +110,35 @@ public class UIText {
     }
 
     /**
+     *  Estado - Gestão de Opcoes
+     */
+    private void gestaoDeOpcoes() {
+        Menu menu = new Menu(new String[]{
+                "Criar Armazem (colocar localizacoes (e arestas?) na base de dados",
+                "Povoar base de dados (adicionar paletes e robot)",
+                "Adicionar Robot",
+                "Eliminar Robot",
+                "etc"
+        });
+
+        // Registar os handlers
+        menu.setHandler(1, ()->criarArmazem());
+        menu.setHandler(2, ()->povoarBD());
+        menu.setHandler(3, ()->adicionarRobot());
+        menu.setHandler(4, ()->eliminarRobot());
+
+        menu.run();
+    }
+
+
+    /**
      *  Comunicar qrcode
      */
     private void comunicarQRCode() {
         try {
             System.out.println("Inserir QRCode: ");
-            String qr = scin.nextLine();
+            String qr = scin.nextLine();                //Exemplo-> 1;1:1;materia1;1.1;1
+                                                        //idpalete;pesopalete:idmateria;nomemateria;pesomateria;quatidademateria
 
             //criar objeto qrcode
             QRCode qrcode = new QRCode(qr);
@@ -141,6 +166,9 @@ public class UIText {
                 String destino = scin.nextLine();
 
                 //if (this.model.origem(num)) {  <- se a origem for igual ao destino nao transportar
+                    //if(robot_disponivel)
+                        //criar percurso e enviar para o robot
+                    //else guardar numa lista de ordens
                 //else{System.out.println("O destino da palete é igual a origem");}
             } else {
                 System.out.println("Essa palete não existe!");
@@ -156,9 +184,9 @@ public class UIText {
      */
     public void consultarTudo(){
         try {
-            //System.out.println(this.model.getPaletesZR().toString());
-            //System.out.println(this.model.getPaletesZA().toString());
-            //System.out.println(this.model.getPaletesZE().toString());
+            for(Palete p:this.model.getPaletes()){
+                System.out.println(p.toString());
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -166,9 +194,9 @@ public class UIText {
     }
     public void consultarZonaRececao(){
         try {
-            //System.out.println(this.model.getPaletesZR().toString());
-            //System.out.println(this.model.getPaletesZA().toString());
-            //System.out.println(this.model.getPaletesZE().toString());
+            for(Palete p:this.model.getPaletesZR()){
+                System.out.println(p.toString());
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -176,9 +204,9 @@ public class UIText {
     }
     public void consultarZonaArmazenamento(){
         try {
-            //System.out.println(this.model.getPaletesZR().toString());
-            //System.out.println(this.model.getPaletesZA().toString());
-            //System.out.println(this.model.getPaletesZE().toString());
+            for(Palete p:this.model.getPaletesZA()){
+                System.out.println(p.toString());
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -186,9 +214,9 @@ public class UIText {
     }
     public void consultarZonaEntrega(){
         try {
-            //System.out.println(this.model.getPaletesZR().toString());
-            //System.out.println(this.model.getPaletesZA().toString());
-            //System.out.println(this.model.getPaletesZE().toString());
+            for(Palete p:this.model.getPaletesZE()){
+                System.out.println(p.toString());
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -201,7 +229,7 @@ public class UIText {
      */
     public void listarOrdens(){
         try {
-            //System.out.println(this.model.getOrdens().toString()); <- vai a cada robot com estado diferente de "A espera" e indica o estado,.. (e a localizacao?)
+            //System.out.println(this.model.getOrdens().toString()); <- vai a cada robot com estado diferente de "A espera" e indica o id do robot, o estado,.. (e a localizacao?)
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -241,5 +269,45 @@ public class UIText {
         }
     }
 
+    public void criarArmazem(){
+        try {
+            //adicionar localizacoes
+            //adicionar arestas?
+            //atualizar armazem?
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    private void povoarBD() {
+        try {
+            //adicionar algumas paletes (e 1 robot?)
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void adicionarRobot() {
+        try {
+            //id automatico ou manual? <- diferença se há stdin
+
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void eliminarRobot() {
+        try {
+            //stdin do id
+            //se existe e nao tem ordem, eliminar
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }
