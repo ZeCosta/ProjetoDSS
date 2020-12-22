@@ -288,6 +288,18 @@ public class UIText {
     private void povoarBD() {
         try {
             //adicionar algumas paletes (e 1 robot?)
+
+
+            QRCode qrcode = new QRCode("1;1:1;materia1;1.1;1");
+            Palete p = qrcode.criarPalete();
+            p.setLocalizacao(new Localizacao("ZRececao"));
+            this.model.adicionarPalete(p);
+
+
+            qrcode = new QRCode("2;1:2;materia2;1.1;1");
+            p = qrcode.criarPalete();
+            p.setLocalizacao(new Localizacao("ZRececao"));
+            this.model.adicionarPalete(p);
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
