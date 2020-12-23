@@ -316,17 +316,31 @@ public class UIText {
     private void povoarBD() {
         try {
             //adicionar algumas paletes (e 1 robot?)
+            Percurso per = new Percurso("1",null,null,null);
+            Robot r = new Robot("1",Robot.Estado.LIVRE,null,per,new Localizacao("ZRobots"));
+            this.model.addRobot(r);
 
+            per = new Percurso("2",null,null,null);
+            r = new Robot("2",Robot.Estado.LIVRE, null,per,new Localizacao("ZRobots"));
+            this.model.addRobot(r);
+
+            per = new Percurso("3",null,null,null);
+            r = new Robot("3",Robot.Estado.LIVRE, null,per,new Localizacao("ZRobots"));
+            this.model.addRobot(r);
 
             QRCode qrcode = new QRCode("1;1:1;materia1;1.1;1");
             Palete p = qrcode.criarPalete();
             p.setLocalizacao(new Localizacao("ZRececao"));
             this.model.adicionarPalete(p);
 
-
             qrcode = new QRCode("2;1:2;materia2;1.1;1");
             p = qrcode.criarPalete();
             p.setLocalizacao(new Localizacao("ZRececao"));
+            this.model.adicionarPalete(p);
+
+            qrcode = new QRCode("3;2.1:3;materia3;2.2;3");
+            p = qrcode.criarPalete();
+            p.setLocalizacao(new Localizacao("P3S"));
             this.model.adicionarPalete(p);
         }
         catch (NullPointerException e) {
