@@ -51,4 +51,8 @@ public class Palete {
         sb.append('}');
         return sb.toString();
     }
+
+    public String getNomeMateria() {
+        return this.materia.getNome();
+    }
 }

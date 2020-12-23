@@ -58,6 +58,10 @@ public interface IGestaoArmazemLNFacade {
 
     void criarArmazemDefault();
 
+    Set<Robot> getRobots();
+
+    boolean robotHasPalete(String id);
+
 
 
     /*Map<String,Localizacao> solicitarListagem();

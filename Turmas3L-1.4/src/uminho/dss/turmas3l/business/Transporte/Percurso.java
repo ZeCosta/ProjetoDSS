@@ -69,4 +69,12 @@ public class Percurso {
         sb.append('}');
         return sb.toString();
     }
+    public String toString2() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append(cRecolha).append("->");
+        sb.append(cEntrega).append("->");
+        sb.append(cRobots);
+        sb.append('}');
+        return sb.toString();
+    }
 }

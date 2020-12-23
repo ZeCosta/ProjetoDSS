@@ -81,4 +81,16 @@ public class SubSistemaTransporte {
     public void delAllRobots() {
         this.robots.clear();
     }
+
+    public Set<Robot> getRobots() {
+        return new HashSet<>(this.robots.values());
+    }
+
+    public boolean robotHasPalete(String id) {
+        boolean res=false;
+        for(Robot r:this.robots.values()){
+            if(r.getPalete()!=null && r.getPalete().getId().equals(id)) res=true;
+        }
+        return res;
+    }
 }

@@ -14,7 +14,8 @@ public class Robot {
         final StringBuilder sb = new StringBuilder("Robot{");
         sb.append("id='").append(id).append('\'');
         sb.append(", Estado='").append(this.getEstado()).append('\'');
-        sb.append(", Palete=").append(this.getPalete().getId()).append('\'');
+        sb.append(", Palete=").append(this.getPalete().getId())
+                .append("(").append(this.getPalete().getNomeMateria()).append(")").append('\'');
         sb.append(", localizacao='").append(localizacao.getLocal());
         sb.append('}');
         return sb.toString();
@@ -76,8 +77,8 @@ public class Robot {
         final StringBuilder sb = new StringBuilder("Robot{");
         sb.append("id='").append(id).append('\'');
         sb.append(", Estado='").append(this.getEstado()).append('\'');
-        if (palete!=null) sb.append(", Palete=").append(this.getPalete().getId()).append('\'');
-        sb.append(", Percurso=").append(this.getPercurso().getId()).append('\'');
+        if (palete!=null) {sb.append(", Palete=").append(this.getPalete().getId()).append('\'');}
+        sb.append(", Percurso=").append(this.getPercurso().toString2()).append('\'');
         sb.append(", localizacao='").append(localizacao.getLocal());
         sb.append('}');
         return sb.toString();

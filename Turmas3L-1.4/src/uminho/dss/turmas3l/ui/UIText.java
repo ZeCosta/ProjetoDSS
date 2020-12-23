@@ -126,20 +126,26 @@ public class UIText {
                 "Criar armazem (default)",
                 "Povoar base de dados (adicionar paletes e robot)",
                 "Adicionar Robot",
+                "Listar Robots",
                 "Eliminar Robot",
                 "Limpar Base de Dados"
         });
 
+        menu.setPreCondition(2, ()->this.model.validaLocal("ZEntrega") &&
+                this.model.validaLocal("ZRobots"));
+        menu.setPreCondition(3, ()->this.model.validaLocal("ZRobots"));
+        menu.setPreCondition(4, ()->this.model.haRobot());
+        menu.setPreCondition(5, ()->this.model.haRobot());
         // Registar os handlers
         menu.setHandler(1, ()->criarArmazem());
         menu.setHandler(2, ()->povoarBD());
         menu.setHandler(3, ()->adicionarRobot());
-        menu.setHandler(4, ()->eliminarRobot());
-        menu.setHandler(5, ()->limparBD());
+        menu.setHandler(4, ()->listarRobot());
+        menu.setHandler(5, ()->eliminarRobot());
+        menu.setHandler(6, ()->limparBD());
 
         menu.run();
     }
-
 
 
     /**
@@ -174,7 +180,7 @@ public class UIText {
             String id = scin.nextLine();
             Palete p = this.model.getPalete(id);
             if (p!=null) {   //<- se nao existe palete sair
-                if(p.getLocalizacao()!=null){
+                if(!this.model.robotHasPalete(p.getId())){
                     System.out.println("Destino da palete: ");
                     String destino = scin.nextLine();
 
@@ -182,12 +188,13 @@ public class UIText {
                         if (!p.getLocalizacao().getLocal().equals(destino)) {  //<- se a origem for igual ao destino nao transportar
                             Robot robotdisponivel = this.model.getRobotDisponivel();
                             if(robotdisponivel!=null){
-                                //chamar comunicarTransporte para criar percurso e enviar para o robot
+                                //chamar comunicarTransporte que vai criar percurso e enviar para o robot
                                 this.model.comunicarTransporte(robotdisponivel,p,new Localizacao(destino));
 
                             }else{
                                 //else guardar numa lista de ordens ?
-                                System.out.println("Não há robot disponivel. Queue de ordens indisponivel.");
+                                System.out.println("Não há robot disponivel");
+                                //System.out.println("Queue de ordens indisponivel.");
                             }
                         }else{
                             System.out.println("O destino da palete é igual a origem");
@@ -196,7 +203,7 @@ public class UIText {
                         System.out.println("O destino não existe");
                     }
                 }else{
-                    System.out.println("Palete já está a ser transportada");
+                    System.out.println("Palete está a ser transportada ou ja tem transporte agendado");
                 }
             } else {
                 System.out.println("Essa palete não existe!");
@@ -267,9 +274,20 @@ public class UIText {
      */
     public void listarOrdens(){
         try {
-            //vai a cada robot com estado diferente de "A espera" e indica o id do robot, o estado,.. (e a localizacao?)
+            //vai a cada robot com estado "Buscar" ou "Transportar" e indica o id do robot, o estado,.. (e a localizacao?)
             for(Robot r:this.model.getRobotComOrdens()){
                 System.out.println(r.toStringOrdens());
+            }
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void listarRobot() {
+        try {
+            for(Robot r:this.model.getRobots()){
+                System.out.println(r.toString());
             }
         }
         catch (NullPointerException e) {
@@ -344,12 +362,14 @@ public class UIText {
                 Palete p = this.model.getPalete(idP);
 
                 //verificar que não ha palete naquele sitio...
+
                 p.setLocalizacao(r.getLocalizacao());
                 r.setEstado("REGRESSAR");
 
                 this.model.adicionarPalete(p);
 
                 //verificar se há ordens na lista de ordens
+
                 r.setLocalizacao(new Localizacao(r.getPercurso().getcRobotsFim()));
                 r.setEstado("LIVRE");
                 r.setPercurso(new Percurso(r.getId(),null,null,null));
@@ -384,10 +404,11 @@ public class UIText {
             per = new Percurso("2",null,null,null);
             r = new Robot("2",Robot.Estado.LIVRE, null,per,new Localizacao("ZRobots"));
             if(this.model.getRobot("2")==null)this.model.addRobot(r);
-
+            /*
             per = new Percurso("3",null,null,null);
             r = new Robot("3",Robot.Estado.LIVRE, null,per,new Localizacao("ZRobots"));
             if(this.model.getRobot("3")==null)this.model.addRobot(r);
+            */
 
             QRCode qrcode = new QRCode("1;1:1;materia1;1.1;1");
             Palete p = qrcode.criarPalete();

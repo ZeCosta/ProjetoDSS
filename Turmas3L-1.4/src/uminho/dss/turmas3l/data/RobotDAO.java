@@ -157,7 +157,7 @@ public class RobotDAO implements Map<String, Robot> {
                 Localizacao lo = new Localizacao(rs.getString("localizacao"));
                 if(e.equals(Robot.Estado.TRANSPORTAR) || e.equals(Robot.Estado.BUSCAR)){
                         // Robot possui palete com ele, é preciso reconstruir a localização da palete, a matéria prima e a própria palete
-                        String idPalete = rs.getString("id");
+                        String idPalete = rs.getString("palete");
                         try(ResultSet rsa = stm.executeQuery("SELECT * FROM palete WHERE id='"+idPalete+"'")){
                             //Reconstruir matéria prima
                             if(rsa.next()){
@@ -176,7 +176,7 @@ public class RobotDAO implements Map<String, Robot> {
                                         l = new Localizacao(rsc.getString("id"));
                                     }
                                 }
-                                p = new Palete(idPalete, rsa.getDouble("peso"),mp,l);
+                                p = new Palete(rsa.getString("id"), rsa.getDouble("peso"),mp,l);
                             }
                         }
                 }
@@ -269,13 +269,13 @@ public class RobotDAO implements Map<String, Robot> {
 
             }
 
-
+            res=r;
         } catch (SQLException e) {
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return r;
+        return res;
     }
 
     @Override
