@@ -50,6 +50,13 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
     }
 
     @Override
+    public Set<Palete> getPaletesTrans() {
+        return ssg.getPaletesZE();
+    }
+
+
+
+    @Override
     public Robot getRobot(String id) {
         return this.sst.getRobot(id);
     }

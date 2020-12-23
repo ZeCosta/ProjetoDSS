@@ -14,6 +14,7 @@ public interface IGestaoArmazemLNFacade {
     Set<Palete> getPaletesZR();
     Set<Palete> getPaletesZA();
     Set<Palete> getPaletesZE();
+    Set<Palete> getPaletesTrans();
 
     Robot getRobot(String id);
 

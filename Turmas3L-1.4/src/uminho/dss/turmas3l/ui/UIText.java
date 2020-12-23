@@ -81,7 +81,8 @@ public class UIText {
                 "Consultar tudo",
                 "Consultar zona de receção",
                 "Consultar zona de armazenamento",
-                "Consultar zona de entrega"
+                "Consultar zona de entrega",
+                "Consultar as que estão a ser transportadas"
         });
 
         // Registar os handlers
@@ -89,6 +90,7 @@ public class UIText {
         menu.setHandler(2, ()->consultarZonaRececao());
         menu.setHandler(3, ()->consultarZonaArmazenamento());
         menu.setHandler(4, ()->consultarZonaEntrega());
+        menu.setHandler(5, ()->consultarTransportar());
 
         menu.run();
     }
@@ -229,6 +231,16 @@ public class UIText {
     public void consultarZonaEntrega(){
         try {
             for(Palete p:this.model.getPaletesZE()){
+                System.out.println(p.toString());
+            }
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void consultarTransportar(){
+        try {
+            for(Palete p:this.model.getPaletesTrans()){
                 System.out.println(p.toString());
             }
         }

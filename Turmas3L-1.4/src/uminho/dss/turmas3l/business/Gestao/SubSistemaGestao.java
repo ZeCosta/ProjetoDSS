@@ -53,7 +53,8 @@ public class SubSistemaGestao implements IGest{
     public Set<Palete> getPaletesZA() {
         Set<Palete> res = new HashSet<>();
         for(Palete p:this.paletes.values()){
-            if(!p.getLocalizacao().getLocal().equals("ZRececao")
+            if(p.getLocalizacao().getLocal()!=null
+                    && !p.getLocalizacao().getLocal().equals("ZRececao")
                     && !p.getLocalizacao().getLocal().equals("ZEntrega")) res.add(p);
         }
         return res;
@@ -62,6 +63,13 @@ public class SubSistemaGestao implements IGest{
         Set<Palete> res = new HashSet<>();
         for(Palete p:this.paletes.values()){
             if(p.getLocalizacao().getLocal().equals("ZEntrega")) res.add(p);
+        }
+        return res;
+    }
+    public Set<Palete> getPaletesTrans() {
+        Set<Palete> res = new HashSet<>();
+        for(Palete p:this.paletes.values()){
+            if(p.getLocalizacao()==null) res.add(p);
         }
         return res;
     }
