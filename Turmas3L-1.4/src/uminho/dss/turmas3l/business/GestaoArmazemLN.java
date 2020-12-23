@@ -1,20 +1,20 @@
 package uminho.dss.turmas3l.business;
 
-//import org.mariadb.jdbc.internal.util.dao.CloneableCallableStatement;
+import uminho.dss.turmas3l.business.Gestao.IGest;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Gestao.SubSistemaGestao;
+import uminho.dss.turmas3l.business.Transporte.ITransporte;
 import uminho.dss.turmas3l.business.Transporte.Percurso;
 import uminho.dss.turmas3l.business.Transporte.Robot;
 import uminho.dss.turmas3l.business.Transporte.SubSistemaTransporte;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
     private Armazem armazem = new Armazem();
 
-    private SubSistemaGestao ssg = new SubSistemaGestao();
-    private SubSistemaTransporte sst = new SubSistemaTransporte();
+    private IGest ssg = new SubSistemaGestao();
+    private ITransporte sst = new SubSistemaTransporte();
 
     public GestaoArmazemLN(){}
 
@@ -82,26 +82,6 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
         return this.sst.getRobotDisponivel();
     }
 
-    public void mudaLocalizacaoR (String id, String l) {
-        this.sst.mudaLocalizacao (id, l);
-    }
-
-    public void eliminaPaleteR (String id) {
-        this.sst.eliminaPalete (id);
-    }
-
-    public void mudaEstado (String id, String e) {
-        this.sst.mudaEstado (id, e);
-    }
-
-    public void eliminaLocalizacaoP (String id) {
-        this.ssg.eliminaLocalizacao (id);
-    }
-
-    @Override
-    public Percurso getPercurso(Localizacao lRobot, Localizacao lPalete, Localizacao destino, String idRobot) {
-        return this.armazem.criarPercurso(lRobot, lPalete, destino, idRobot);
-    }
 
     @Override
     public void comunicarTransporte(Robot r, Palete p, Localizacao destino) {
@@ -159,9 +139,4 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
         return this.sst.robotHasPalete(id);
     }
 
-    public void putAllLocalizacoes(String[] s){
-        for(String si:s){
-            this.armazem.putAllLocalizacoes(s);
-        }
-    }
 }

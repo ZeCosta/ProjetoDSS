@@ -28,20 +28,8 @@ public interface IGestaoArmazemLNFacade {
 
     Robot getRobotDisponivel();
 
-    void mudaLocalizacaoR (String id, String l);
-
-    void eliminaPaleteR (String id);
-
-    void mudaEstado (String id, String e);
-
-    void eliminaLocalizacaoP (String id);
-
-    Percurso getPercurso(Localizacao lRobot, Localizacao lPalete, Localizacao destino, String idRobot);
 
     void comunicarTransporte(Robot r, Palete p, Localizacao destino);
-
-    void putAllLocalizacoes(String[] s);
-
 
     Set<Robot> getRobotComOrdens();
 
@@ -62,11 +50,4 @@ public interface IGestaoArmazemLNFacade {
 
     boolean robotHasPalete(String id);
 
-
-
-    /*Map<String,Localizacao> solicitarListagem();
-    void ordemTransporte(String idRobot, String idPalete);
-    void comunicarQR(QRCode qr);
-    void entregarPalete(String idRobot);
-    void recolherPalete(String idRobot);*/
 }

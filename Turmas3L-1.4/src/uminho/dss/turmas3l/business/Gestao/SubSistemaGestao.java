@@ -1,26 +1,15 @@
 package uminho.dss.turmas3l.business.Gestao;
 
-import uminho.dss.turmas3l.business.Transporte.Robot;
 import uminho.dss.turmas3l.data.PaleteDAO;
 
 import java.util.*;
 
-            public class SubSistemaGestao implements IGest{
+public class SubSistemaGestao implements IGest{
     private Map<String, Palete> paletes;
 
     public SubSistemaGestao(){
         this.paletes = PaleteDAO.getInstance();
     }
-
-    /*
-    public void setPaletesIds(Collection<String> ids){
-        paletes.addAll(ids);
-    }
-
-    public void addPaleteId(String id){
-        paletes.add(id);
-    }
-    */
 
     @Override
     public Palete getPalete(String id) {

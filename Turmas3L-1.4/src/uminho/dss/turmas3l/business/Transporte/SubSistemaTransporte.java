@@ -1,13 +1,14 @@
 package uminho.dss.turmas3l.business.Transporte;
 
 
+import uminho.dss.turmas3l.business.Gestao.IGest;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Localizacao;
 import uminho.dss.turmas3l.data.RobotDAO;
 
 import java.util.*;
 
-public class SubSistemaTransporte {
+public class SubSistemaTransporte implements ITransporte {
     private Map<String, Robot> robots;
 
     public SubSistemaTransporte(){
