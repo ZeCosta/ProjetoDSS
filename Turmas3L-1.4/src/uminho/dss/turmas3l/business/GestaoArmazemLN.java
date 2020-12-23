@@ -106,7 +106,7 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
     @Override
     public void comunicarTransporte(Robot r, Palete p, Localizacao destino) {
         Percurso per = this.armazem.criarPercurso(r.getLocalizacao(), p.getLocalizacao(),destino, r.getId());
-        this.sst.comunicarTransporte(r.getId(), p, per);
+        if(per!=null) this.sst.comunicarTransporte(r.getId(), p, per);
     }
 
 
