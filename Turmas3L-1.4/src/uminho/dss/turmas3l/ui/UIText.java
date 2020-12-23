@@ -174,11 +174,8 @@ public class UIText {
                     if (!p.getLocalizacao().getLocal().equals(destino)) {  //<- se a origem for igual ao destino nao transportar
                         Robot robotdisponivel = this.model.getRobotDisponivel();
                         if(robotdisponivel!=null){
-                            System.out.println(robotdisponivel.toString());
                             //chamar comunicarTransporte para criar percurso e enviar para o robot
                             this.model.comunicarTransporte(robotdisponivel,p,new Localizacao(destino));
-                            //this.model.comunicarTransporte2(robotdisponivel.getId(),p,this.model.getPercurso(robotdisponivel.getLocalizacao(),p.getLocalizacao(),new Localizacao(destino),robotdisponivel.getId()));
-                            //this.model.comunicarTransporte2(robotdisponivel.getId(),p,new Percurso(robotdisponivel.getId(),robotdisponivel.getLocalizacao().getLocal(),p.getLocalizacao().getLocal(),(new Localizacao(destino)).getLocal()));
 
                         }else{
                             //else guardar numa lista de ordens ?
@@ -343,6 +340,9 @@ public class UIText {
 
                 //verificar se há ordens na lista de ordens
                 r.setLocalizacao(new Localizacao(r.getPercurso().getcRobotsFim()));
+                r.setEstado("LIVRE");
+                r.setPercurso(new Percurso(r.getId(),null,null,null));
+                r.setPalete(null);
                 this.model.addRobot(r);
             }
         }

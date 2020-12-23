@@ -200,7 +200,7 @@ public class PaleteDAO implements Map<String, Palete> {
              Statement stm = conn.createStatement()) {
 
             // adicionar localizacao se nao existe
-            stm.executeUpdate(
+            if(l!=null)stm.executeUpdate(
                     "INSERT IGNORE INTO localizacao " +
                                 "VALUES ('"+ l.getLocal()+ "')");
 
@@ -217,6 +217,7 @@ public class PaleteDAO implements Map<String, Palete> {
 
 
             // Actualizar a palete
+            if(l!=null)
             stm.executeUpdate(
                     "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
                             ", '"+l.getLocal()+"', '" +
@@ -224,7 +225,13 @@ public class PaleteDAO implements Map<String, Palete> {
                                 "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao),"+
                                 "materia=VALUES(materia),"+
                                 "peso=VALUES(peso)");
-
+            else stm.executeUpdate(
+                    "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
+                            ", NULL, '" +
+                            m.getId()+"') " +
+                            "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao),"+
+                            "materia=VALUES(materia),"+
+                            "peso=VALUES(peso)");
 
         } catch (SQLException e) {
             // Database error!
