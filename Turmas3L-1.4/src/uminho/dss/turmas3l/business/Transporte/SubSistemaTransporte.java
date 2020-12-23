@@ -60,10 +60,12 @@ public class SubSistemaTransporte {
     }
 
     public Robot getRobotDisponivel() {
-        Robot res = null;
         for(Robot r:this.robots.values()){
-            if(r.getEstado().equals("LIVRE")) res=r;
+            if(r.getEstado().equals("LIVRE")){
+                System.out.println(r.toString());
+                return r;
+            }
         }
-        return res;
+        return null;
     }
 }

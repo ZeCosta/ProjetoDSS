@@ -66,7 +66,7 @@ public class Robot {
         final StringBuilder sb = new StringBuilder("Robot{");
         sb.append("id='").append(id).append('\'');
         sb.append(", Estado='").append(this.getEstado()).append('\'');
-        sb.append(", Palete=").append(this.getPalete().getId()).append('\'');
+        if (palete!=null) sb.append(", Palete=").append(this.getPalete().getId()).append('\'');
         sb.append(", Percurso=").append(this.getPercurso().getId()).append('\'');
         sb.append(", localizacao='").append(localizacao.getLocal());
         sb.append('}');

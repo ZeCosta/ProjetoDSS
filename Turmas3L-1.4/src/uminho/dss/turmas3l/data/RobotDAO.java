@@ -154,6 +154,7 @@ public class RobotDAO implements Map<String, Robot> {
                 String idRobot = rs.getString("id");
                 String estado = rs.getString("estado");
                 Robot.Estado e = Robot.Estado.valueOf(estado);
+                Localizacao lo = new Localizacao(rs.getString("localizacao"));
                 if(e.equals(Robot.Estado.TRANSPORTAR)){
                         // Robot possui palete com ele, é preciso reconstruir a localização da palete, a matéria prima e a própria palete
                         String idPalete = rs.getString("paleteId");
@@ -172,7 +173,7 @@ public class RobotDAO implements Map<String, Robot> {
                                 String idLocalizacao = rsa.getString("localizacao");
                                 try(ResultSet rsc = stm.executeQuery("SELECT * FROM localizacao WHERE id='"+idLocalizacao+"'")){
                                     if(rsc.next()){
-                                        l = new Localizacao(rsc.getString("l_local"));
+                                        l = new Localizacao(rsc.getString("id"));
                                     }
                                 }
                                 p = new Palete(idPalete, rsa.getDouble("peso"),mp,l);
@@ -190,7 +191,12 @@ public class RobotDAO implements Map<String, Robot> {
                     }
                 }
 
-                r = new Robot(idRobot, e, p, per, l);
+
+                System.out.println(per.toString());
+                System.out.println(lo.toString());
+                System.out.println(e.toString());
+                r = new Robot(idRobot, e, p, per, lo);
+                System.out.println(r.toString());
             }
         } catch (SQLException e) {
             // Database error!
@@ -321,9 +327,9 @@ public class RobotDAO implements Map<String, Robot> {
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT id FROM robot")) { // ResultSet com os ids de todas as turmas
             while (rs.next()) {
-                String idt = rs.getString("id"); // Obtemos um id de turma do ResultSet
-                Robot r = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
-                res.add(r);                                 // Adiciona a turma ao resultado.
+                String idt = rs.getString("id");
+                Robot r = this.get(idt);
+                res.add(r);
             }
         } catch (Exception e) {
             // Database error!

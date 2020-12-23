@@ -174,6 +174,7 @@ public class UIText {
                     if (!p.getLocalizacao().getLocal().equals(destino)) {  //<- se a origem for igual ao destino nao transportar
                         Robot robotdisponivel = this.model.getRobotDisponivel();
                         if(robotdisponivel!=null){
+                            System.out.println(robotdisponivel.toString());
                             //chamar comunicarTransporte para criar percurso e enviar para o robot
                             this.model.comunicarTransporte(robotdisponivel,p,new Localizacao(destino));
                             //this.model.comunicarTransporte2(robotdisponivel.getId(),p,this.model.getPercurso(robotdisponivel.getLocalizacao(),p.getLocalizacao(),new Localizacao(destino),robotdisponivel.getId()));
