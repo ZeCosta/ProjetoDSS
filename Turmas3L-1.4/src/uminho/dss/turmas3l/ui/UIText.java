@@ -42,6 +42,7 @@ public class UIText {
      */
     public void run() {
         System.out.println("Bem vindo ao Sistema de Gestão de Armazém!");
+        this.criarArmazem();
         this.menuPrincipal();
         System.out.println("Até breve...");
     }
@@ -121,7 +122,6 @@ public class UIText {
      */
     private void gestaoDeOpcoes() {
         Menu menu = new Menu(new String[]{
-                "Criar Armazem (colocar localizacoes (e arestas?) na base de dados",
                 "Povoar base de dados (adicionar paletes e robot)",
                 "Adicionar Robot",
                 "Eliminar Robot",
@@ -129,7 +129,7 @@ public class UIText {
         });
 
         // Registar os handlers
-        menu.setHandler(1, ()->criarArmazem());
+        //menu.setHandler(1, ()->criarArmazem());
         menu.setHandler(2, ()->povoarBD());
         menu.setHandler(3, ()->adicionarRobot());
         menu.setHandler(4, ()->eliminarRobot());

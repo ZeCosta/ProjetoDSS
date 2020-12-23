@@ -17,8 +17,7 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS localizacao (" +
-                    "id varchar(10) NOT NULL PRIMARY KEY," +
-                    "l_local varchar(20) NOT NULL)";
+                    "id varchar(10) NOT NULL PRIMARY KEY)";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
             // Erro a criar tabela...

@@ -80,7 +80,7 @@ public class SubSistemaGestao implements IGest{
 
     @Override
     public boolean haPalete() {
-        return this.paletes.size()>0;
+        return !this.paletes.isEmpty();
     }
 
 

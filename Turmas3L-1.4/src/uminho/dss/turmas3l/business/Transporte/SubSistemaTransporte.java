@@ -75,6 +75,6 @@ public class SubSistemaTransporte {
     }
 
     public boolean haRobot() {
-        return this.robots.size()>0;
+        return !this.robots.isEmpty();
     }
 }
