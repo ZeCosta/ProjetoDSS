@@ -24,7 +24,6 @@ public class Percurso {
     public String getcRecolha() {
         return cRecolha;
     }
-
     public void setcRecolha(String cRecolha) {
         this.cRecolha = cRecolha;
     }
@@ -32,7 +31,6 @@ public class Percurso {
     public String getcEntrega() {
         return cEntrega;
     }
-
     public void setcEntrega(String cEntrega) {
         this.cEntrega = cEntrega;
     }
@@ -40,9 +38,25 @@ public class Percurso {
     public String getcRobots() {
         return cRobots;
     }
-
     public void setcRobots(String cRobots) {
         this.cRobots = cRobots;
+    }
+
+
+    public String getcRecolhaFim(){
+        String[] linha = this.getcRecolha().split(":", 0);
+        if(linha.length==0) return null;
+        return linha[linha.length-1];
+    }
+    public String getcEntregaFim(){
+        String[] linha = this.getcEntrega().split(":", 0);
+        if(linha.length==0) return null;
+        return linha[linha.length-1];
+    }
+    public String getcRobotsFim(){
+        String[] linha = this.getcRobots().split(":", 0);
+        if(linha.length==0) return null;
+        return linha[linha.length-1];
     }
 
     @Override
