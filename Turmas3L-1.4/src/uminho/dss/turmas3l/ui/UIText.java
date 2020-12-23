@@ -155,9 +155,12 @@ public class UIText {
             QRCode qrcode = new QRCode(qr);
             //chamar metodo criarPalete
             Palete p = qrcode.criarPalete();
-            p.setLocalizacao(new Localizacao("ZRececao"));
-            //adicionar paelte a zona de rececao
-            this.model.adicionarPalete(p);
+            if(p!=null){
+                p.setLocalizacao(new Localizacao("ZRececao"));
+                //adicionar paelte a zona de rececao
+                this.model.adicionarPalete(p);
+            }
+            else System.out.println("QRCode invalido");
 
         }
         catch (NullPointerException e) {
@@ -433,8 +436,6 @@ public class UIText {
                 //adicionar robot com id lido
                 Robot r = new Robot(id, Robot.Estado.LIVRE,null,new Percurso(id,null,null,null),new Localizacao("ZRobots"));
 
-                //System.out.println(r.toString());
-                System.out.println(r.getId());
                 this.model.addRobot(r);
             }
             else{
