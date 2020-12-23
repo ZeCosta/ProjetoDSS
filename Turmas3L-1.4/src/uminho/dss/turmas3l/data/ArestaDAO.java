@@ -35,7 +35,7 @@ public class ArestaDAO implements Map<String, Aresta> {
                     "id varchar(10) NOT NULL PRIMARY KEY)";
             stm.executeUpdate(sql);
             sql = "CREATE TABLE IF NOT EXISTS aresta (" +
-                    "id varchar(10) NOT NULL PRIMARY KEY," +
+                    "id varchar(20) NOT NULL PRIMARY KEY," +
                     "v1 varchar(45) NOT NULL," +
                     "v2 varchar(45) NOT NULL," +
                     "foreign key(v1) references localizacao(id)," +
@@ -193,6 +193,7 @@ public class ArestaDAO implements Map<String, Aresta> {
              Statement stm = conn.createStatement()) {
 
             // Actualizar a aresta
+            //System.out.println(a.getV1().getLocal()+"->"+a.getV2().getLocal());
             stm.executeUpdate(
                     "INSERT INTO aresta VALUES ('"+key+"'," +
                             "'" +a.getV1().getLocal() +"','" +

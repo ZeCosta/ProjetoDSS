@@ -184,9 +184,140 @@ public class Armazem {
         }
 
         //arestas
-        Aresta a = new Aresta("ZRececaoC1",new Localizacao("ZRececao"),new Localizacao("C1"));
+        Aresta a = new Aresta("",new Localizacao("ZRececao"),new Localizacao("C1"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
         this.arestas.put(a.getId(),a);
-        a = new Aresta("C1ZRececao",new Localizacao("C1"),new Localizacao("ZRececao"));
+        a = new Aresta("",new Localizacao("C1"),new Localizacao("ZRececao"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("C1"),new Localizacao("CP1N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP1N"),new Localizacao("P1N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("C1ZRececao",new Localizacao("P1N"),new Localizacao("CP1N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP1N"),new Localizacao("CP2N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP2N"),new Localizacao("P2N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("P2N"),new Localizacao("CP2N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP2N"),new Localizacao("CP3N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+
+        a = new Aresta("",new Localizacao("CP3N"),new Localizacao("P3N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("P3N"),new Localizacao("CP3N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP3N"),new Localizacao("CP4N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+
+        a = new Aresta("",new Localizacao("CP4N"),new Localizacao("P4N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("P4N"),new Localizacao("CP4N"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+
+        a = new Aresta("",new Localizacao("CP4N"),new Localizacao("C2"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("C2"),new Localizacao("CZEntrega"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CZEntrega"),new Localizacao("ZEntrega"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("ZEntrega"),new Localizacao("CZEntrega"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CZEntrega"),new Localizacao("C4"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("C4"),new Localizacao("CP4S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP4S"),new Localizacao("P4S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("P4S"),new Localizacao("CP4S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP4S"),new Localizacao("CP3S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP3S"),new Localizacao("P3S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("P3S"),new Localizacao("CP3S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP3S"),new Localizacao("CP2S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP2S"),new Localizacao("P2S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("P2S"),new Localizacao("CP2S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP2S"),new Localizacao("CP1S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP1S"),new Localizacao("P1S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("P1S"),new Localizacao("CP1S"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("CP1S"),new Localizacao("C3"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("C3"),new Localizacao("CRobots"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+
+        a = new Aresta("",new Localizacao("ZRobots"),new Localizacao("CRobots"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("CRobots"),new Localizacao("ZRobots"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
+
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("",new Localizacao("CRobots"),new Localizacao("C1"));
+        a.setId(a.getV1().getLocal()+a.getV2().getLocal());
         this.arestas.put(a.getId(),a);
     }
 }
