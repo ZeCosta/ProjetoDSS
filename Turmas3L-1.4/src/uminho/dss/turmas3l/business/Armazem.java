@@ -3,10 +3,12 @@ package uminho.dss.turmas3l.business;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Transporte.Percurso;
 import uminho.dss.turmas3l.business.Transporte.Robot;
+import uminho.dss.turmas3l.data.LocalizacaoDAO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 /*
  * Esta classe representa o desenho ou mapa do armazém.
@@ -17,6 +19,9 @@ import java.util.Collection;
 public class Armazem {
     private int mapa[][];
     private String[] locaisOrdenados;
+    private Map<String,Localizacao> localizacoes;
+
+
 
     /*private int indiceLocal(String local, String[] locais){
         int i = 0, size = locais.length, res = -1;
@@ -98,7 +103,8 @@ public class Armazem {
                 /*CP2S*/     {    0,    0, 0,  0,  0,  0,  0,   0,   0,   0,   0,   0,      0,       0,        0,   0,  0,  1,  0,  0,  1,   0,   1,   0,   0},
                 /*CP3S*/     {    0,    0, 0,  0,  0,  0,  0,   0,   0,   0,   0,   0,      0,       0,        0,   0,  0,  0,  1,  0,  0,   1,   0,   1,   0},
                 /*CP4S*/     {    0,    0, 0,  0,  0,  0,  0,   0,   0,   0,   0,   0,      0,       0,        0,   0,  0,  0,  0,  1,  0,   0,   1,   0,   1},
-                /*C4*/       {    0,    0, 0,  0,  0,  0,  1,   0,   0,   0,   0,   0,      0,       1,        0,   0,  0,  0,  0,  0,  0,   0,   0,   1,   0}};;
+                /*C4*/       {    0,    0, 0,  0,  0,  0,  1,   0,   0,   0,   0,   0,      0,       1,        0,   0,  0,  0,  0,  0,  0,   0,   0,   1,   0}};
+        this.localizacoes = LocalizacaoDAO.getInstance();
     }
 
     public String[] getLocaisOrdenados(){
