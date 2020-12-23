@@ -62,7 +62,6 @@ public class SubSistemaTransporte {
     public Robot getRobotDisponivel() {
         for(Robot r:this.robots.values()){
             if(r.getEstado().equals("LIVRE")){
-                System.out.println(r.toString());
                 return r;
             }
         }

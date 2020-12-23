@@ -192,11 +192,7 @@ public class RobotDAO implements Map<String, Robot> {
                 }
 
 
-                System.out.println(per.toString());
-                System.out.println(lo.toString());
-                System.out.println(e.toString());
                 r = new Robot(idRobot, e, p, per, lo);
-                System.out.println(r.toString());
             }
         } catch (SQLException e) {
             // Database error!
