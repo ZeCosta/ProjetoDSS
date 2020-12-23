@@ -73,7 +73,7 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
 
     public MateriaPrima get(Object key) {
         MateriaPrima mp = null;
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM materiaprima WHERE id='"+key+"'")) {
             if (rs.next()) {  // A chave existe na tabela
@@ -90,7 +90,7 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
 
     public MateriaPrima put(String key, MateriaPrima mp) {
         MateriaPrima res = null;
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate(
                     "INSERT INTO materiaprima VALUES ('"+mp.getId()+"', '"+mp.getNome()+"', '"+mp.getPeso()+"', '"+mp.getQtd()+"' NULL) " +
@@ -104,7 +104,7 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
 
     public MateriaPrima remove(Object key) {
         MateriaPrima mp = this.get(key);
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate("DELETE FROM materiaprima WHERE id='"+key+"'");
         } catch (Exception e) {
@@ -121,7 +121,7 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
     }
 
     public void clear() {
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate("TRUNCATE materiaprima");
         } catch (SQLException e) {
@@ -140,7 +140,7 @@ public class MateriaPrimaDAO implements Map<String, MateriaPrima> {
 
     public Collection<MateriaPrima> values() {
         Collection<MateriaPrima> col = new HashSet<>();
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT id FROM materiaprima")) {
             while (rs.next()) {

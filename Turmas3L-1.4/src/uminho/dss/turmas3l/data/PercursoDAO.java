@@ -74,7 +74,7 @@ public class PercursoDAO implements Map<String, Percurso> {
 
     public Percurso get(Object key) {
         Percurso p = null;
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM percurso WHERE id='"+key+"'")) {
             if (rs.next()) {  // A chave existe na tabela
@@ -90,7 +90,7 @@ public class PercursoDAO implements Map<String, Percurso> {
 
     public Percurso put(String key, Percurso p) {
         Percurso res = null;
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate(
                     "INSERT INTO percurso VALUES ('"+p.getId()+"', '"+p.getcEntrega()+"', '"+p.getcRecolha()+"', '"+p.getcRobots()+"' NULL) " +
@@ -104,7 +104,7 @@ public class PercursoDAO implements Map<String, Percurso> {
 
     public Percurso remove(Object key) {
         Percurso p = this.get(key);
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate("DELETE FROM percurso WHERE id='"+key+"'");
         } catch (Exception e) {
@@ -121,7 +121,7 @@ public class PercursoDAO implements Map<String, Percurso> {
     }
 
     public void clear() {
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate("TRUNCATE percurso");
         } catch (SQLException e) {
@@ -140,7 +140,7 @@ public class PercursoDAO implements Map<String, Percurso> {
 
     public Collection<Percurso> values() {
         Collection<Percurso> col = new HashSet<>();
-        try (Connection conn = DriverManager.getConnection(DAOconfig.URL, DAOconfig.USERNAME, DAOconfig.PASSWORD);
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT id FROM percurso")) {
             while (rs.next()) {
