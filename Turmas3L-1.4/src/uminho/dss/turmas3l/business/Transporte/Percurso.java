@@ -44,4 +44,15 @@ public class Percurso {
     public void setcRobots(String cRobots) {
         this.cRobots = cRobots;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Percurso{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", cRecolha='").append(cRecolha).append('\'');
+        sb.append(", cEntrega='").append(cEntrega).append('\'');
+        sb.append(", cRobots='").append(cRobots).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

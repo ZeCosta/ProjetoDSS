@@ -18,7 +18,7 @@ public class Armazem {
     private int mapa[][];
     private String[] locaisOrdenados;
 
-    private int indiceLocal(String local, String[] locais){
+    /*private int indiceLocal(String local, String[] locais){
         int i = 0, size = locais.length, res = -1;
         boolean stop = false;
 
@@ -55,9 +55,9 @@ public class Armazem {
             i++;
         }
         return res;
-    }
+    }*/
 
-    private String criaCaminho(int inicio, int fim, String[] locais, int[][] mapa){
+    /*private String criaCaminho(int inicio, int fim, String[] locais, int[][] mapa){
         String caminho = locais[inicio];
 
         if(inicio == fim){
@@ -66,7 +66,7 @@ public class Armazem {
             int pivot = procuraArco(mapa[inicio]);
             return caminho + ":" + criaCaminho(pivot,fim,locais,mapa);
         }
-    }
+    }*/
 
     public Armazem(){
         this.locaisOrdenados = new String[]{"ZRececao", "C1", "P1N", "P2N", "P3N", "P4N", "CP1N",
@@ -116,22 +116,18 @@ public class Armazem {
         String localP = lPalete.getLocal();
         String dest = destino.getLocal();
 
-        int iRobot = indiceLocal(localR, locaisOrdenados);
+        /*int iRobot = indiceLocal(localR, locaisOrdenados);
         int iPalete = indiceLocal(localP, locaisOrdenados);
         int iDest = indiceLocal(dest, locaisOrdenados);
 
         if(iRobot < 0 || iPalete < 0 || iDest < 0)
-            return null;
+            return null;*/
 
-        String cRecolha = criaCaminho(iRobot, iPalete, locaisOrdenados, mapa);
-        /*String cEntrega = criaCaminho(iPalete, iDest, locaisOrdenados, mapa);
-        String cRobots = criaCaminho(iDest, iRobot, locaisOrdenados, mapa);*/
-        System.out.println(cRecolha);
-       /* System.out.println(cEntrega);
-        System.out.println(cRobots);*/
+        String cRecolha = localR + ":" + localP;
+        String cEntrega = localP + ":" + dest;
+        String cRobots = dest + ":" + "ZRobots";
 
-        //res = new Percurso(idRobot,cRecolha,cEntrega,cRobots);
-        return null;
+        return new Percurso(idRobot,cRecolha,cEntrega,cRobots);
     }
 
 
@@ -140,7 +136,8 @@ public class Armazem {
         Armazem a = new Armazem();
         Localizacao lPalete = new Localizacao("P2N");
         Localizacao lRobot = new Localizacao("ZRobots");
-        Percurso p = a.criarPercurso(lRobot, lPalete, new Localizacao("ZEntrega"), "1");
+        Percurso p = a.criarPercurso(lRobot, lPalete, new Localizacao("P3S"), "1");
+        System.out.println(p.toString());
         System.out.println("Adeus");
     }
 }
