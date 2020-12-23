@@ -278,7 +278,7 @@ public class UIText {
                 System.out.println("Robot com esse id não está a recolher palete");
             }
             else{
-                r.setEstado(r.getPercurso().getcRecolhaFim());
+                r.setLocalizacao(new Localizacao(r.getPercurso().getcRecolhaFim()));
                 String idP = r.getPalete().getId();
                 Palete p = this.model.getPalete(idP);
                 if (p.getLocalizacao()==null) {
@@ -306,12 +306,38 @@ public class UIText {
     public void notificarEntrega(){
         try {
             //alterar localizacao do robot
-            //entregar a palete -> colocar no local e retirar do robot
+            //verificar se nao ha palete no sitio -> entregar a palete -> colocar no local e retirar do robot
             //alterar estado do robot
 
             //verificar se há entregas na fila de espera
             //      -> Se sim, dar a ordem ao robot
             //      -> Se nao, alterar a localizacao do robot para a zona de descanso
+
+            System.out.println("Id do robot: ");
+            String id = scin.nextLine();
+
+            Robot r = this.model.getRobot(id);
+            if(r==null){
+                System.out.println("Robot com esse id não existe");
+            }
+            else if (!r.getEstado().equals("TRANSPORTAR")){
+                System.out.println("Robot com esse id não está a transportar palete");
+            }
+            else{
+                r.setLocalizacao(new Localizacao(r.getPercurso().getcEntregaFim()));
+                String idP = r.getPalete().getId();
+                Palete p = this.model.getPalete(idP);
+
+                //verificar que não ha palete naquele sitio...
+                p.setLocalizacao(r.getLocalizacao());
+                r.setEstado("REGRESSAR");
+
+                this.model.adicionarPalete(p);
+
+                //verificar se há ordens na lista de ordens
+                r.setLocalizacao(new Localizacao(r.getPercurso().getcRobotsFim()));
+                this.model.addRobot(r);
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -320,7 +346,7 @@ public class UIText {
 
     public void criarArmazem(){
         try {
-            //adicionar localizacoes
+            //adicionar localizacoes this.model.addLocalizacoes(String[] ...)
             //adicionar arestas?
             //atualizar armazem?
         }
