@@ -269,24 +269,30 @@ public class UIText {
         try {
             System.out.println("Id do robot: ");
             String id = scin.nextLine();
-            if(this.model.getRobot(id)==null){
+
+            Robot r = this.model.getRobot(id);
+            if(r==null){
                 System.out.println("Robot com esse id não existe");
             }
-            else if (!this.model.getRobot(id).getEstado().equals("BUSCAR")){
-                System.out.println("Robot com esse id está com outras ocupações");
+            else if (!r.getEstado().equals("BUSCAR")){
+                System.out.println("Robot com esse id não está a recolher palete");
             }
             else{
-                this.model.mudaLocalizacaoR(id, "ZRececao");
-                String idP = this.model.getRobot(id).getPalete().getId();
-                if (this.model.getPalete(idP).getLocalizacao().equals(null)) {
-                    this.model.eliminaPaleteR(id);
-                    this.model.mudaLocalizacaoR(id, "ZRobots");
-                    this.model.mudaEstado(id, "LIVRE");
+                r.setEstado(r.getPercurso().getcRecolhaFim());
+                String idP = r.getPalete().getId();
+                Palete p = this.model.getPalete(idP);
+                if (p.getLocalizacao()==null) {
+                    r.setPalete(null);
+                    r.setLocalizacao(new Localizacao("ZRobots"));
+                    r.setEstado("LIVRE");
                 }
                 else {
-                    this.model.eliminaLocalizacaoP(idP);
-                    this.model.mudaEstado(id, "TRANSPORTAR");
+                    p.setLocalizacao(null);
+                    this.model.adicionarPalete(p);
+
+                    r.setEstado("TRANSPORTAR");
                 }
+                this.model.addRobot(r);
             }
         }
         catch (NullPointerException e) {
