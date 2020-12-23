@@ -125,6 +125,21 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
         return this.ssg.haPalete();
     }
 
+    @Override
+    public void delAllRobots() {
+        this.sst.delAllRobots();
+    }
+
+    @Override
+    public void delAllPaletes() {
+        this.ssg.delAllPaletes();
+    }
+
+    @Override
+    public void delAllLocalizacoes() {
+        this.armazem.delAllLocalizacoes();
+    }
+
     public void putAllLocalizacoes(String[] s){
         for(String si:s){
             this.armazem.putAllLocalizacoes(s);

@@ -291,6 +291,17 @@ public class PaleteDAO implements Map<String, Palete> {
      */
     @Override
     public void clear() {
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
+             Statement stm = conn.createStatement()) {
+            /*stm.execute("UPDATE alunos SET Turma=NULL");
+            stm.executeUpdate("TRUNCATE turmas");*/
+            stm.executeUpdate("DELETE FROM materiaprima");
+            stm.executeUpdate("DELETE FROM palete");
+        } catch (SQLException e) {
+            // Database error!
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
     }
 
     /**

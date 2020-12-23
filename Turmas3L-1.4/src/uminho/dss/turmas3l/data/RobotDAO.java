@@ -308,6 +308,17 @@ public class RobotDAO implements Map<String, Robot> {
 
     @Override
     public void clear() {
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
+             Statement stm = conn.createStatement()) {
+            /*stm.execute("UPDATE alunos SET Turma=NULL");
+            stm.executeUpdate("TRUNCATE turmas");*/
+            stm.executeUpdate("DELETE FROM percurso");
+            stm.executeUpdate("DELETE FROM robot");
+        } catch (SQLException e) {
+            // Database error!
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
 
     }
 

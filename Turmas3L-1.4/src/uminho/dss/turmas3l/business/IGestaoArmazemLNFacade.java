@@ -49,6 +49,12 @@ public interface IGestaoArmazemLNFacade {
 
     boolean haPalete();
 
+    void delAllRobots();
+
+    void delAllPaletes();
+
+    void delAllLocalizacoes();
+
 
 
     /*Map<String,Localizacao> solicitarListagem();

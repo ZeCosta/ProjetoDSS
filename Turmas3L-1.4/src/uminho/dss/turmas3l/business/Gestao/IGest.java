@@ -17,4 +17,6 @@ public interface IGest {
     Set<Palete> getPaletesTrans();
 
     boolean haPalete();
+
+    void delAllPaletes();
 }

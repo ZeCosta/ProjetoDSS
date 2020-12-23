@@ -77,4 +77,8 @@ public class SubSistemaTransporte {
     public boolean haRobot() {
         return !this.robots.isEmpty();
     }
+
+    public void delAllRobots() {
+        this.robots.clear();
+    }
 }

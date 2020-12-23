@@ -162,6 +162,10 @@ public class Armazem {
             this.localizacoes.put(si,new Localizacao(si));
         }
     }
+
+    public void delAllLocalizacoes() {
+        this.localizacoes.clear();
+    }
 }
 
 

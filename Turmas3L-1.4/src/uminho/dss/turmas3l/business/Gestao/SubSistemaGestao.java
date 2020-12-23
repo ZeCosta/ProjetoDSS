@@ -5,7 +5,7 @@ import uminho.dss.turmas3l.data.PaleteDAO;
 
 import java.util.*;
 
-public class SubSistemaGestao implements IGest{
+            public class SubSistemaGestao implements IGest{
     private Map<String, Palete> paletes;
 
     public SubSistemaGestao(){
@@ -81,6 +81,11 @@ public class SubSistemaGestao implements IGest{
     @Override
     public boolean haPalete() {
         return !this.paletes.isEmpty();
+    }
+
+    @Override
+    public void delAllPaletes() {
+        this.paletes.clear();
     }
 
 

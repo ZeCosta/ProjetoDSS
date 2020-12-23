@@ -62,6 +62,7 @@ public class UIText {
         });
 
         // Registar pré-condições das transições
+        menu.setPreCondition(1, ()->this.model.validaLocal("ZRececao"));
         menu.setPreCondition(2, ()->this.model.haRobot() && this.model.haPalete());
         menu.setPreCondition(3, ()->this.model.haPalete());
         menu.setPreCondition(4, ()->this.model.haRobot());
@@ -122,20 +123,23 @@ public class UIText {
      */
     private void gestaoDeOpcoes() {
         Menu menu = new Menu(new String[]{
+                "Criar armazem (default)",
                 "Povoar base de dados (adicionar paletes e robot)",
                 "Adicionar Robot",
                 "Eliminar Robot",
-                "etc"
+                "Limpar Base de Dados"
         });
 
         // Registar os handlers
-        //menu.setHandler(1, ()->criarArmazem());
+        menu.setHandler(1, ()->criarArmazem());
         menu.setHandler(2, ()->povoarBD());
         menu.setHandler(3, ()->adicionarRobot());
         menu.setHandler(4, ()->eliminarRobot());
+        menu.setHandler(5, ()->limparBD());
 
         menu.run();
     }
+
 
 
     /**
@@ -170,25 +174,29 @@ public class UIText {
             String id = scin.nextLine();
             Palete p = this.model.getPalete(id);
             if (p!=null) {   //<- se nao existe palete sair
-                System.out.println("Destino da palete: ");
-                String destino = scin.nextLine();
+                if(p.getLocalizacao()!=null){
+                    System.out.println("Destino da palete: ");
+                    String destino = scin.nextLine();
 
-                if (this.model.validaLocal(destino)) {  //<- valida se o destino e valido
-                    if (!p.getLocalizacao().getLocal().equals(destino)) {  //<- se a origem for igual ao destino nao transportar
-                        Robot robotdisponivel = this.model.getRobotDisponivel();
-                        if(robotdisponivel!=null){
-                            //chamar comunicarTransporte para criar percurso e enviar para o robot
-                            this.model.comunicarTransporte(robotdisponivel,p,new Localizacao(destino));
+                    if (this.model.validaLocal(destino)) {  //<- valida se o destino e valido
+                        if (!p.getLocalizacao().getLocal().equals(destino)) {  //<- se a origem for igual ao destino nao transportar
+                            Robot robotdisponivel = this.model.getRobotDisponivel();
+                            if(robotdisponivel!=null){
+                                //chamar comunicarTransporte para criar percurso e enviar para o robot
+                                this.model.comunicarTransporte(robotdisponivel,p,new Localizacao(destino));
 
+                            }else{
+                                //else guardar numa lista de ordens ?
+                                System.out.println("Não há robot disponivel. Queue de ordens indisponivel.");
+                            }
                         }else{
-                            //else guardar numa lista de ordens ?
-                            System.out.println("Não há robot disponivel. Queue de ordens indisponivel.");
+                            System.out.println("O destino da palete é igual a origem");
                         }
                     }else{
-                        System.out.println("O destino da palete é igual a origem");
+                        System.out.println("O destino não existe");
                     }
                 }else{
-                    System.out.println("O destino não existe");
+                    System.out.println("Palete já está a ser transportada");
                 }
             } else {
                 System.out.println("Essa palete não existe!");
@@ -439,6 +447,25 @@ public class UIText {
                 System.out.println("Robot com esse id está ocupado");
             }
             else this.model.deleteRobot(id);
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    private void limparBD() {
+        try {
+            //delete tudo da base de dados
+
+            //delete robot
+            this.model.delAllRobots();
+
+            //delete palete
+            this.model.delAllPaletes();
+
+            //delete localizacao
+            this.model.delAllLocalizacoes();
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
