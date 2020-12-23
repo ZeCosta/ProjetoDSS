@@ -45,6 +45,10 @@ public interface IGestaoArmazemLNFacade {
 
     Set<Robot> getRobotComOrdens();
 
+    boolean haRobot();
+
+    boolean haPalete();
+
 
 
     /*Map<String,Localizacao> solicitarListagem();

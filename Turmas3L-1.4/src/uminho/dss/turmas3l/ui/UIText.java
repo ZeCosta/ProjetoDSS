@@ -61,7 +61,10 @@ public class UIText {
         });
 
         // Registar pré-condições das transições
-        //menu.setPreCondition(4, ()->this.model.haRobot() );
+        menu.setPreCondition(2, ()->this.model.haRobot() && this.model.haPalete());
+        menu.setPreCondition(3, ()->this.model.haPalete());
+        menu.setPreCondition(4, ()->this.model.haRobot());
+        //menu.setPreCondition(4, ()->this.model.haRobot());
 
         // Registar os handlers
         menu.setHandler(1, ()->comunicarQRCode());

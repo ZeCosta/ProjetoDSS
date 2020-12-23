@@ -78,6 +78,10 @@ public class SubSistemaGestao implements IGest{
         return res;
     }
 
+    @Override
+    public boolean haPalete() {
+        return this.paletes.size()>0;
+    }
 
 
     public void eliminaLocalizacao (String id) {

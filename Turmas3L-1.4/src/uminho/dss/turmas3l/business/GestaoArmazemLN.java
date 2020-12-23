@@ -115,6 +115,16 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
         return this.sst.getRobotComOrdens();
     }
 
+    @Override
+    public boolean haRobot() {
+        return this.sst.haRobot();
+    }
+
+    @Override
+    public boolean haPalete() {
+        return this.ssg.haPalete();
+    }
+
     public void putAllLocalizacoes(String[] s){
         for(String si:s){
             this.armazem.putAllLocalizacoes(s);

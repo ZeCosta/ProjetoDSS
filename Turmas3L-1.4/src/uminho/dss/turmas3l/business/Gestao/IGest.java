@@ -16,4 +16,5 @@ public interface IGest {
     Palete getPalete(String id);
     Set<Palete> getPaletesTrans();
 
+    boolean haPalete();
 }
