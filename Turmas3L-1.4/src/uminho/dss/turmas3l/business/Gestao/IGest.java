@@ -1,6 +1,7 @@
 package uminho.dss.turmas3l.business.Gestao;
 import uminho.dss.turmas3l.business.Localizacao;
 import uminho.dss.turmas3l.business.QRCode;
+import uminho.dss.turmas3l.business.Transporte.Robot;
 
 import java.util.Map;
 import java.util.Set;
@@ -14,4 +15,5 @@ public interface IGest {
 
     Palete getPalete(String id);
     Set<Palete> getPaletesTrans();
+
 }

@@ -259,7 +259,10 @@ public class UIText {
      */
     public void listarOrdens(){
         try {
-            //System.out.println(this.model.getOrdens().toString()); <- vai a cada robot com estado diferente de "A espera" e indica o id do robot, o estado,.. (e a localizacao?)
+            //vai a cada robot com estado diferente de "A espera" e indica o id do robot, o estado,.. (e a localizacao?)
+            for(Robot r:this.model.getRobotComOrdens()){
+                System.out.println(r.toStringOrdens());
+            }
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());

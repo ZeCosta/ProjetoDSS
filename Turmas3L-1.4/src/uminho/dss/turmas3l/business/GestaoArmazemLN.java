@@ -115,6 +115,11 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
         this.sst.comunicarTransporte(r, p, per);
     }
 
+    @Override
+    public Set<Robot> getRobotComOrdens() {
+        return this.sst.getRobotComOrdens();
+    }
+
     public void putAllLocalizacoes(String[] s){
         for(String si:s){
             this.armazem.putAllLocalizacoes(s);

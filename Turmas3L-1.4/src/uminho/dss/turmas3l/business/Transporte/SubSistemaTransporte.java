@@ -5,9 +5,7 @@ import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Localizacao;
 import uminho.dss.turmas3l.data.RobotDAO;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 public class SubSistemaTransporte {
     private Map<String, Robot> robots;
@@ -66,5 +64,13 @@ public class SubSistemaTransporte {
             }
         }
         return null;
+    }
+
+    public Set<Robot> getRobotComOrdens() {
+        Set<Robot> res = new HashSet<>();
+        for(Robot r:this.robots.values()){
+            if(r.getEstado().equals("BUSCAR")||r.getEstado().equals("TRANSPORTAR")) res.add(r);
+        }
+        return res;
     }
 }

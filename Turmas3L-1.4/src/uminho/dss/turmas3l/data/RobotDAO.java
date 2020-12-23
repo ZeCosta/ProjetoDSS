@@ -155,9 +155,9 @@ public class RobotDAO implements Map<String, Robot> {
                 String estado = rs.getString("estado");
                 Robot.Estado e = Robot.Estado.valueOf(estado);
                 Localizacao lo = new Localizacao(rs.getString("localizacao"));
-                if(e.equals(Robot.Estado.TRANSPORTAR)){
+                if(e.equals(Robot.Estado.TRANSPORTAR) || e.equals(Robot.Estado.BUSCAR)){
                         // Robot possui palete com ele, é preciso reconstruir a localização da palete, a matéria prima e a própria palete
-                        String idPalete = rs.getString("paleteId");
+                        String idPalete = rs.getString("id");
                         try(ResultSet rsa = stm.executeQuery("SELECT * FROM palete WHERE id='"+idPalete+"'")){
                             //Reconstruir matéria prima
                             if(rsa.next()){

@@ -1,5 +1,6 @@
 package uminho.dss.turmas3l.business.Gestao;
 
+import uminho.dss.turmas3l.business.Transporte.Robot;
 import uminho.dss.turmas3l.data.PaleteDAO;
 
 import java.util.*;
@@ -73,6 +74,8 @@ public class SubSistemaGestao implements IGest{
         }
         return res;
     }
+
+
 
     public void eliminaLocalizacao (String id) {
         this.getPalete(id).setLocalizacao(null);

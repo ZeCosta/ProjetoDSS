@@ -44,6 +44,9 @@ public interface IGestaoArmazemLNFacade {
 
     void comunicarTransporte2(String id, Palete p, Percurso percurso);
 
+    Set<Robot> getRobotComOrdens();
+
+
 
     /*Map<String,Localizacao> solicitarListagem();
     void ordemTransporte(String idRobot, String idPalete);

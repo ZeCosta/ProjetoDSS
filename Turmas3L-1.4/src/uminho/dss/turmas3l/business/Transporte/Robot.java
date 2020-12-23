@@ -10,6 +10,16 @@ public class Robot {
     private Percurso percurso;
     private Localizacao localizacao;
 
+    public String toStringOrdens() {
+        final StringBuilder sb = new StringBuilder("Robot{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", Estado='").append(this.getEstado()).append('\'');
+        sb.append(", Palete=").append(this.getPalete().getId()).append('\'');
+        sb.append(", localizacao='").append(localizacao.getLocal());
+        sb.append('}');
+        return sb.toString();
+    }
+
     public enum Estado{
         LIVRE, BUSCAR, TRANSPORTAR, REGRESSAR
     }
