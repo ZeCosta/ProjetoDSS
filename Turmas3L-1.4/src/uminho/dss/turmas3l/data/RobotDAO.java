@@ -180,7 +180,7 @@ public class RobotDAO implements Map<String, Robot> {
                         }
                 }
                 Percurso per = null;
-                String percursoId = rs.getString("percursoId");
+                String percursoId = rs.getString("id");
                 try(ResultSet rsa = stm.executeQuery("SELECT * FROM percurso WHERE id='"+percursoId+"'")){
                     if(rsa.next()){
                         per = new Percurso(rsa.getString("id"),
@@ -217,37 +217,27 @@ public class RobotDAO implements Map<String, Robot> {
                             "VALUES ('"+ l.getLocal()+ "') ");
 
             // Atualizar percurso
-            stm.executeUpdate(
+            if(per.getcRecolha()!=null){
+                stm.executeUpdate(
+                        "INSERT INTO percurso " +
+                                "VALUES ('"+ per.getId()+ "', '"+
+                                per.getcRecolha()+"', '"+
+                                per.getcEntrega()+"', '"+
+                                per.getcRobots()+"') " +
+                                "ON DUPLICATE KEY UPDATE cRecolha=Values(cRecolha), " +
+                                "cEntrega=Values(cEntrega), " +
+                                "cRobots=Values(cRobots)");
+            }else{
+                stm.executeUpdate(
                     "INSERT INTO percurso " +
-                            "VALUES ('"+ per.getId()+ "', '"+
-                            per.getcRecolha()+"', '"+
-                            per.getcEntrega()+"', '"+
-                            per.getcRobots()+"') " +
+                            "VALUES ('"+ per.getId()+ "', "+
+                            "NULL"+", "+
+                            "NULL"+", "+
+                            "NULL"+") " +
                             "ON DUPLICATE KEY UPDATE cRecolha=Values(cRecolha), " +
                             "cEntrega=Values(cEntrega), " +
                             "cRobots=Values(cRobots)");
-            /*
-            MateriaPrima m = p.getMateriaPrima();
-            Localizacao lPalete = p.getLocalizacao();
-            //Atualizar a materia prima
-            stm.executeUpdate(
-                    "INSERT INTO materiaprima VALUES ('"+m.getId()+"', "+m.getNome()+
-                            ", '"+m.getPeso()+"', '" +
-                            m.getQtd()+"') " +
-                            "ON DUPLICATE KEY UPDATE nome=VALUES(nome),"+
-                            "quantidade=VALUES(quantidade),"+
-                            "peso=VALUES(peso)");
-
-            // Atualizar a palete
-            stm.executeUpdate(
-                    "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
-                            ", '"+l.getLocal()+"', '" +
-                            m.getId()+"') " +
-                            "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao),"+
-                            "materia=VALUES(materia),"+
-                            "peso=VALUES(peso)");
-            */
-
+            }
 
 
             if(r.getPalete()!=null){
