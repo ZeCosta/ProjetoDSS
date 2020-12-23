@@ -96,7 +96,9 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
     }
 
     @Override
-    public void comunicarTransporte(String id, Palete p, Percurso per) {
-        this.sst.comunicarTransporte(id, p, per);
+    public void comunicarTransporte(Robot r, Palete p, Localizacao destino) {
+        Percurso per = this.getPercurso(r.getLocalizacao(), p.getLocalizacao(),
+                destino, r.getId());
+        this.sst.comunicarTransporte(r.getId(), p, per);
     }
 }

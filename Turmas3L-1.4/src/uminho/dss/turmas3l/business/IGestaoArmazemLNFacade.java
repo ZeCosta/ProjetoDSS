@@ -37,7 +37,7 @@ public interface IGestaoArmazemLNFacade {
 
     Percurso getPercurso(Localizacao lRobot, Localizacao lPalete, Localizacao destino, String idRobot);
 
-    void comunicarTransporte(String id, Palete p, Percurso per);
+    void comunicarTransporte(Robot r, Palete p, Localizacao destino);
 
 
     /*Map<String,Localizacao> solicitarListagem();

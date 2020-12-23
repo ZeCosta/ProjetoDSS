@@ -172,12 +172,11 @@ public class UIText {
                     if (p.getLocalizacao().getLocal()!=destino) {  //<- se a origem for igual ao destino nao transportar
                         Robot robotdisponivel = this.model.getRobotDisponivel();
                         if(robotdisponivel!=null){
-                            //criar percurso e enviar para o robot
-                            Percurso per = this.model.getPercurso(robotdisponivel.getLocalizacao(), p.getLocalizacao(),
-                                    new Localizacao(destino), robotdisponivel.getId());
-                            this.model.comunicarTransporte(robotdisponivel.getId(),p,per);
+                            //chamar comunicarTransporte para criar percurso e enviar para o robot
+                            this.model.comunicarTransporte(robotdisponivel,p,new Localizacao(destino));
                         }else{
-                            //else guardar numa lista de ordens
+                            //else guardar numa lista de ordens ?
+                            System.out.println("Não há robot disponivel. Queue de ordens indisponivel.");
                         }
                     }else{
                         System.out.println("O destino da palete é igual a origem");
