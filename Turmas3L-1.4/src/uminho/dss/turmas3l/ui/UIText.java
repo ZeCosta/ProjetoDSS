@@ -173,6 +173,9 @@ public class UIText {
                         Robot robotdisponivel = this.model.getRobotDisponivel();
                         if(robotdisponivel!=null){
                             //criar percurso e enviar para o robot
+                            Percurso per = this.model.getPercurso(robotdisponivel.getLocalizacao(), p.getLocalizacao(),
+                                    new Localizacao(destino), robotdisponivel.getId());
+                            this.model.comunicarTransporte(robotdisponivel.getId(),p,per);
                         }else{
                             //else guardar numa lista de ordens
                         }

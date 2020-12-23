@@ -1,6 +1,7 @@
 package uminho.dss.turmas3l.business.Transporte;
 
 
+import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Localizacao;
 import uminho.dss.turmas3l.data.RobotDAO;
 
@@ -50,4 +51,11 @@ public class SubSistemaTransporte {
     }
 
 
+    public void comunicarTransporte(String id, Palete p, Percurso per) {
+        Robot r = this.getRobot(id);
+        r.setPercurso(per);
+        r.setPalete(p);
+        r.setEstado("BUSCAR");
+        this.robots.put(r.getId(),r);
+    }
 }

@@ -2,6 +2,7 @@ package uminho.dss.turmas3l.business;
 
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Gestao.SubSistemaGestao;
+import uminho.dss.turmas3l.business.Transporte.Percurso;
 import uminho.dss.turmas3l.business.Transporte.Robot;
 import uminho.dss.turmas3l.business.Transporte.SubSistemaTransporte;
 
@@ -87,5 +88,15 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
 
     public void eliminaLocalizacaoP (String id) {
         this.ssg.eliminaLocalizacao (id);
+    }
+
+    @Override
+    public Percurso getPercurso(Localizacao lRobot, Localizacao lPalete, Localizacao destino, String idRobot) {
+        return this.armazem.criarPercurso(lRobot, lPalete, destino, idRobot);
+    }
+
+    @Override
+    public void comunicarTransporte(String id, Palete p, Percurso per) {
+        this.sst.comunicarTransporte(id, p, per);
     }
 }

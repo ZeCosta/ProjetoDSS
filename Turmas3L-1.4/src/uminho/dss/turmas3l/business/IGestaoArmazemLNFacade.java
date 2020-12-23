@@ -1,5 +1,6 @@
 package uminho.dss.turmas3l.business;
 import uminho.dss.turmas3l.business.Gestao.Palete;
+import uminho.dss.turmas3l.business.Transporte.Percurso;
 import uminho.dss.turmas3l.business.Transporte.Robot;
 
 import java.util.Map;
@@ -33,6 +34,10 @@ public interface IGestaoArmazemLNFacade {
     void mudaEstado (String id, String e);
 
     void eliminaLocalizacaoP (String id);
+
+    Percurso getPercurso(Localizacao lRobot, Localizacao lPalete, Localizacao destino, String idRobot);
+
+    void comunicarTransporte(String id, Palete p, Percurso per);
 
 
     /*Map<String,Localizacao> solicitarListagem();
