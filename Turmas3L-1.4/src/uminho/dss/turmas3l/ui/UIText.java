@@ -357,10 +357,11 @@ public class UIText {
         try {
             System.out.println("Id do robot a eliminar: ");
             String id = scin.nextLine();
-            if(this.model.getRobot(id)==null){
+            Robot r =this.model.getRobot(id);
+            if(r==null){
                 System.out.println("Robot com esse id não existe");
             }
-            else if (!this.model.getRobot(id).getEstado().equals("LIVRE")){
+            else if (!r.getEstado().equals("LIVRE")){
                 System.out.println("Robot com esse id está ocupado");
             }
             else this.model.deleteRobot(id);
