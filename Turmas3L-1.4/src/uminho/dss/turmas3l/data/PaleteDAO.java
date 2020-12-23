@@ -1,9 +1,3 @@
-/*
- *  DISCLAIMER: Este código foi criado para discussão e edição durante as aulas práticas de DSS, representando
- *  uma solução em construção. Como tal, não deverá ser visto como uma solução canónica, ou mesmo acabada.
- *  É disponibilizado para auxiliar o processo de estudo. Os alunos são encorajados a testar adequadamente o
- *  código fornecido e a procurar soluções alternativas, à medida que forem adquirindo mais conhecimentos.
- */
 package uminho.dss.turmas3l.data;
 
 import uminho.dss.turmas3l.business.Gestao.MateriaPrima;
@@ -14,12 +8,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * Versão incompleta de um DAO para Turmas
- *
- * Tabelas a criar na BD: ver método getInstance
- *
- * @author JFC
- * @version 20201208
+ * DAO para Paletes
  */
 public class PaleteDAO implements Map<String, Palete> {
     private static PaleteDAO singleton = null;
@@ -64,7 +53,7 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * @return número de turmas na base de dados
+     * @return número de paletes na base de dados
      */
     @Override
     public int size() {
@@ -85,9 +74,9 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * Método que verifica se existem turmas
+     * Método que verifica se existem paletes
      *
-     * @return true se existirem 0 turmas
+     * @return true se existirem 0 paletes
      */
     @Override
     public boolean isEmpty() {
@@ -95,11 +84,11 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * Método que cerifica se um id de turma existe na base de dados
+     * Método que cerifica se um id de palete existe na base de dados
      *
-     * @param key id da turma
-     * @return true se a turma existe
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @param key id da palete
+     * @return true se a palete existe
+     * @throws NullPointerException
      */
     @Override
     public boolean containsKey(Object key) {
@@ -118,25 +107,22 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * Verifica se uma turma existe na base de dados
+     * Verifica se uma palete existe na base de dados
      *
-     * Esta implementação é provisória. Devia testar o objecto e não apenas a chave.
-     *
-     * @param value ...
-     * @return ...
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public boolean containsValue(Object value) {
         return false;
     }
 
+
     /**
      * Obter uma palete, dado o seu id
      *
      * @param key id da palete
      * @return a palete caso exista (null noutro caso)
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public Palete get(Object key) {
@@ -188,8 +174,8 @@ public class PaleteDAO implements Map<String, Palete> {
     /**
      * @param key o id da palete
      * @param p a palete
-     * @return para já retorna sempre null (deverá devolver o valor existente, caso exista um)
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @return palete
+     * @throws NullPointerException
      */
     @Override
     public Palete put(String key, Palete p) {
@@ -248,7 +234,7 @@ public class PaleteDAO implements Map<String, Palete> {
      *
      * @param key id da palete a remover
      * @return a palete removida
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public Palete remove(Object key) {
@@ -275,7 +261,7 @@ public class PaleteDAO implements Map<String, Palete> {
      * Adicionar um conjunto de palete à base de dados
      *
      * @param paletes as paletes a adicionar
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public void putAll(Map<? extends String, ? extends Palete> paletes) {
@@ -285,9 +271,9 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * Apagar todas as paletes -> não achamos necessaria a implementação
+     * Apagar todas as paletes
      *
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public void clear() {
@@ -305,7 +291,7 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * NÃO IMPLEMENTADO!
+     * NÃO IMPLEMENTADO! -> Nao é necessaria
      * @return ainda nada!
      */
     @Override
@@ -336,7 +322,7 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     /**
-     * NÃO IMPLEMENTADO!
+     * NÃO IMPLEMENTADO! -> Nao é necessaria
      * @return ainda nada!
      */
     @Override

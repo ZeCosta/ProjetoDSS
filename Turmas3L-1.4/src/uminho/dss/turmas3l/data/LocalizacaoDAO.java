@@ -1,7 +1,5 @@
 package uminho.dss.turmas3l.data;
 
-import uminho.dss.turmas3l.business.Gestao.MateriaPrima;
-import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Localizacao;
 
 import java.sql.*;
@@ -95,23 +93,20 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
     /**
      * Verifica se uma localizacao existe na base de dados
      *
-     * Esta implementação é provisória. Devia testar o objecto e não apenas a chave.
-     *
-     * @param value ...
-     * @return ...
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public boolean containsValue(Object value) {
         return false;
     }
 
+
     /**
      * Obter uma localizacao, dado o seu id (local)
      *
      * @param key local
      * @return a localizacao caso exista (null noutro caso)
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public Localizacao get(Object key) {
@@ -135,8 +130,8 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
     /**
      * @param key o local
      * @param l a localizacao
-     * @return para já retorna sempre null (deverá devolver o valor existente, caso exista um)
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @return Localizacao l
+     * @throws NullPointerException
      */
     @Override
     public Localizacao put(String key, Localizacao l) {
@@ -160,11 +155,9 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
     /**
      * Remover uma localizacao, dado o seu local
      *
-     * NOTA: Não estamos a apagar a localizacao, mas estamos a apagar a materia...
-     *
      * @param key local da localizacao a remover
      * @return a localizacao removida
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public Localizacao remove(Object key) {
@@ -186,7 +179,7 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
      * Adicionar um conjunto de localizacões à base de dados
      *
      * @param ls as localizações a adicionar
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public void putAll(Map<? extends String, ? extends Localizacao> ls) {
@@ -196,16 +189,14 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
     }
 
     /**
-     * Apagar todas as localizações -> não achamos necessaria a implementação
+     * Apagar todas as localizações
      *
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public void clear() {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
-            /*stm.execute("UPDATE alunos SET Turma=NULL");
-            stm.executeUpdate("TRUNCATE turmas");*/
             stm.executeUpdate("DELETE FROM localizacao");
         } catch (SQLException e) {
             // Database error!
@@ -215,7 +206,7 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
     }
 
     /**
-     * NÃO IMPLEMENTADO!
+     * NÃO IMPLEMENTADO! -> Nao é necessaria
      * @return ainda nada!
      */
     @Override
@@ -246,7 +237,7 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
     }
 
     /**
-     * NÃO IMPLEMENTADO!
+     * NÃO IMPLEMENTADO! -> Nao é necessaria
      * @return ainda nada!
      */
     @Override

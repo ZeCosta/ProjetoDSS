@@ -72,7 +72,7 @@ public class ArestaDAO implements Map<String, Aresta> {
     /**
      * Método que verifica se existem arestas
      *
-     * @return true se existirem 0 turmas
+     * @return true se existirem 0 arestas
      */
     @Override
     public boolean isEmpty() {
@@ -80,11 +80,9 @@ public class ArestaDAO implements Map<String, Aresta> {
     }
 
     /**
-     * Método que cerifica se um id de turma existe na base de dados
+     * Método que cerifica se um id de aresta existe na base de dados
      *
-     * @param key id da turma
-     * @return true se a turma existe
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException Em caso de erro
      */
     @Override
     public boolean containsKey(Object key) {
@@ -103,13 +101,9 @@ public class ArestaDAO implements Map<String, Aresta> {
     }
 
     /**
-     * Verifica se uma turma existe na base de dados
+     * Verifica se uma aresta existe na base de dados
      *
-     * Esta implementação é provisória. Devia testar o objecto e não apenas a chave.
-     *
-     * @param value ...
-     * @return ...
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException Em caso de erro
      */
     @Override
     public boolean containsValue(Object value) {
@@ -117,11 +111,11 @@ public class ArestaDAO implements Map<String, Aresta> {
     }
 
     /**
-     * Obter uma palete, dado o seu id
+     * Obter uma aresta, dado o seu id
      *
-     * @param key id da palete
-     * @return a palete caso exista (null noutro caso)
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @param key id da aresta
+     * @return a aresta caso exista (null noutro caso)
+     * @throws NullPointerException Em caso de erro
      */
     @Override
     public Aresta get(Object key) {
@@ -169,10 +163,9 @@ public class ArestaDAO implements Map<String, Aresta> {
 
 
     /**
-     * @param key o id da palete
-     * @param a a palete
-     * @return para já retorna sempre null (deverá devolver o valor existente, caso exista um)
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @param key o id da aresta
+     * @param a a aresta
+     * @throws NullPointerException Em caso de erro
      */
     @Override
     public Aresta put(String key, Aresta a) {
@@ -199,13 +192,11 @@ public class ArestaDAO implements Map<String, Aresta> {
     }
 
     /**
-     * Remover uma palete, dado o seu id
+     * Remover uma aresta, dado o seu id
      *
-     * NOTA: Não estamos a apagar a localizacao, mas estamos a apagar a materia...
+     * NOTA: Não estamos a apagar a localizacao
      *
-     * @param key id da palete a remover
-     * @return a palete removida
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public Aresta remove(Object key) {
@@ -225,10 +216,10 @@ public class ArestaDAO implements Map<String, Aresta> {
 
 
     /**
-     * Adicionar um conjunto de palete à base de dados
+     * Adicionar um conjunto de arestas à base de dados
      *
-     * @param arestas as paletes a adicionar
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @param arestas as arestas a adicionar
+     * @throws NullPointerException
      */
     @Override
     public void putAll(Map<? extends String, ? extends Aresta> arestas) {
@@ -238,9 +229,9 @@ public class ArestaDAO implements Map<String, Aresta> {
     }
 
     /**
-     * Apagar todas as paletes -> não achamos necessaria a implementação
+     * Apagar todas as palarestasetes
      *
-     * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
+     * @throws NullPointerException
      */
     @Override
     public void clear() {
@@ -257,7 +248,7 @@ public class ArestaDAO implements Map<String, Aresta> {
     }
 
     /**
-     * NÃO IMPLEMENTADO!
+     * NÃO IMPLEMENTADO! -> Nao é necessaria
      * @return ainda nada!
      */
     @Override
@@ -265,8 +256,9 @@ public class ArestaDAO implements Map<String, Aresta> {
         throw new NullPointerException("Not implemented!");
     }
 
+
     /**
-     * @return Todas as paletes da base de dados
+     * @return Todas as arestas da base de dados
      */
     @Override
     public Collection<Aresta> values() {
@@ -288,7 +280,7 @@ public class ArestaDAO implements Map<String, Aresta> {
     }
 
     /**
-     * NÃO IMPLEMENTADO!
+     * NÃO IMPLEMENTADO! -> Nao é necessaria
      * @return ainda nada!
      */
     @Override
