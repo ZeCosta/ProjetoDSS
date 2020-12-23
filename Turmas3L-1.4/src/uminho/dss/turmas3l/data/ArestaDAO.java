@@ -6,6 +6,7 @@
  */
 package uminho.dss.turmas3l.data;
 
+import uminho.dss.turmas3l.business.Aresta;
 import uminho.dss.turmas3l.business.Gestao.MateriaPrima;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Localizacao;
@@ -24,7 +25,7 @@ import java.util.Set;
  * @author JFC
  * @version 20201208
  */
-public class ArestaDAO implements Map<String, Palete> {
+public class ArestaDAO implements Map<String, Aresta> {
     private static ArestaDAO singleton = null;
 
     private ArestaDAO() {
@@ -34,9 +35,9 @@ public class ArestaDAO implements Map<String, Palete> {
                     "id varchar(10) NOT NULL PRIMARY KEY)";
             stm.executeUpdate(sql);
             sql = "CREATE TABLE IF NOT EXISTS aresta (" +
-                    "id varchar(10) NOT NULL PRIMARY KEY" +
+                    "id varchar(10) NOT NULL PRIMARY KEY," +
                     "v1 varchar(45) NOT NULL," +
-                    "v2 varchar(45) NOT NULL)" +
+                    "v2 varchar(45) NOT NULL," +
                     "foreign key(v1) references localizacao(id)," +
                     "foreign key(v2) references localizacao(id))";
             stm.executeUpdate(sql);
@@ -104,7 +105,7 @@ public class ArestaDAO implements Map<String, Palete> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs =
-                     stm.executeQuery("SELECT id FROM aaresta WHERE id='"+key.toString()+"'")) {
+                     stm.executeQuery("SELECT id FROM aresta WHERE id='"+key.toString()+"'")) {
             r = rs.next();
         } catch (SQLException e) {
             // Database error!
@@ -136,108 +137,77 @@ public class ArestaDAO implements Map<String, Palete> {
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public Palete get(Object key) {
-        Palete p = null;
+    public Aresta get(Object key) {
+        Aresta a = null;
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM aresta WHERE Id='"+key+"'")) {
             if (rs.next()) {  // A chave existe na tabela
-            /*    // Reconstruir a MateriaPrima
-                MateriaPrima m = null;
-                String sql = "SELECT * FROM materiaprima WHERE id='"+rs.getString("materia")+"'";
+
+                // Reconstruir v1
+                Localizacao l1 = null;
+                String sql = "SELECT * FROM localizacao WHERE id='"+rs.getString("v1")+"'";
                 try (ResultSet rsa = stm.executeQuery(sql)) {
                     if (rsa.next()) {  // Encontrou a sala
-                        m = new MateriaPrima(rs.getString("id"),
-                                     rsa.getString("nome"),
-                                rsa.getDouble("peso"),
-                                rsa.getInt("quantidade"));
-                    } else {
-                        // BD inconsistente!! Sala não existe - tratar com excepções.
-                    } // catch é feito no try inicial - este try serve para fechar o ResultSet automaticamente
-                      // Nota: abrir um novo ResultSet no mesmo Statement fecha o ResultSet anterior
-                }
-
-                // Reconstruir a localizacao
-                Localizacao l = null;
-                sql = "SELECT * FROM localizacao WHERE id='"+rs.getString("localizacao")+"'";
-                try (ResultSet rsa = stm.executeQuery(sql)) {
-                    if (rsa.next()) {  // Encontrou a localizacao
-                        l = new Localizacao(rsa.getString("id"));
+                        l1 = new Localizacao(rs.getString("id"));
                     } else {
                         // BD inconsistente!! Sala não existe - tratar com excepções.
                     } // catch é feito no try inicial - este try serve para fechar o ResultSet automaticamente
                     // Nota: abrir um novo ResultSet no mesmo Statement fecha o ResultSet anterior
                 }
 
-                // Reconstruir a palete cokm os dados obtidos da BD
-                p = new Palete(rs.getString("id"),Double.parseDouble(rs.getString("peso")), m, l);
+                // Reconstruir v2
+                Localizacao l2 = null;
+                sql = "SELECT * FROM localizacao WHERE id='"+rs.getString("v2")+"'";
+                try (ResultSet rsa = stm.executeQuery(sql)) {
+                    if (rsa.next()) {  // Encontrou a sala
+                        l2 = new Localizacao(rs.getString("id"));
+                    } else {
+                        // BD inconsistente!! Sala não existe - tratar com excepções.
+                    } // catch é feito no try inicial - este try serve para fechar o ResultSet automaticamente
+                    // Nota: abrir um novo ResultSet no mesmo Statement fecha o ResultSet anterior
+                }
 
-             */
+                // Reconstruir aresta
+                a = new Aresta(rs.getString("id"),l1,l2);
             }
         } catch (SQLException e) {
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return null;
+        return a;
     }
 
 
 
     /**
      * @param key o id da palete
-     * @param p a palete
+     * @param a a palete
      * @return para já retorna sempre null (deverá devolver o valor existente, caso exista um)
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public Palete put(String key, Palete p) {
-        Palete res = null;
-        Localizacao l = p.getLocalizacao();
-        MateriaPrima m = p.getMateriaPrima();
+    public Aresta put(String key, Aresta a) {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
 
-            // adicionar localizacao se nao existe
-            if(l!=null)stm.executeUpdate(
-                    "INSERT IGNORE INTO localizacao " +
-                                "VALUES ('"+ l.getLocal()+ "')");
-
-            // Actualizar a MateriaPrima
+            // Actualizar a aresta
             stm.executeUpdate(
-                    "INSERT INTO materiaprima " +
-                            "VALUES ('"+ m.getId()+ "', '"+
-                            m.getNome()+"', "+
-                            m.getPeso()+", "+
-                            m.getQtd()+") " +
-                            "ON DUPLICATE KEY UPDATE nome=Values(nome), " +
-                            "peso=Values(peso), " +
-                            "quantidade=Values(quantidade)");
-
-
-            // Actualizar a palete
-            if(l!=null)
-            stm.executeUpdate(
-                    "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
-                            ", '"+l.getLocal()+"', '" +
-                            m.getId()+"') " +
-                                "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao),"+
-                                "materia=VALUES(materia),"+
-                                "peso=VALUES(peso)");
-            else stm.executeUpdate(
-                    "INSERT INTO palete VALUES ('"+p.getId()+"', "+p.getPeso()+
-                            ", NULL, '" +
-                            m.getId()+"') " +
-                            "ON DUPLICATE KEY UPDATE localizacao=VALUES(localizacao),"+
-                            "materia=VALUES(materia),"+
-                            "peso=VALUES(peso)");
+                    "INSERT INTO aresta VALUES ('"+key+"'," +
+                            "'" +a.getV1().getLocal() +"','" +
+                            a.getV2().getLocal()+"') " +
+                            "ON DUPLICATE KEY UPDATE v1=VALUES(v1),"+
+                            "v2=VALUES(v2)");
 
         } catch (SQLException e) {
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return p;
+
+
+        return null;
     }
 
     /**
@@ -250,22 +220,18 @@ public class ArestaDAO implements Map<String, Palete> {
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public Palete remove(Object key) {
-        Palete p = this.get(key);
+    public Aresta remove(Object key) {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
 
-            // apagar a materiaprima
-            stm.executeUpdate("DELETE FROM materiaprima WHERE Id='"+p.getMateriaPrima().getId()+"'");
-
-            // apagar a palete
-            stm.executeUpdate("DELETE FROM palete WHERE Id='"+key+"'");
+            // apagar a aresta
+            stm.executeUpdate("DELETE FROM aresta WHERE Id='"+key+"'");
         } catch (Exception e) {
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return p;
+        return null;
     }
 
 
@@ -273,13 +239,13 @@ public class ArestaDAO implements Map<String, Palete> {
     /**
      * Adicionar um conjunto de palete à base de dados
      *
-     * @param paletes as paletes a adicionar
+     * @param arestas as paletes a adicionar
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public void putAll(Map<? extends String, ? extends Palete> paletes) {
-        for(Palete p : paletes.values()) {
-            this.put(p.getId(), p);
+    public void putAll(Map<? extends String, ? extends Aresta> arestas) {
+        for(Aresta a : arestas.values()) {
+            this.put(a.getId(), a);
         }
     }
 
@@ -290,6 +256,16 @@ public class ArestaDAO implements Map<String, Palete> {
      */
     @Override
     public void clear() {
+        try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
+                              Statement stm = conn.createStatement()) {
+            /*stm.execute("UPDATE alunos SET Turma=NULL");
+            stm.executeUpdate("TRUNCATE turmas");*/
+        stm.executeUpdate("DELETE FROM aresta");
+    } catch (SQLException e) {
+        // Database error!
+        e.printStackTrace();
+        throw new NullPointerException(e.getMessage());
+    }
     }
 
     /**
@@ -305,22 +281,22 @@ public class ArestaDAO implements Map<String, Palete> {
      * @return Todas as paletes da base de dados
      */
     @Override
-    public Collection<Palete> values() {
-        Collection<Palete> res = new HashSet<>();
+    public Collection<Aresta> values() {
+        Collection<Aresta> res = new HashSet<>();
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT Id FROM palete")) { // ResultSet com os ids de todas as turmas
+             ResultSet rs = stm.executeQuery("SELECT Id FROM aresta")) { // ResultSet com os ids de todas as turmas
             while (rs.next()) {
                 String idt = rs.getString("Id"); // Obtemos um id de turma do ResultSet
-                Palete p = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
-                res.add(p);                                 // Adiciona a turma ao resultado.
+                Aresta a = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
+                res.add(a);                                 // Adiciona a turma ao resultado.
             }
         } catch (Exception e) {
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return res;
+        return null;
     }
 
     /**
@@ -328,7 +304,7 @@ public class ArestaDAO implements Map<String, Palete> {
      * @return ainda nada!
      */
     @Override
-    public Set<Entry<String, Palete>> entrySet() {
-        throw new NullPointerException("public Set<Map.Entry<String,Palete>> entrySet() not implemented!");
+    public Set<Entry<String, Aresta>> entrySet() {
+        throw new NullPointerException("public Set<Map.Entry<String,Aresta>> entrySet() not implemented!");
     }
 }

@@ -295,8 +295,8 @@ public class PaleteDAO implements Map<String, Palete> {
              Statement stm = conn.createStatement()) {
             /*stm.execute("UPDATE alunos SET Turma=NULL");
             stm.executeUpdate("TRUNCATE turmas");*/
-            stm.executeUpdate("DELETE FROM materiaprima");
             stm.executeUpdate("DELETE FROM palete");
+            stm.executeUpdate("DELETE FROM materiaprima");
         } catch (SQLException e) {
             // Database error!
             e.printStackTrace();

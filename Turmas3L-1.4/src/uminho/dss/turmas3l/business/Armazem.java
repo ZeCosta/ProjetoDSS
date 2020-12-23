@@ -3,6 +3,7 @@ package uminho.dss.turmas3l.business;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Transporte.Percurso;
 import uminho.dss.turmas3l.business.Transporte.Robot;
+import uminho.dss.turmas3l.data.ArestaDAO;
 import uminho.dss.turmas3l.data.LocalizacaoDAO;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Armazem {
     private int mapa[][];
     private String[] locaisOrdenados;
     private Map<String,Localizacao> localizacoes;
+    private Map<String,Aresta> arestas;
 
 
 
@@ -105,6 +107,7 @@ public class Armazem {
                 /*CP4S*/     {    0,    0, 0,  0,  0,  0,  0,   0,   0,   0,   0,   0,      0,       0,        0,   0,  0,  0,  0,  1,  0,   0,   1,   0,   1},
                 /*C4*/       {    0,    0, 0,  0,  0,  0,  1,   0,   0,   0,   0,   0,      0,       1,        0,   0,  0,  0,  0,  0,  0,   0,   0,   1,   0}};
         this.localizacoes = LocalizacaoDAO.getInstance();
+        this.arestas = ArestaDAO.getInstance();
     }
 
     public String[] getLocaisOrdenados(){
@@ -165,6 +168,26 @@ public class Armazem {
 
     public void delAllLocalizacoes() {
         this.localizacoes.clear();
+    }
+
+    public void delAllArestas() {
+        this.arestas.clear();
+    }
+
+    public void criarArmazemDefault() {
+        //localizacoes
+        String[] s = new String[]{"ZRececao", "C1", "P1N", "P2N", "P3N", "P4N", "CP1N",
+                "CP2N", "CP3N", "CP4N", "C2", "ZRobots", "CRobots", "CZEntrega", "ZEntrega", "C3",
+                "P1S", "P2S", "P3S", "P4S", "CP1S", "CP2S", "CP3S", "CP4S", "C4"};
+        for(String si:s){
+            this.localizacoes.put(si,new Localizacao(si));
+        }
+
+        //arestas
+        Aresta a = new Aresta("ZRececaoC1",new Localizacao("ZRececao"),new Localizacao("C1"));
+        this.arestas.put(a.getId(),a);
+        a = new Aresta("C1ZRececao",new Localizacao("C1"),new Localizacao("ZRececao"));
+        this.arestas.put(a.getId(),a);
     }
 }
 

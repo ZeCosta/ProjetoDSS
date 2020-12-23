@@ -312,8 +312,8 @@ public class RobotDAO implements Map<String, Robot> {
              Statement stm = conn.createStatement()) {
             /*stm.execute("UPDATE alunos SET Turma=NULL");
             stm.executeUpdate("TRUNCATE turmas");*/
-            stm.executeUpdate("DELETE FROM percurso");
             stm.executeUpdate("DELETE FROM robot");
+            stm.executeUpdate("DELETE FROM percurso");
         } catch (SQLException e) {
             // Database error!
             e.printStackTrace();

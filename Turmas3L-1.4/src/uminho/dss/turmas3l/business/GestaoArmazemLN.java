@@ -139,6 +139,15 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
     public void delAllLocalizacoes() {
         this.armazem.delAllLocalizacoes();
     }
+    @Override
+    public void delAllArestas() {
+        this.armazem.delAllArestas();
+    }
+
+    @Override
+    public void criarArmazemDefault() {
+        this.armazem.criarArmazemDefault();
+    }
 
     public void putAllLocalizacoes(String[] s){
         for(String si:s){

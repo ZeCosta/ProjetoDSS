@@ -54,6 +54,9 @@ public interface IGestaoArmazemLNFacade {
     void delAllPaletes();
 
     void delAllLocalizacoes();
+    void delAllArestas();
+
+    void criarArmazemDefault();
 
 
 

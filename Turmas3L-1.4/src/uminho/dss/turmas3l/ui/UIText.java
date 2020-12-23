@@ -364,12 +364,8 @@ public class UIText {
 
     public void criarArmazem(){
         try {
-            //adicionar localizacoes this.model.addLocalizacoes(String[] ...)
-            String[] s = new String[]{"ZRececao", "C1", "P1N", "P2N", "P3N", "P4N", "CP1N",
-                    "CP2N", "CP3N", "CP4N", "C2", "ZRobots", "CRobots", "CZEntrega", "ZEntrega", "C3",
-                    "P1S", "P2S", "P3S", "P4S", "CP1S", "CP2S", "CP3S", "CP4S", "C4"};
-            this.model.putAllLocalizacoes(s);
-            //adicionar arestas?
+            //adicionar localizacoes + adicionar arestas?
+            this.model.criarArmazemDefault();
             //atualizar armazem?
         }
         catch (NullPointerException e) {
@@ -463,6 +459,9 @@ public class UIText {
 
             //delete palete
             this.model.delAllPaletes();
+
+            //delete arestas
+            this.model.delAllArestas();
 
             //delete localizacao
             this.model.delAllLocalizacoes();
