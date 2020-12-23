@@ -1,5 +1,6 @@
 package uminho.dss.turmas3l.business;
 
+import org.mariadb.jdbc.internal.util.dao.CloneableCallableStatement;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Gestao.SubSistemaGestao;
 import uminho.dss.turmas3l.business.Transporte.Percurso;
@@ -73,12 +74,12 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
 
     @Override
     public boolean validaLocal(String destino) {    //fazer funcao -> ir ao armazem e verificar que local existe
-        return true;
+        return this.armazem.validaLocalizacao(destino);
     }
 
     @Override
-    public Robot getRobotDisponivel() {
-        return null;
+    public Robot getRobotDisponivel(){
+        return this.sst.getRobotDisponivel();
     }
 
     public void mudaLocalizacaoR (String id, String l) {
@@ -104,8 +105,19 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
 
     @Override
     public void comunicarTransporte(Robot r, Palete p, Localizacao destino) {
-        Percurso per = this.getPercurso(r.getLocalizacao(), p.getLocalizacao(),
-                destino, r.getId());
+        //Percurso per = this.armazem.criarPercurso(r.getLocalizacao(), p.getLocalizacao(),destino, r.getId());
+        Percurso per = this.armazem.criarPercurso(new Localizacao("ZRobots"),new Localizacao("ZRececao"),new Localizacao("ZEntrega"),"1");
         this.sst.comunicarTransporte(r.getId(), p, per);
+    }
+    public void comunicarTransporte2(String r, Palete p, Percurso per) {
+        //Percurso per = this.armazem.criarPercurso(r.getLocalizacao(), p.getLocalizacao(),destino, r.getId());
+        //Percurso per = this.armazem.criarPercurso(new Localizacao("ZRobots"),new Localizacao("ZRececao"),new Localizacao("ZEntrega"),"1");
+        this.sst.comunicarTransporte(r, p, per);
+    }
+
+    public void putAllLocalizacoes(String[] s){
+        for(String si:s){
+            this.armazem.putAllLocalizacoes(s);
+        }
     }
 }

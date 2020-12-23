@@ -147,6 +147,21 @@ public class Armazem {
         System.out.println("Adeus");
     }
     */
+
+    public boolean validaLocalizacao(String l){
+        boolean res=false;
+        for(Localizacao local:this.localizacoes.values()){
+            if(local.getLocal().equals(l)) res=true;
+        }
+
+        return res;
+    }
+
+    public void putAllLocalizacoes(String[] s){
+        for(String si:s){
+            this.localizacoes.put(si,new Localizacao(si));
+        }
+    }
 }
 
 

@@ -40,6 +40,10 @@ public interface IGestaoArmazemLNFacade {
 
     void comunicarTransporte(Robot r, Palete p, Localizacao destino);
 
+    void putAllLocalizacoes(String[] s);
+
+    void comunicarTransporte2(String id, Palete p, Percurso percurso);
+
 
     /*Map<String,Localizacao> solicitarListagem();
     void ordemTransporte(String idRobot, String idPalete);

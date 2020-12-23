@@ -170,12 +170,15 @@ public class UIText {
                 System.out.println("Destino da palete: ");
                 String destino = scin.nextLine();
 
-                if (this.model.validaLocal(destino)) {  //<- se a origem for igual ao destino nao transporta
-                    if (p.getLocalizacao().getLocal()!=destino) {  //<- se a origem for igual ao destino nao transportar
+                if (this.model.validaLocal(destino)) {  //<- valida se o destino e valido
+                    if (!p.getLocalizacao().getLocal().equals(destino)) {  //<- se a origem for igual ao destino nao transportar
                         Robot robotdisponivel = this.model.getRobotDisponivel();
                         if(robotdisponivel!=null){
                             //chamar comunicarTransporte para criar percurso e enviar para o robot
                             this.model.comunicarTransporte(robotdisponivel,p,new Localizacao(destino));
+                            //this.model.comunicarTransporte2(robotdisponivel.getId(),p,this.model.getPercurso(robotdisponivel.getLocalizacao(),p.getLocalizacao(),new Localizacao(destino),robotdisponivel.getId()));
+                            //this.model.comunicarTransporte2(robotdisponivel.getId(),p,new Percurso(robotdisponivel.getId(),robotdisponivel.getLocalizacao().getLocal(),p.getLocalizacao().getLocal(),(new Localizacao(destino)).getLocal()));
+
                         }else{
                             //else guardar numa lista de ordens ?
                             System.out.println("Não há robot disponivel. Queue de ordens indisponivel.");
@@ -347,6 +350,10 @@ public class UIText {
     public void criarArmazem(){
         try {
             //adicionar localizacoes this.model.addLocalizacoes(String[] ...)
+            String[] s = new String[]{"ZRececao", "C1", "P1N", "P2N", "P3N", "P4N", "CP1N",
+                    "CP2N", "CP3N", "CP4N", "C2", "ZRobots", "CRobots", "CZEntrega", "ZEntrega", "C3",
+                    "P1S", "P2S", "P3S", "P4S", "CP1S", "CP2S", "CP3S", "CP4S", "C4"};
+            this.model.putAllLocalizacoes(s);
             //adicionar arestas?
             //atualizar armazem?
         }

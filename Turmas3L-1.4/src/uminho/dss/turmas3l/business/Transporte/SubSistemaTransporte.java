@@ -58,4 +58,12 @@ public class SubSistemaTransporte {
         r.setEstado("BUSCAR");
         this.robots.put(r.getId(),r);
     }
+
+    public Robot getRobotDisponivel() {
+        Robot res = null;
+        for(Robot r:this.robots.values()){
+            if(r.getEstado().equals("LIVRE")) res=r;
+        }
+        return res;
+    }
 }

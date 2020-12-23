@@ -119,10 +119,10 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
         Localizacao l = null;
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT * FROM localizacao WHERE local='"+key.toString()+"'")) {
+             ResultSet rs = stm.executeQuery("SELECT * FROM localizacao WHERE id='"+key.toString()+"'")) {
             if (rs.next()) {  // A chave existe na tabela
                 // Reconstruir a Localizacao
-                String local = rs.getString("local");
+                String local = rs.getString("id");
                 l = new Localizacao(local);
             }
         } catch (SQLException e) {
@@ -174,7 +174,7 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
              Statement stm = conn.createStatement()) {
 
             // apagar a localizacao
-            stm.executeUpdate("DELETE FROM localizacao WHERE local='"+l.getLocal()+"'");
+            stm.executeUpdate("DELETE FROM localizacao WHERE id='"+l.getLocal()+"'");
         } catch (Exception e) {
             // Database error!
             e.printStackTrace();
@@ -222,9 +222,9 @@ public class LocalizacaoDAO implements Map<String, Localizacao> {
         Collection<Localizacao> res = new HashSet<>();
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT local FROM localizacao")) { // ResultSet com os ids de todas as localizações
+             ResultSet rs = stm.executeQuery("SELECT id FROM localizacao")) { // ResultSet com os ids de todas as localizações
             while (rs.next()) {
-                String idt = rs.getString("local"); // Obtemos um id da localização (local)
+                String idt = rs.getString("id"); // Obtemos um id da localização (local)
                 Localizacao l = this.get(idt);                    // Utilizamos o get para construir as localizações uma a uma
                 res.add(l);                                 // Adiciona a localização ao resultado.
             }

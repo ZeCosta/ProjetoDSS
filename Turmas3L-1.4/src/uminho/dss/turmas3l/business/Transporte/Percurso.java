@@ -8,8 +8,8 @@ public class Percurso {
 
     public Percurso(String id, String cR, String cE, String cRobots){
         this.id = id;
-        cRecolha = cR;
-        cEntrega = cE;
+        this.cRecolha = cR;
+        this.cEntrega = cE;
         this.cRobots = cRobots;
     }
 
