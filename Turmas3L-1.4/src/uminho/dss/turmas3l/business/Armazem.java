@@ -130,7 +130,7 @@ public class Armazem {
         return new Percurso(idRobot,cRecolha,cEntrega,cRobots);
     }
 
-
+    /*
     public static void main(String[] args){
         System.out.println("Ola");
         Armazem a = new Armazem();
@@ -140,6 +140,7 @@ public class Armazem {
         System.out.println(p.toString());
         System.out.println("Adeus");
     }
+    */
 }
 
 

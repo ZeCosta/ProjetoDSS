@@ -3,10 +3,8 @@ package uminho.dss.turmas3l.data;
 import uminho.dss.turmas3l.business.Gestao.MateriaPrima;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Localizacao;
-import uminho.dss.turmas3l.business.Sala;
 import uminho.dss.turmas3l.business.Transporte.Percurso;
 import uminho.dss.turmas3l.business.Transporte.Robot;
-import uminho.dss.turmas3l.business.Turma;
 
 import java.sql.*;
 import java.util.Collection;

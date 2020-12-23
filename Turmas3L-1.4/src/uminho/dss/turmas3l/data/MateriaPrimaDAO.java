@@ -1,6 +1,5 @@
 package uminho.dss.turmas3l.data;
 
-import uminho.dss.turmas3l.business.Aluno;
 import uminho.dss.turmas3l.business.Gestao.*;
 
 import java.sql.*;
