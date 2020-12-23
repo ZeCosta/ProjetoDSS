@@ -1,6 +1,6 @@
 package uminho.dss.turmas3l.business;
 
-import org.mariadb.jdbc.internal.util.dao.CloneableCallableStatement;
+//import org.mariadb.jdbc.internal.util.dao.CloneableCallableStatement;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Gestao.SubSistemaGestao;
 import uminho.dss.turmas3l.business.Transporte.Percurso;

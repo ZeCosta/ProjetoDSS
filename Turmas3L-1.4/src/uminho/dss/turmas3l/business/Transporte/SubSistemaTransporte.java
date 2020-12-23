@@ -54,7 +54,7 @@ public class SubSistemaTransporte {
         r.setPercurso(per);
         r.setPalete(p);
         r.setEstado("BUSCAR");
-        Robot res = this.robots.put(r.getId(),r);
+        Robot res = this.robots.put(id,r);
     }
 
     public Robot getRobotDisponivel() {
