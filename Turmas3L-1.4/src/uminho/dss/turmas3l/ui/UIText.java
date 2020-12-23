@@ -77,7 +77,7 @@ public class UIText {
     }
 
     /**
-     *  Estado - Gestão de Alunos
+     *  Estado -
      */
     private void consultarListagem() {
         Menu menu = new Menu(new String[]{
@@ -99,7 +99,7 @@ public class UIText {
     }
 
     /**
-     *  Estado - Gestão de Alunos
+     *  Estado -
      */
     private void gestaoRobots() {
         Menu menu = new Menu(new String[]{
@@ -117,7 +117,7 @@ public class UIText {
     }
 
     /**
-     *  Estado - Gestão de Opcoes
+     *  Estado -
      */
     private void gestaoDeOpcoes() {
         Menu menu = new Menu(new String[]{
