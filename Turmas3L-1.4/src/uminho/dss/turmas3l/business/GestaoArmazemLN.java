@@ -52,7 +52,7 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
 
     @Override
     public Set<Palete> getPaletesTrans() {
-        return ssg.getPaletesZE();
+        return ssg.getPaletesTrans();
     }
 
 
@@ -108,9 +108,7 @@ public class GestaoArmazemLN implements IGestaoArmazemLNFacade {
         Percurso per = this.armazem.criarPercurso(r.getLocalizacao(), p.getLocalizacao(),destino, r.getId());
         this.sst.comunicarTransporte(r.getId(), p, per);
     }
-    public void comunicarTransporte2(String r, Palete p, Percurso per) {
-        this.sst.comunicarTransporte(r, p, per);
-    }
+
 
     @Override
     public Set<Robot> getRobotComOrdens() {

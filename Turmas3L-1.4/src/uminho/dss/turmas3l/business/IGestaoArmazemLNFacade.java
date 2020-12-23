@@ -42,7 +42,6 @@ public interface IGestaoArmazemLNFacade {
 
     void putAllLocalizacoes(String[] s);
 
-    void comunicarTransporte2(String id, Palete p, Percurso percurso);
 
     Set<Robot> getRobotComOrdens();
 
