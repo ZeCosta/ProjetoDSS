@@ -9,10 +9,7 @@ package uminho.dss.turmas3l;
 
 import uminho.dss.turmas3l.ui.UIText;
 
-/**
- * @author DSS
- * @version 20201206
- */
+
 public class Main {
 
     /**

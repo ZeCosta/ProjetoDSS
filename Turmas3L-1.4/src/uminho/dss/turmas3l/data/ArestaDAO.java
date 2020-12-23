@@ -1,14 +1,6 @@
-/*
- *  DISCLAIMER: Este código foi criado para discussão e edição durante as aulas práticas de DSS, representando
- *  uma solução em construção. Como tal, não deverá ser visto como uma solução canónica, ou mesmo acabada.
- *  É disponibilizado para auxiliar o processo de estudo. Os alunos são encorajados a testar adequadamente o
- *  código fornecido e a procurar soluções alternativas, à medida que forem adquirindo mais conhecimentos.
- */
 package uminho.dss.turmas3l.data;
 
 import uminho.dss.turmas3l.business.Aresta;
-import uminho.dss.turmas3l.business.Gestao.MateriaPrima;
-import uminho.dss.turmas3l.business.Gestao.Palete;
 import uminho.dss.turmas3l.business.Localizacao;
 
 import java.sql.*;
@@ -18,12 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Versão incompleta de um DAO para Turmas
- *
- * Tabelas a criar na BD: ver método getInstance
- *
- * @author JFC
- * @version 20201208
+ * DAO para arestas
  */
 public class ArestaDAO implements Map<String, Aresta> {
     private static ArestaDAO singleton = null;
@@ -62,7 +49,7 @@ public class ArestaDAO implements Map<String, Aresta> {
     }
 
     /**
-     * @return número de turmas na base de dados
+     * @return número de arestas no grafo que representa o armazem
      */
     @Override
     public int size() {
@@ -83,7 +70,7 @@ public class ArestaDAO implements Map<String, Aresta> {
     }
 
     /**
-     * Método que verifica se existem turmas
+     * Método que verifica se existem arestas
      *
      * @return true se existirem 0 turmas
      */

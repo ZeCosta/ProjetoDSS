@@ -21,14 +21,7 @@ public class RobotDAO implements Map<String, Robot> {
             String sql = "CREATE TABLE IF NOT EXISTS localizacao (" +
                     "id varchar(10) NOT NULL PRIMARY KEY)";
             stm.executeUpdate(sql);
-            /*
-            sql = "CREATE TABLE IF NOT EXISTS materiaprima (" +
-                    "id varchar(10) NOT NULL PRIMARY KEY," +
-                    "nome varchar(45) DEFAULT NULL," +
-                    "peso double(4,2) DEFAULT 0," +
-                    "quantidade int(4) DEFAULT 0)";
-            stm.executeUpdate(sql);
-            */
+
             sql = "CREATE TABLE IF NOT EXISTS percurso (" +
                     "id varchar(10) NOT NULL PRIMARY KEY," +
                     "cRecolha varchar(45) DEFAULT NULL," +
@@ -285,11 +278,11 @@ public class RobotDAO implements Map<String, Robot> {
         try (Connection conn = DriverManager.getConnection(DAOConfig.URL, DAOConfig.USERNAME, DAOConfig.PASSWORD);
              Statement stm = conn.createStatement()) {
 
-            // apagar o percurso
-            stm.executeUpdate("DELETE FROM percurso WHERE id='"+r.getPercurso().getId()+"'");
-
             //apagar o robot
             stm.executeUpdate("DELETE FROM robot WHERE id='"+r.getId()+"'");
+
+            // apagar o percurso
+            stm.executeUpdate("DELETE FROM percurso WHERE id='"+r.getPercurso().getId()+"'");
 
         } catch (Exception e) {
             // Database error!

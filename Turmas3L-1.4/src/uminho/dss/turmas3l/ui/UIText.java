@@ -36,7 +36,7 @@ public class UIText {
      */
     public void run() {
         System.out.println("Bem vindo ao Sistema de Gestão de Armazém!");
-        this.criarArmazem();
+        //this.criarArmazem();
         this.menuPrincipal();
         System.out.println("Até breve...");
     }

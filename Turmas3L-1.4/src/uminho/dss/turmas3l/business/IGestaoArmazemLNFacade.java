@@ -1,9 +1,8 @@
 package uminho.dss.turmas3l.business;
+
 import uminho.dss.turmas3l.business.Gestao.Palete;
-import uminho.dss.turmas3l.business.Transporte.Percurso;
 import uminho.dss.turmas3l.business.Transporte.Robot;
 
-import java.util.Map;
 import java.util.Set;
 
 public interface IGestaoArmazemLNFacade {

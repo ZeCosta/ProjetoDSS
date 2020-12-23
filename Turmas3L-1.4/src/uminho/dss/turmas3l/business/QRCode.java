@@ -4,8 +4,6 @@ import uminho.dss.turmas3l.business.Gestao.MateriaPrima;
 import uminho.dss.turmas3l.business.Gestao.Palete;
 
 
-import java.util.Scanner;
-
 public class QRCode {
     private String qrcode;
 

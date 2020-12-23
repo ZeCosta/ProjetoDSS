@@ -14,12 +14,6 @@ public interface ITransporte {
 
     void deleteRobot(String id);
 
-    void mudaLocalizacao(String id, String l);
-
-    void eliminaPalete(String id);
-
-    void mudaEstado(String id, String e);
-
     Set<Robot> getRobotComOrdens();
 
     boolean haRobot();
